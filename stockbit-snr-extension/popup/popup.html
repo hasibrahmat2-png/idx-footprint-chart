@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stockbit Auto S/R Settings</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo-group">
+            <span class="badge">IDX</span>
+            <h3>Auto S/R Settings</h3>
+        </div>
+        <span class="version">v1.0</span>
+    </div>
+
+    <div class="content">
+        <!-- Master Toggle -->
+        <div class="control-group">
+            <div class="label-group">
+                <span class="label-title">Enable Auto S/R</span>
+                <span class="label-desc">Display HUD and draw levels on Stockbit</span>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="master-toggle" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Lookback Selector -->
+        <div class="control-group">
+            <div class="label-group">
+                <span class="label-title">Pivot Lookback</span>
+                <span class="label-desc">Bars before & after pivot swing</span>
+            </div>
+            <select id="lookback-select" class="custom-select">
+                <option value="5">5 bars (Fast / Scalping)</option>
+                <option value="10" selected>10 bars (Standard / Swing)</option>
+                <option value="15">15 bars (Major S/R)</option>
+                <option value="20">20 bars (Long Term)</option>
+            </select>
+        </div>
+
+        <!-- Supply / Demand Zones -->
+        <div class="control-group">
+            <div class="label-group">
+                <span class="label-title">Supply & Demand Zones</span>
+                <span class="label-desc">Cluster swings within 3 ticks</span>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="zones-toggle" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <!-- Orderbook Highlighting -->
+        <div class="control-group">
+            <div class="label-group">
+                <span class="label-title">Orderbook Badges</span>
+                <span class="label-desc">Highlight Bid/Offer rows</span>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="ob-toggle" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Token Management -->
+        <div class="control-group" style="flex-direction: column; align-items: stretch; gap: 6px;">
+            <div class="label-group">
+                <span class="label-title">Stockbit Token</span>
+                <span class="label-desc">Bearer JWT for market feed</span>
+            </div>
+            <input type="password" id="token-input" style="background:#1e222d; border:1px solid #2a2e39; border-radius:4px; padding:5px 8px; color:#fff; font-size:10px; width:100%; box-sizing:border-box;" />
+        </div>
+    </div>
+
+    <div class="footer">
+        <button id="refresh-btn" class="action-btn">🔄 Recalculate Active Tab</button>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

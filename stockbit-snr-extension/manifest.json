@@ -1,0 +1,73 @@
+{
+  "manifest_version": 3,
+  "name": "Stockbit Automated S/R & Zones",
+  "version": "1.0.0",
+  "description": "Automated Dow Theory Support & Resistance, Touch Counter, IDX Fraksi clustering, and Supply/Demand Zones for Stockbit.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Stockbit Auto S/R Settings",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "cookies"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "host_permissions": [
+    "https://stockbit.com/*",
+    "https://*.stockbit.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://stockbit.com/*",
+        "https://*.stockbit.com/*"
+      ],
+      "js": [
+        "src/chart-hook.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://stockbit.com/*",
+        "https://*.stockbit.com/*"
+      ],
+      "css": [
+        "styles/hud.css"
+      ],
+      "js": [
+        "src/snr-engine.js",
+        "src/stockbit-api.js",
+        "src/hud-overlay.js",
+        "src/content.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/chart-hook.js"
+      ],
+      "matches": [
+        "https://stockbit.com/*",
+        "https://*.stockbit.com/*"
+      ]
+    }
+  ]
+}

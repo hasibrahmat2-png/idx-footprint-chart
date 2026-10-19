@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 40" width="450" height="40" fill="none">
+  <!-- Style Definition matching TradingView Line Style -->
+  <style>
+    .tv-btn { rx: 14; stroke: #e0e3eb; stroke-width: 1; fill: #ffffff; cursor: pointer; }
+    .tv-btn.active { stroke: #2962ff; fill: #f0f3fa; }
+    .tv-text { font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, sans-serif; font-size: 12px; font-weight: 500; fill: #131722; }
+    .tv-text.active { fill: #2962ff; font-weight: 600; }
+    .tv-icon { stroke: #131722; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .tv-icon.active { stroke: #2962ff; }
+  </style>
+
+  <!-- Button 1: Short-Term (Lightning Bolt Line) -->
+  <g id="btn-short-term" transform="translate(5, 5)">
+    <rect class="tv-btn active" x="0" y="0" width="130" height="28"/>
+    <!-- Lightning Icon (TradingView clean line) -->
+    <g transform="translate(10, 6)">
+      <path class="tv-icon active" d="M9 1L3 9h5l-1 6 6-8H8l1-6z"/>
+    </g>
+    <text class="tv-text active" x="32" y="18">Short-Term</text>
+  </g>
+
+  <!-- Button 2: Medium-Term (Trend Line Chart) -->
+  <g id="btn-medium-term" transform="translate(145, 5)">
+    <rect class="tv-btn" x="0" y="0" width="140" height="28"/>
+    <!-- Trend Chart Icon -->
+    <g transform="translate(10, 6)">
+      <path class="tv-icon" d="M2 13l4-5 3.5 3.5L14 4"/>
+      <path class="tv-icon" d="M11 4h3v3"/>
+    </g>
+    <text class="tv-text" x="32" y="18">Medium-Term</text>
+  </g>
+
+  <!-- Button 3: Long-Term (Classical Bank / Pillars) -->
+  <g id="btn-long-term" transform="translate(295, 5)">
+    <rect class="tv-btn" x="0" y="0" width="130" height="28"/>
+    <!-- Bank / Temple Pillars Icon -->
+    <g transform="translate(10, 6)">
+      <path class="tv-icon" d="M1 5l7-3.5L15 5H1z"/>
+      <path class="tv-icon" d="M3 6.5v6M8 6.5v6M13 6.5v6"/>
+      <path class="tv-icon" d="M1 14h14"/>
+    </g>
+    <text class="tv-text" x="32" y="18">Long-Term</text>
+  </g>
+</svg>

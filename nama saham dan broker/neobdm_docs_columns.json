@@ -1,0 +1,1214 @@
+{
+  "total_count": 151,
+  "source": "https://neobdm.tech/new-market-summary/docs/columns",
+  "columns": [
+    {
+      "section": "INFORMASI EMITEN",
+      "subsection": "Skala Bisnis",
+      "column": "Mcap (T)",
+      "description": "Kapitalisasi Pasar dalam Triliun Rupiah",
+      "type": "card",
+      "no": 1
+    },
+    {
+      "section": "INFORMASI EMITEN",
+      "subsection": "Skala Bisnis",
+      "column": "Tval (B)",
+      "description": "Total Nilai Transaksi dalam Miliar Rupiah",
+      "type": "card",
+      "no": 2
+    },
+    {
+      "section": "INFORMASI EMITEN",
+      "subsection": "Catatan IDX",
+      "column": "Suspend",
+      "description": "saham sedang di-suspend atau tidak oleh IDX",
+      "type": "card",
+      "no": 3
+    },
+    {
+      "section": "INFORMASI EMITEN",
+      "subsection": "Catatan IDX",
+      "column": "FCA",
+      "description": "saham masuk Papan Pemantauan Khusus (Full Call Auction) IDX",
+      "type": "card",
+      "no": 4
+    },
+    {
+      "section": "INFORMASI EMITEN",
+      "subsection": "Catatan IDX",
+      "column": "Syariah",
+      "description": "apakah saham merupakan saham syariah atau tidak menurut IDX",
+      "type": "card",
+      "no": 5
+    },
+    {
+      "section": "INFORMASI EMITEN",
+      "subsection": "Catatan IDX",
+      "column": "HSC",
+      "description": "apakah saham terkonsentrasi tinggi (High Shareholding Concentration) menurut IDX",
+      "type": "card",
+      "no": 6
+    },
+    {
+      "section": "ANALISA TRANSAKSI",
+      "subsection": "ANALISA TRANSAKSI",
+      "column": "[Metode][Periode]",
+      "description": "Akum / Dist dalam Miliar Rupiah",
+      "type": "card",
+      "no": 7
+    },
+    {
+      "section": "ANALISA TRANSAKSI",
+      "subsection": "ANALISA TRANSAKSI",
+      "column": "%[Metode][Periode]",
+      "description": "Persen Akum / Dist terhadap total transaksi",
+      "type": "card",
+      "no": 8
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Transaction Compatibility",
+      "column": "Comp [Metode]",
+      "description": "Compatibility menurut AI NeoBDM",
+      "type": "card",
+      "no": 9
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Transaction Compatibility",
+      "column": "Comp Any",
+      "description": "Indikasi jika ada minimal 1 metode yang compatible",
+      "type": "card",
+      "no": 10
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Transaction Compatibility",
+      "column": "%Comp [Metode]",
+      "description": "Persentase Compatibility menurut AI NeoBDM",
+      "type": "card",
+      "no": 11
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Transaction Compatibility",
+      "column": "%Comp [Metode] [Periode]",
+      "description": "Persentase Compatibility dengan periode spesifik",
+      "type": "card",
+      "no": 12
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Compatibility berdasarkan Likuiditas",
+      "column": "Likuiditas",
+      "description": "Tingkat Likuiditas menurut NeoBDM",
+      "type": "card",
+      "no": 13
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Compatibility berdasarkan Likuiditas",
+      "column": "Likuid",
+      "description": "Likuid atau Tidak Likuid menurut NeoBDM",
+      "type": "card",
+      "no": 14
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Indikasi Crossing",
+      "column": "Cross",
+      "description": "Cross Index sedang tinggi",
+      "type": "card",
+      "no": 15
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Indikasi Crossing",
+      "column": "F-I Cross",
+      "description": "Terdeteksi Crossing antara Foreign ↔ Institusi",
+      "type": "card",
+      "no": 16
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Indikasi Crossing",
+      "column": "I-Z Cross",
+      "description": "Terdeteksi crossing antara Institusi ↔ Zombie",
+      "type": "card",
+      "no": 17
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Clean Transaction",
+      "column": "Clean",
+      "description": "Tingkat kebersihan transaksi (harian) bernilai dari -10 hingga 10",
+      "type": "card",
+      "no": 18
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Saham Pinky / Potensi Berkepentingan Khusus",
+      "column": "Pinky",
+      "description": "Terindikasi potensi aktivitas berkepentingan khusus.",
+      "type": "card",
+      "no": 19
+    },
+    {
+      "section": "BROKER",
+      "subsection": "BROKER",
+      "column": "Top[N] Buy",
+      "description": "Top N Net Buyer di Broker Summary",
+      "type": "card",
+      "no": 20
+    },
+    {
+      "section": "BROKER",
+      "subsection": "BROKER",
+      "column": "Top[N] Sell",
+      "description": "Top N Net Seller di Broker Summary",
+      "type": "card",
+      "no": 21
+    },
+    {
+      "section": "BROKER",
+      "subsection": "BROKER",
+      "column": "Tektoker",
+      "description": "Broker yang tektok / crossing di Broker Summary",
+      "type": "card",
+      "no": 22
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Candlestick",
+      "column": "High",
+      "description": "Harga tertinggi candle",
+      "type": "card",
+      "no": 23
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Candlestick",
+      "column": "Low",
+      "description": "Harga terendah candle",
+      "type": "card",
+      "no": 24
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Candlestick",
+      "column": "Close",
+      "description": "Harga penutupan candle",
+      "type": "card",
+      "no": 25
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Candlestick",
+      "column": "HL2",
+      "description": "(H + L) / 2",
+      "type": "card",
+      "no": 26
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Candlestick",
+      "column": "HLC3",
+      "description": "(H + L + C) / 3",
+      "type": "card",
+      "no": 27
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Candlestick",
+      "column": "HLCC4",
+      "description": "(H + L + C + C) / 4",
+      "type": "card",
+      "no": 28
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Candlestick",
+      "column": "OHLC4",
+      "description": "(O + H + L + C) / 4",
+      "type": "card",
+      "no": 29
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Perubahan Harga",
+      "column": "Chg[N]",
+      "description": "Persentase perubahan harga N candlestick",
+      "type": "card",
+      "no": 30
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Harga Rata-rata",
+      "column": "MA[N]",
+      "description": "Moving Average N candle",
+      "type": "card",
+      "no": 31
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Harga Rata-rata",
+      "column": "MA [N1] [N2] GC",
+      "description": "Golden Cross antara MA N1 dengan MA N2",
+      "type": "card",
+      "no": 32
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Harga Rata-rata",
+      "column": "EMA[N]",
+      "description": "Exponential Moving Average N candle",
+      "type": "card",
+      "no": 33
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Harga Rata-rata",
+      "column": "EMA [N1] [N2] GC",
+      "description": "Golden Cross antara EMA N1 dengan EMA N2",
+      "type": "card",
+      "no": 34
+    },
+    {
+      "section": "VOLUME",
+      "subsection": "Volume",
+      "column": "Volume",
+      "description": "volume transaksi",
+      "type": "card",
+      "no": 35
+    },
+    {
+      "section": "VOLUME",
+      "subsection": "Perubahan Volume",
+      "column": "VolChg[N]",
+      "description": "persentase perubahan volume N candle",
+      "type": "card",
+      "no": 36
+    },
+    {
+      "section": "VOLUME",
+      "subsection": "Volume Rata-Rata",
+      "column": "MAVol[N]",
+      "description": "rata-rata volume N candle",
+      "type": "card",
+      "no": 37
+    },
+    {
+      "section": "VOLUME",
+      "subsection": "Volume Relatif",
+      "column": "RVol[N]",
+      "description": "Rasio volume terhadap volume rata-rata N candle",
+      "type": "card",
+      "no": 38
+    },
+    {
+      "section": "VOLUME",
+      "subsection": "Volume Spike",
+      "column": "VolSpike [N]d",
+      "description": "Terdeteksi ada Volume spike (jauh lebih dari volume rata-rata) dalam N hari terkahir",
+      "type": "card",
+      "no": 39
+    },
+    {
+      "section": "STRUKTUR",
+      "subsection": "Base / Konsolidasi",
+      "column": "Consol",
+      "description": "Menandakan harga sedang konsolidasi / nge-base (tanpa breakout yang signifikan)",
+      "type": "card",
+      "no": 40
+    },
+    {
+      "section": "STRUKTUR",
+      "subsection": "Breakout",
+      "column": "Breakout[N]d",
+      "description": "Menandakan harga breakout dari high N candle terakhir",
+      "type": "card",
+      "no": 41
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Indikator Volatilitas",
+      "column": "ATR14",
+      "description": "Average True Range 14 hari",
+      "type": "card",
+      "no": 42
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Indikator Volatilitas",
+      "column": "ATR20",
+      "description": "Average True Range 20 hari",
+      "type": "card",
+      "no": 43
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Indikator Volatilitas",
+      "column": "Volatility",
+      "description": "Tingkat volatilitas menurut kriteria NeoBDM",
+      "type": "card",
+      "no": 44
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "RSI",
+      "column": "RSI",
+      "description": "Relative Strength Index (0–100)",
+      "type": "card",
+      "no": 45
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "RSI",
+      "column": "RSI OB",
+      "description": "RSI Overbought (RSI ≥ 80)",
+      "type": "card",
+      "no": 46
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "RSI",
+      "column": "RSI OS",
+      "description": "RSI Oversold (RSI ≤ 20)",
+      "type": "card",
+      "no": 47
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "RSI",
+      "column": "RSI Bull",
+      "description": "RSI Bull Signal (keluar dari oversold)",
+      "type": "card",
+      "no": 48
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic",
+      "column": "Stoch %K",
+      "description": "Fast Stochastic",
+      "type": "card",
+      "no": 49
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic",
+      "column": "Stoch %K OB",
+      "description": "Fast Stochastic Overbought",
+      "type": "card",
+      "no": 50
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic",
+      "column": "Stoch %K OS",
+      "description": "Fast Stochastic Oversold",
+      "type": "card",
+      "no": 51
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic",
+      "column": "Stoch %D",
+      "description": "Slow Stochastic",
+      "type": "card",
+      "no": 52
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic",
+      "column": "Stoch %D OB",
+      "description": "Slow Stochastic Overbought",
+      "type": "card",
+      "no": 53
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic",
+      "column": "Stoch %D OS",
+      "description": "Slow Stochastic Oversold",
+      "type": "card",
+      "no": 54
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic",
+      "column": "Stoch GC",
+      "description": "Stochastic Golden Cross",
+      "type": "card",
+      "no": 55
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic RSI",
+      "column": "StochRSI %K",
+      "description": "Fast Stochastic RSI",
+      "type": "card",
+      "no": 56
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic RSI",
+      "column": "StochRSI %K OB",
+      "description": "Fast Stochastic RSI Overbought",
+      "type": "card",
+      "no": 57
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic RSI",
+      "column": "StochRSI %K OS",
+      "description": "Fast Stochastic RSI Oversold",
+      "type": "card",
+      "no": 58
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic RSI",
+      "column": "StochRSI %D",
+      "description": "Slow Stochastic RSI",
+      "type": "card",
+      "no": 59
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic RSI",
+      "column": "StochRSI %D OB",
+      "description": "Slow Stochastic RSI Overbought",
+      "type": "card",
+      "no": 60
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic RSI",
+      "column": "StochRSI %D OS",
+      "description": "Slow Stochastic RSI Oversold",
+      "type": "card",
+      "no": 61
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Stochastic RSI",
+      "column": "StochRSI GC",
+      "description": "Stochastic RSI Golden Cross",
+      "type": "card",
+      "no": 62
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "MACD",
+      "column": "MACD",
+      "description": "MACD Line",
+      "type": "card",
+      "no": 63
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "MACD",
+      "column": "MACD Signal",
+      "description": "MACD Signal Line",
+      "type": "card",
+      "no": 64
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "MACD",
+      "column": "MACD Hist",
+      "description": "MACD Histogram",
+      "type": "card",
+      "no": 65
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "MACD",
+      "column": "MACD GC",
+      "description": "MACD Golden Cross",
+      "type": "card",
+      "no": 66
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Bollinger Band",
+      "column": "BB Up",
+      "description": "Batas atas Bollinger Band",
+      "type": "card",
+      "no": 67
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Bollinger Band",
+      "column": "BB Mid",
+      "description": "Garis tengah Bollinger Band",
+      "type": "card",
+      "no": 68
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Bollinger Band",
+      "column": "BB Low",
+      "description": "Batas bawah Bollinger Band",
+      "type": "card",
+      "no": 69
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Parabolic SAR",
+      "column": "SAR",
+      "description": "harga parabolic SAR",
+      "type": "card",
+      "no": 70
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Parabolic SAR",
+      "column": "SAR Trend",
+      "description": "BULL = close > SAR. BEAR = close ≤ SAR",
+      "type": "card",
+      "no": 71
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Parabolic SAR",
+      "column": "SAR Flip Bull",
+      "description": "parabolic SAR berpindah ke bawah harga closing",
+      "type": "card",
+      "no": 72
+    },
+    {
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "subsection": "Parabolic SAR",
+      "column": "SAR Flip Bear",
+      "description": "parabolic SAR berpindah ke atas harga closing",
+      "type": "card",
+      "no": 73
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "CandleUp",
+      "description": "Candle hijau (close > open)",
+      "type": "card",
+      "no": 74
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "CandleDown",
+      "description": "Candle hijau (close < open)",
+      "type": "card",
+      "no": 75
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "EveningStar",
+      "description": "Candlestick Pattern Evening Star",
+      "type": "card",
+      "no": 76
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "MorningStar",
+      "description": "Candlestick Pattern Morning Star",
+      "type": "card",
+      "no": 77
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "EveningDojiStar",
+      "description": "Candlestick Pattern Evening Doji Star",
+      "type": "card",
+      "no": 78
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "MorningDojiStar",
+      "description": "Candlestick Pattern Morning Doji Star",
+      "type": "card",
+      "no": 79
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "BearMarubozu",
+      "description": "Candlestick Pattern Bear Marubozu",
+      "type": "card",
+      "no": 80
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "BullMarubozu",
+      "description": "Candlestick Pattern Bull Marubozu",
+      "type": "card",
+      "no": 81
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "3BlackCrows",
+      "description": "Candlestick Pattern 3 Black Crows",
+      "type": "card",
+      "no": 82
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "3WhiteSoldiers",
+      "description": "Candlestick Pattern 3 White Soldiers",
+      "type": "card",
+      "no": 83
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "DarkCloudCover",
+      "description": "Candlestick Pattern Dark Cloud Cover",
+      "type": "card",
+      "no": 84
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "PiercingLine",
+      "description": "Candlestick Pattern Piercing Line",
+      "type": "card",
+      "no": 85
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "GravestoneDoji",
+      "description": "Candlestick Pattern Gravestone Doji",
+      "type": "card",
+      "no": 86
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "DragonflyDoji",
+      "description": "Candlestick Pattern Dragonfly Doji",
+      "type": "card",
+      "no": 87
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "Doji",
+      "description": "Candlestick Pattern Doji",
+      "type": "card",
+      "no": 88
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "LongLeggedDoji",
+      "description": "Candlestick Pattern Long Legged Doji",
+      "type": "card",
+      "no": 89
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "BearSpinningTop",
+      "description": "Candlestick Pattern Bear Spinning Top",
+      "type": "card",
+      "no": 90
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "BullSpinningTop",
+      "description": "Candlestick Pattern Bull Spinning Top",
+      "type": "card",
+      "no": 91
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "ShootingStar",
+      "description": "Candlestick Pattern Shooting Star",
+      "type": "card",
+      "no": 92
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "Hammer",
+      "description": "Candlestick Pattern Hammer",
+      "type": "card",
+      "no": 93
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "HangingMan",
+      "description": "Candlestick Pattern Hanging Man",
+      "type": "card",
+      "no": 94
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "InvertedHammer",
+      "description": "Candlestick Pattern Inverted Hammer",
+      "type": "card",
+      "no": 95
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "BearHarami",
+      "description": "Candlestick Pattern Bear Harami",
+      "type": "card",
+      "no": 96
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "BullHarami",
+      "description": "Candlestick Pattern Bull Harami",
+      "type": "card",
+      "no": 97
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "BearHaramiCross",
+      "description": "Candlestick Pattern Bear Harami Cross",
+      "type": "card",
+      "no": 98
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "BullHaramiCross",
+      "description": "Candlestick Pattern Bull Harami Cross",
+      "type": "card",
+      "no": 99
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "BearEngulfing",
+      "description": "Candlestick Pattern Bear Engulfing",
+      "type": "card",
+      "no": 100
+    },
+    {
+      "section": "POLA CANDLESTICK",
+      "subsection": "POLA CANDLESTICK",
+      "column": "BullEngulfing",
+      "description": "Candlestick Pattern Bull Engulfing",
+      "type": "card",
+      "no": 101
+    },
+    {
+      "section": "ROTATION CHART",
+      "subsection": "ROTATION CHART",
+      "column": "RotStrength [periode]",
+      "description": "Kekuatan Momentum di Rotation Chart",
+      "type": "card",
+      "no": 102
+    },
+    {
+      "section": "ROTATION CHART",
+      "subsection": "ROTATION CHART",
+      "column": "RotPhase [periode]",
+      "description": "Fase Momentum di Rotation Chart",
+      "type": "card",
+      "no": 103
+    },
+    {
+      "section": "ROTATION CHART",
+      "subsection": "ROTATION CHART",
+      "column": "RotDir [periode]",
+      "description": "Arah Momentum di Rotation Chart",
+      "type": "card",
+      "no": 104
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Balance Position",
+      "column": "Bpos [kelompok] [periode]",
+      "description": "Persentase kepemilikan kelompok pada bulan tersebut",
+      "type": "card",
+      "no": 105
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Balance Position",
+      "column": "BposChg [kelompok] [periode]",
+      "description": "Perubahan % kepemilikan kelompok pada bulan tersebut",
+      "type": "card",
+      "no": 106
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Scripless",
+      "column": "Scripless [periode]",
+      "description": "Persentase saham scripless pada bulan tersebut",
+      "type": "card",
+      "no": 107
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Scripless",
+      "column": "ScriplessChg [periode]",
+      "description": "Perubahan %scripless pada bulan tersebut",
+      "type": "card",
+      "no": 108
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Kepemilikan >1%",
+      "column": "Total KDA 1%",
+      "description": "Persentase Total saham para pemegang saham yang kepemilikan >1%",
+      "type": "card",
+      "no": 109
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Free Float",
+      "column": "FreeFloat",
+      "description": "Persentase Free Float saham",
+      "type": "card",
+      "no": 110
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Analisa Holder",
+      "column": "Holder",
+      "description": "Jumlah pemegang saham (SID)",
+      "type": "card",
+      "no": 111
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Analisa Kepemilikan Populer",
+      "column": "Buyback m1–m3",
+      "description": "Potensi buyback institusi menurut NeoBDM",
+      "type": "card",
+      "no": 112
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Analisa Kepemilikan Populer",
+      "column": "Nominee m1–m3",
+      "description": "Indikasi nominee menurut NeoBDM",
+      "type": "card",
+      "no": 113
+    },
+    {
+      "section": "SEASONALITY",
+      "subsection": "SEASONALITY",
+      "column": "Proba m[periode]",
+      "description": "Probability — Probabilitas saham naik di bulan tersebut secara historis",
+      "type": "card",
+      "no": 114
+    },
+    {
+      "section": "SEASONALITY",
+      "subsection": "SEASONALITY",
+      "column": "Exp m[periode]",
+      "description": "Expectancy — Persen kenaikan saham di bulan tersebut secara historis",
+      "type": "card",
+      "no": 115
+    },
+    {
+      "section": "MEMBER REQUEST",
+      "subsection": "MEMBER REQUEST",
+      "column": "SMACD GC",
+      "description": "Golden cross menggunakan MACD(2, 10, 2) untuk scalping",
+      "type": "card",
+      "no": 116
+    },
+    {
+      "section": "ANALISA TRANSAKSI",
+      "subsection": "ANALISA TRANSAKSI",
+      "column": "M d0",
+      "description": "Akum Bandarmologi hari ini (Miliar)",
+      "type": "table",
+      "no": 117
+    },
+    {
+      "section": "ANALISA TRANSAKSI",
+      "subsection": "ANALISA TRANSAKSI",
+      "column": "%M d0",
+      "description": "Persen Akum Bandarmologi hari ini Misal akum Rp 2M, total transaksi Rp 10M, maka %akum = 20%",
+      "type": "table",
+      "no": 118
+    },
+    {
+      "section": "ANALISA TRANSAKSI",
+      "subsection": "ANALISA TRANSAKSI",
+      "column": "F d1",
+      "description": "Foreign Flow kemarin (Miliar)",
+      "type": "table",
+      "no": 119
+    },
+    {
+      "section": "ANALISA TRANSAKSI",
+      "subsection": "ANALISA TRANSAKSI",
+      "column": "F w0",
+      "description": "Foreign Flow selama Senin - Jumat pada minggu ini (Miliar)",
+      "type": "table",
+      "no": 120
+    },
+    {
+      "section": "ANALISA TRANSAKSI",
+      "subsection": "ANALISA TRANSAKSI",
+      "column": "S w1",
+      "description": "Sultanmologi selama Senin - Jumat pada minggu lalu (Miliar)",
+      "type": "table",
+      "no": 121
+    },
+    {
+      "section": "ANALISA TRANSAKSI",
+      "subsection": "ANALISA TRANSAKSI",
+      "column": "%NR c5",
+      "description": "Persen akum NonRetail selama 5 candle terakhir Misal dalam 5 candle terakhir, total akum Rp 3M, dan total transaksi Rp 12M, maka %akum = 25%",
+      "type": "table",
+      "no": 122
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Transaction Compatibility",
+      "column": "Comp NR",
+      "description": "Apakah NR compatible di emiten yang sedang dianalisa",
+      "type": "table",
+      "no": 123
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Transaction Compatibility",
+      "column": "%Comp M",
+      "description": "Persentase Kompatibilitas Metode Bandarmologi terhadap suatu emiten",
+      "type": "table",
+      "no": 124
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Transaction Compatibility",
+      "column": "%Comp F Short",
+      "description": "Persentase Kompatibilitas Foreign Flow — jangka pendek",
+      "type": "table",
+      "no": 125
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Transaction Compatibility",
+      "column": "%Comp I Mid",
+      "description": "Persentase Kompatibilitas Institution Flow — jangka menengah",
+      "type": "table",
+      "no": 126
+    },
+    {
+      "section": "COMPATIBILITY",
+      "subsection": "Transaction Compatibility",
+      "column": "%Comp Z Long",
+      "description": "Persentase Kompatibilitas Zombiemologi — jangka panjang",
+      "type": "table",
+      "no": 127
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Perubahan Harga",
+      "column": "Chg1",
+      "description": "% perubahan harga dalam 1 candle terakhir",
+      "type": "table",
+      "no": 128
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Perubahan Harga",
+      "column": "Chg5",
+      "description": "% perubahan harga dalam 5 candle terakhir",
+      "type": "table",
+      "no": 129
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Perubahan Harga",
+      "column": "Chg20",
+      "description": "% perubahan harga dalam 20 candle terakhir",
+      "type": "table",
+      "no": 130
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Perubahan Harga",
+      "column": "Chg200",
+      "description": "% perubahan harga dalam 200 candle terakhir",
+      "type": "table",
+      "no": 131
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Harga Rata-rata",
+      "column": "MA10",
+      "description": "Simple Moving Average — 10 candle",
+      "type": "table",
+      "no": 132
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Harga Rata-rata",
+      "column": "MA50",
+      "description": "Simple Moving Average — 50 candle",
+      "type": "table",
+      "no": 133
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Harga Rata-rata",
+      "column": "EMA50",
+      "description": "Exponential Moving Average — 50 candle",
+      "type": "table",
+      "no": 134
+    },
+    {
+      "section": "HARGA",
+      "subsection": "Harga Rata-rata",
+      "column": "EMA200",
+      "description": "Exponential Moving Average — 200 candle",
+      "type": "table",
+      "no": 135
+    },
+    {
+      "section": "VOLUME",
+      "subsection": "Perubahan Volume",
+      "column": "VolChg1",
+      "description": "% perubahan volume vs 1 candle lalu",
+      "type": "table",
+      "no": 136
+    },
+    {
+      "section": "VOLUME",
+      "subsection": "Perubahan Volume",
+      "column": "VolChg20",
+      "description": "% perubahan volume vs 20 candle lalu",
+      "type": "table",
+      "no": 137
+    },
+    {
+      "section": "VOLUME",
+      "subsection": "Volume Rata-Rata",
+      "column": "MAVol10",
+      "description": "Simple Moving Average volume — 10 candle",
+      "type": "table",
+      "no": 138
+    },
+    {
+      "section": "VOLUME",
+      "subsection": "Volume Rata-Rata",
+      "column": "MAVol20",
+      "description": "Simple Moving Average volume — 20 candle",
+      "type": "table",
+      "no": 139
+    },
+    {
+      "section": "VOLUME",
+      "subsection": "Volume Relatif",
+      "column": "RVol10",
+      "description": "Volume saat ini ÷ rata-rata volume 10 candle",
+      "type": "table",
+      "no": 140
+    },
+    {
+      "section": "VOLUME",
+      "subsection": "Volume Relatif",
+      "column": "RVol20",
+      "description": "Volume saat ini ÷ rata-rata volume 20 candle",
+      "type": "table",
+      "no": 141
+    },
+    {
+      "section": "STRUKTUR",
+      "subsection": "Breakout",
+      "column": "Breakout 10d",
+      "description": "Harga breakout dari high 10 candle terakhir",
+      "type": "table",
+      "no": 142
+    },
+    {
+      "section": "STRUKTUR",
+      "subsection": "Breakout",
+      "column": "Breakout 20d",
+      "description": "Harga breakout dari high 20 candle terakhir",
+      "type": "table",
+      "no": 143
+    },
+    {
+      "section": "ROTATION CHART",
+      "subsection": "ROTATION CHART",
+      "column": "RotStrength D",
+      "description": "Kekuatan rotation chart — harian",
+      "type": "table",
+      "no": 144
+    },
+    {
+      "section": "ROTATION CHART",
+      "subsection": "ROTATION CHART",
+      "column": "RotPhase W",
+      "description": "Fase rotation chart — mingguan",
+      "type": "table",
+      "no": 145
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Balance Position",
+      "column": "Bpos F m3",
+      "description": "Persentase Kepemilikan Asing — 3 bulan lalu",
+      "type": "table",
+      "no": 146
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Balance Position",
+      "column": "BposChg R m1",
+      "description": "Perubahan Persentase kepemilikan Individu Lokal bulan lalu",
+      "type": "table",
+      "no": 147
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Scripless",
+      "column": "Scripless m1",
+      "description": "Persentase Scripless 1 bulan lalu",
+      "type": "table",
+      "no": 148
+    },
+    {
+      "section": "ANALISA KEPEMILIKAN",
+      "subsection": "Scripless",
+      "column": "ScriplessChg m2",
+      "description": "Perubahan Persentase scripless 2 bulan lalu",
+      "type": "table",
+      "no": 149
+    },
+    {
+      "section": "SEASONALITY",
+      "subsection": "SEASONALITY",
+      "column": "Proba m0",
+      "description": "Probabilitas saham hijau secara historis di bulan ini",
+      "type": "table",
+      "no": 150
+    },
+    {
+      "section": "SEASONALITY",
+      "subsection": "SEASONALITY",
+      "column": "Exp m1",
+      "description": "Persen Kenaikan saham secara historis di bulan depan",
+      "type": "table",
+      "no": 151
+    }
+  ]
+}

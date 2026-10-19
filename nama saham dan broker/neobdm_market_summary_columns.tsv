@@ -1,0 +1,539 @@
+No	Field	Title	Format	Deskripsi
+1	symbol	Tick	string	Ticker saham
+2	tval	Tval (B)	ufloat	Total Value Transaksi (Miliar)
+3	m_d_0	Md0	float	Bandar Flow Hari ini (Miliar)
+4	m_dn_0	%Md0	percent	%Bandar Flow Hari ini
+5	m_w_0	Mw0	float	Bandar Flow Minggu ini (Miliar)
+6	m_wn_0	%Mw0	percent	%Bandar Flow Minggu ini
+7	m_d_1	Md1	float	Bandar Flow Kemarin (Miliar)
+8	m_dn_1	%Md1	percent	%Bandar Flow Kemarin
+9	m_w_1	Mw1	float	Bandar Flow Minggu lalu (Miliar)
+10	m_wn_1	%Mw1	percent	%Bandar Flow Minggu lalu
+11	m_d_2	Md2	float	Bandar Flow 2 hari lalu (Miliar)
+12	m_dn_2	%Md2	percent	%Bandar Flow 2 hari lalu
+13	m_w_2	Mw2	float	Bandar Flow 2 minggu lalu (Miliar)
+14	m_wn_2	%Mw2	percent	%Bandar Flow 2 minggu lalu
+15	m_d_3	Md3	float	Bandar Flow 3 hari lalu (Miliar)
+16	m_dn_3	%Md3	percent	%Bandar Flow 3 hari lalu
+17	m_w_3	Mw3	float	Bandar Flow 3 minggu lalu (Miliar)
+18	m_wn_3	%Mw3	percent	%Bandar Flow 3 minggu lalu
+19	m_d_4	Md4	float	Bandar Flow 4 hari lalu (Miliar)
+20	m_dn_4	%Md4	percent	%Bandar Flow 4 hari lalu
+21	m_w_4	Mw4	float	Bandar Flow 4 minggu lalu (Miliar)
+22	m_wn_4	%Mw4	percent	%Bandar Flow 4 minggu lalu
+23	m_c_3	Mc3	float	Bandar Flow Kumulatif 3 candle (Miliar)
+24	m_cn_3	%Mc3	percent	%Bandar Flow Kumulatif 3 candle
+25	m_c_5	Mc5	float	Bandar Flow Kumulatif 5 candle (Miliar)
+26	m_cn_5	%Mc5	percent	%Bandar Flow Kumulatif 5 candle
+27	m_c_10	Mc10	float	Bandar Flow Kumulatif 10 candle (Miliar)
+28	m_cn_10	%Mc10	percent	%Bandar Flow Kumulatif 10 candle
+29	m_c_20	Mc20	float	Bandar Flow Kumulatif 20 candle (Miliar)
+30	m_cn_20	%Mc20	percent	%Bandar Flow Kumulatif 20 candle
+31	m_c_50	Mc50	float	Bandar Flow Kumulatif 50 candle (Miliar)
+32	m_cn_50	%Mc50	percent	%Bandar Flow Kumulatif 50 candle
+33	nr_d_0	NRd0	float	NonRetail Flow Hari ini (Miliar)
+34	nr_dn_0	%NRd0	percent	%NonRetail Flow Hari ini
+35	nr_w_0	NRw0	float	NonRetail Flow Minggu ini (Miliar)
+36	nr_wn_0	%NRw0	percent	%NonRetail Flow Minggu ini
+37	nr_d_1	NRd1	float	NonRetail Flow Kemarin (Miliar)
+38	nr_dn_1	%NRd1	percent	%NonRetail Flow Kemarin
+39	nr_w_1	NRw1	float	NonRetail Flow Minggu lalu (Miliar)
+40	nr_wn_1	%NRw1	percent	%NonRetail Flow Minggu lalu
+41	nr_d_2	NRd2	float	NonRetail Flow 2 hari lalu (Miliar)
+42	nr_dn_2	%NRd2	percent	%NonRetail Flow 2 hari lalu
+43	nr_w_2	NRw2	float	NonRetail Flow 2 minggu lalu (Miliar)
+44	nr_wn_2	%NRw2	percent	%NonRetail Flow 2 minggu lalu
+45	nr_d_3	NRd3	float	NonRetail Flow 3 hari lalu (Miliar)
+46	nr_dn_3	%NRd3	percent	%NonRetail Flow 3 hari lalu
+47	nr_w_3	NRw3	float	NonRetail Flow 3 minggu lalu (Miliar)
+48	nr_wn_3	%NRw3	percent	%NonRetail Flow 3 minggu lalu
+49	nr_d_4	NRd4	float	NonRetail Flow 4 hari lalu (Miliar)
+50	nr_dn_4	%NRd4	percent	%NonRetail Flow 4 hari lalu
+51	nr_w_4	NRw4	float	NonRetail Flow 4 minggu lalu (Miliar)
+52	nr_wn_4	%NRw4	percent	%NonRetail Flow 4 minggu lalu
+53	nr_c_3	NRc3	float	NonRetail Flow Kumulatif 3 candle (Miliar)
+54	nr_cn_3	%NRc3	percent	%NonRetail Flow Kumulatif 3 candle
+55	nr_c_5	NRc5	float	NonRetail Flow Kumulatif 5 candle (Miliar)
+56	nr_cn_5	%NRc5	percent	%NonRetail Flow Kumulatif 5 candle
+57	nr_c_10	NRc10	float	NonRetail Flow Kumulatif 10 candle (Miliar)
+58	nr_cn_10	%NRc10	percent	%NonRetail Flow Kumulatif 10 candle
+59	nr_c_20	NRc20	float	NonRetail Flow Kumulatif 20 candle (Miliar)
+60	nr_cn_20	%NRc20	percent	%NonRetail Flow Kumulatif 20 candle
+61	nr_c_50	NRc50	float	NonRetail Flow Kumulatif 50 candle (Miliar)
+62	nr_cn_50	%NRc50	percent	%NonRetail Flow Kumulatif 50 candle
+63	f_d_0	Fd0	float	Foreign Flow Hari ini (Miliar)
+64	f_dn_0	%Fd0	percent	%Foreign Flow Hari ini
+65	f_w_0	Fw0	float	Foreign Flow Minggu ini (Miliar)
+66	f_wn_0	%Fw0	percent	%Foreign Flow Minggu ini
+67	f_d_1	Fd1	float	Foreign Flow Kemarin (Miliar)
+68	f_dn_1	%Fd1	percent	%Foreign Flow Kemarin
+69	f_w_1	Fw1	float	Foreign Flow Minggu lalu (Miliar)
+70	f_wn_1	%Fw1	percent	%Foreign Flow Minggu lalu
+71	f_d_2	Fd2	float	Foreign Flow 2 hari lalu (Miliar)
+72	f_dn_2	%Fd2	percent	%Foreign Flow 2 hari lalu
+73	f_w_2	Fw2	float	Foreign Flow 2 minggu lalu (Miliar)
+74	f_wn_2	%Fw2	percent	%Foreign Flow 2 minggu lalu
+75	f_d_3	Fd3	float	Foreign Flow 3 hari lalu (Miliar)
+76	f_dn_3	%Fd3	percent	%Foreign Flow 3 hari lalu
+77	f_w_3	Fw3	float	Foreign Flow 3 minggu lalu (Miliar)
+78	f_wn_3	%Fw3	percent	%Foreign Flow 3 minggu lalu
+79	f_d_4	Fd4	float	Foreign Flow 4 hari lalu (Miliar)
+80	f_dn_4	%Fd4	percent	%Foreign Flow 4 hari lalu
+81	f_w_4	Fw4	float	Foreign Flow 4 minggu lalu (Miliar)
+82	f_wn_4	%Fw4	percent	%Foreign Flow 4 minggu lalu
+83	f_c_3	Fc3	float	Foreign Flow Kumulatif 3 candle (Miliar)
+84	f_cn_3	%Fc3	percent	%Foreign Flow Kumulatif 3 candle
+85	f_c_5	Fc5	float	Foreign Flow Kumulatif 5 candle (Miliar)
+86	f_cn_5	%Fc5	percent	%Foreign Flow Kumulatif 5 candle
+87	f_c_10	Fc10	float	Foreign Flow Kumulatif 10 candle (Miliar)
+88	f_cn_10	%Fc10	percent	%Foreign Flow Kumulatif 10 candle
+89	f_c_20	Fc20	float	Foreign Flow Kumulatif 20 candle (Miliar)
+90	f_cn_20	%Fc20	percent	%Foreign Flow Kumulatif 20 candle
+91	f_c_50	Fc50	float	Foreign Flow Kumulatif 50 candle (Miliar)
+92	f_cn_50	%Fc50	percent	%Foreign Flow Kumulatif 50 candle
+93	s_d_0	Sd0	float	Sultan Flow Hari ini (Miliar)
+94	s_dn_0	%Sd0	percent	%Sultan Flow Hari ini
+95	s_w_0	Sw0	float	Sultan Flow Minggu ini (Miliar)
+96	s_wn_0	%Sw0	percent	%Sultan Flow Minggu ini
+97	s_d_1	Sd1	float	Sultan Flow Kemarin (Miliar)
+98	s_dn_1	%Sd1	percent	%Sultan Flow Kemarin
+99	s_w_1	Sw1	float	Sultan Flow Minggu lalu (Miliar)
+100	s_wn_1	%Sw1	percent	%Sultan Flow Minggu lalu
+101	s_d_2	Sd2	float	Sultan Flow 2 hari lalu (Miliar)
+102	s_dn_2	%Sd2	percent	%Sultan Flow 2 hari lalu
+103	s_w_2	Sw2	float	Sultan Flow 2 minggu lalu (Miliar)
+104	s_wn_2	%Sw2	percent	%Sultan Flow 2 minggu lalu
+105	s_d_3	Sd3	float	Sultan Flow 3 hari lalu (Miliar)
+106	s_dn_3	%Sd3	percent	%Sultan Flow 3 hari lalu
+107	s_w_3	Sw3	float	Sultan Flow 3 minggu lalu (Miliar)
+108	s_wn_3	%Sw3	percent	%Sultan Flow 3 minggu lalu
+109	s_d_4	Sd4	float	Sultan Flow 4 hari lalu (Miliar)
+110	s_dn_4	%Sd4	percent	%Sultan Flow 4 hari lalu
+111	s_w_4	Sw4	float	Sultan Flow 4 minggu lalu (Miliar)
+112	s_wn_4	%Sw4	percent	%Sultan Flow 4 minggu lalu
+113	s_c_3	Sc3	float	Sultan Flow Kumulatif 3 candle (Miliar)
+114	s_cn_3	%Sc3	percent	%Sultan Flow Kumulatif 3 candle
+115	s_c_5	Sc5	float	Sultan Flow Kumulatif 5 candle (Miliar)
+116	s_cn_5	%Sc5	percent	%Sultan Flow Kumulatif 5 candle
+117	s_c_10	Sc10	float	Sultan Flow Kumulatif 10 candle (Miliar)
+118	s_cn_10	%Sc10	percent	%Sultan Flow Kumulatif 10 candle
+119	s_c_20	Sc20	float	Sultan Flow Kumulatif 20 candle (Miliar)
+120	s_cn_20	%Sc20	percent	%Sultan Flow Kumulatif 20 candle
+121	s_c_50	Sc50	float	Sultan Flow Kumulatif 50 candle (Miliar)
+122	s_cn_50	%Sc50	percent	%Sultan Flow Kumulatif 50 candle
+123	i_d_0	Id0	float	Institution Flow Hari ini (Miliar)
+124	i_dn_0	%Id0	percent	%Institution Flow Hari ini
+125	i_w_0	Iw0	float	Institution Flow Minggu ini (Miliar)
+126	i_wn_0	%Iw0	percent	%Institution Flow Minggu ini
+127	i_d_1	Id1	float	Institution Flow Kemarin (Miliar)
+128	i_dn_1	%Id1	percent	%Institution Flow Kemarin
+129	i_w_1	Iw1	float	Institution Flow Minggu lalu (Miliar)
+130	i_wn_1	%Iw1	percent	%Institution Flow Minggu lalu
+131	i_d_2	Id2	float	Institution Flow 2 hari lalu (Miliar)
+132	i_dn_2	%Id2	percent	%Institution Flow 2 hari lalu
+133	i_w_2	Iw2	float	Institution Flow 2 minggu lalu (Miliar)
+134	i_wn_2	%Iw2	percent	%Institution Flow 2 minggu lalu
+135	i_d_3	Id3	float	Institution Flow 3 hari lalu (Miliar)
+136	i_dn_3	%Id3	percent	%Institution Flow 3 hari lalu
+137	i_w_3	Iw3	float	Institution Flow 3 minggu lalu (Miliar)
+138	i_wn_3	%Iw3	percent	%Institution Flow 3 minggu lalu
+139	i_d_4	Id4	float	Institution Flow 4 hari lalu (Miliar)
+140	i_dn_4	%Id4	percent	%Institution Flow 4 hari lalu
+141	i_w_4	Iw4	float	Institution Flow 4 minggu lalu (Miliar)
+142	i_wn_4	%Iw4	percent	%Institution Flow 4 minggu lalu
+143	i_c_3	Ic3	float	Institution Flow Kumulatif 3 candle (Miliar)
+144	i_cn_3	%Ic3	percent	%Institution Flow Kumulatif 3 candle
+145	i_c_5	Ic5	float	Institution Flow Kumulatif 5 candle (Miliar)
+146	i_cn_5	%Ic5	percent	%Institution Flow Kumulatif 5 candle
+147	i_c_10	Ic10	float	Institution Flow Kumulatif 10 candle (Miliar)
+148	i_cn_10	%Ic10	percent	%Institution Flow Kumulatif 10 candle
+149	i_c_20	Ic20	float	Institution Flow Kumulatif 20 candle (Miliar)
+150	i_cn_20	%Ic20	percent	%Institution Flow Kumulatif 20 candle
+151	i_c_50	Ic50	float	Institution Flow Kumulatif 50 candle (Miliar)
+152	i_cn_50	%Ic50	percent	%Institution Flow Kumulatif 50 candle
+153	z_d_0	Zd0	float	Zombie Flow Hari ini (Miliar)
+154	z_dn_0	%Zd0	percent	%Zombie Flow Hari ini
+155	z_w_0	Zw0	float	Zombie Flow Minggu ini (Miliar)
+156	z_wn_0	%Zw0	percent	%Zombie Flow Minggu ini
+157	z_d_1	Zd1	float	Zombie Flow Kemarin (Miliar)
+158	z_dn_1	%Zd1	percent	%Zombie Flow Kemarin
+159	z_w_1	Zw1	float	Zombie Flow Minggu lalu (Miliar)
+160	z_wn_1	%Zw1	percent	%Zombie Flow Minggu lalu
+161	z_d_2	Zd2	float	Zombie Flow 2 hari lalu (Miliar)
+162	z_dn_2	%Zd2	percent	%Zombie Flow 2 hari lalu
+163	z_w_2	Zw2	float	Zombie Flow 2 minggu lalu (Miliar)
+164	z_wn_2	%Zw2	percent	%Zombie Flow 2 minggu lalu
+165	z_d_3	Zd3	float	Zombie Flow 3 hari lalu (Miliar)
+166	z_dn_3	%Zd3	percent	%Zombie Flow 3 hari lalu
+167	z_w_3	Zw3	float	Zombie Flow 3 minggu lalu (Miliar)
+168	z_wn_3	%Zw3	percent	%Zombie Flow 3 minggu lalu
+169	z_d_4	Zd4	float	Zombie Flow 4 hari lalu (Miliar)
+170	z_dn_4	%Zd4	percent	%Zombie Flow 4 hari lalu
+171	z_w_4	Zw4	float	Zombie Flow 4 minggu lalu (Miliar)
+172	z_wn_4	%Zw4	percent	%Zombie Flow 4 minggu lalu
+173	z_c_3	Zc3	float	Zombie Flow Kumulatif 3 candle (Miliar)
+174	z_cn_3	%Zc3	percent	%Zombie Flow Kumulatif 3 candle
+175	z_c_5	Zc5	float	Zombie Flow Kumulatif 5 candle (Miliar)
+176	z_cn_5	%Zc5	percent	%Zombie Flow Kumulatif 5 candle
+177	z_c_10	Zc10	float	Zombie Flow Kumulatif 10 candle (Miliar)
+178	z_cn_10	%Zc10	percent	%Zombie Flow Kumulatif 10 candle
+179	z_c_20	Zc20	float	Zombie Flow Kumulatif 20 candle (Miliar)
+180	z_cn_20	%Zc20	percent	%Zombie Flow Kumulatif 20 candle
+181	z_c_50	Zc50	float	Zombie Flow Kumulatif 50 candle (Miliar)
+182	z_cn_50	%Zc50	percent	%Zombie Flow Kumulatif 50 candle
+183	m_hist	History M	history	Bandarmologi 5 candle terakhir
+184	nr_hist	History NR	history	NonRetail Flow 5 candle terakhir
+185	f_hist	History F	history	Foreign Flow 5 candle terakhir
+186	s_hist	History S	history	Sultanmologi 5 candle terakhir
+187	i_hist	History I	history	Institution Flow 5 candle terakhir
+188	z_hist	History Z	history	Zombiemologi 5 candle terakhir
+189	clean_score	Clean	int	Clean Score (±10)
+190	is_comp_m	Comp M	boolean	Apakah Bandarmologi compatibile?
+191	is_comp_nr	Comp NR	boolean	Apakah NonRetail compatible?
+192	is_comp_f	Comp F	boolean	Apalah ForeignFlow compatible?
+193	is_comp_s	Comp S	boolean	Apakah Sultanmologi compatible?
+194	is_comp_i	Comp I	boolean	Apakah InstitutionFlow compatible?
+195	is_comp_z	Comp Z	boolean	Apakah Zombiemologi compatible?
+196	has_comp	Comp Any?	boolean	Apakah ada metode analisa transaksi yang compatible?
+197	comp_m	%Comp M	compatibility	Compatibility Bandar
+198	comp_nr	%Comp NR	compatibility	Compatibility NonRetail
+199	comp_f	%Comp F	compatibility	Compatibility Foreign
+200	comp_s	%Comp S	compatibility	Compatibility Sultan
+201	comp_i	%Comp I	compatibility	Compatibility Institusi
+202	comp_z	%Comp Z	compatibility	Compatibility Zombie
+203	comp_m_short	%Comp M Short	compatibility	Compatibility Bandar Jangka Pendek
+204	comp_nr_short	%Comp NR Short	compatibility	Compatibility NonRetail Jangka Pendek
+205	comp_f_short	%Comp F Short	compatibility	Compatibility Foreign Jangka Pendek
+206	comp_s_short	%Comp S Short	compatibility	Compatibility Sultan Jangka Pendek
+207	comp_i_short	%Comp I Short	compatibility	Compatibility Institusi Jangka Pendek
+208	comp_z_short	%Comp Z Short	compatibility	Compatibility Zombie Jangka Pendek
+209	comp_m_mid	%Comp M Mid	compatibility	Compatibility Bandar Jangka Menengah
+210	comp_nr_mid	%Comp NR Mid	compatibility	Compatibility NonRetail Jangka Menengah
+211	comp_f_mid	%Comp F Mid	compatibility	Compatibility Foreign Jangka Menengah
+212	comp_s_mid	%Comp S Mid	compatibility	Compatibility Sultan Jangka Menengah
+213	comp_i_mid	%Comp I Mid	compatibility	Compatibility Institusi Jangka Menengah
+214	comp_z_mid	%Comp Z Mid	compatibility	Compatibility Zombie Jangka Menengah
+215	comp_m_long	%Comp M Long	compatibility	Compatibility Bandar Jangka Panjang
+216	comp_nr_long	%Comp NR Long	compatibility	Compatibility NonRetail Jangka Panjang
+217	comp_f_long	%Comp F Long	compatibility	Compatibility Foreign Jangka Panjang
+218	comp_s_long	%Comp S Long	compatibility	Compatibility Sultan Jangka Panjang
+219	comp_i_long	%Comp I Long	compatibility	Compatibility Institusi Jangka Panjang
+220	comp_z_long	%Comp Z Long	compatibility	Compatibility Zombie Jangka Panjang
+221	top_5_buyer	Top5 NetBuy	string	Top 5 Net Buyer di Broker Summary
+222	top_5_seller	Top5 NetSell	string	Top 5 Net Seller di Broker Summary
+223	top_10_buyer	Top10 NetBuy	string	Top 10 Net Buyer di Broker Summary
+224	top_10_seller	Top10 NetSell	string	Top 10 Net Seller di Broker Summary
+225	tektoker	Tektoker	string	Tektoker di Broker Summary
+226	is_liquid	Likuid	boolean	Apakah Likuid atau tidak
+227	liquidity_type	Likuiditas	string	Tingkat likuiditas
+228	is_crossing	Cross	boolean	Transaksi tektok / kotor di intraday
+229	is_pinky	Pinky	boolean	Potensi berkepentingan khusus
+230	is_f_i_crossing	F-I Cross	boolean	Asing-Institusi Crossing
+231	is_i_z_crossing	I-Z Cross	boolean	Institusi-Zombie Crossing
+232	last_date	Date	string	Tanggal terakhir
+233	high	High	uint	Harga tertinggi
+234	low	Low	uint	Harga terendah
+235	close	Close	uint	Harga closing
+236	volume	Volume	number	Volume transaksi
+237	hl2	HL2	uint	HL2
+238	hlc3	HLC3	uint	HLC3
+239	hlcc4	HLCC4	uint	HLCC4
+240	ohlc4	OHLC4	uint	OHLC4
+241	is_consol	Consol	boolean	Harga nge-base / konsolidasi
+242	breakout_hhv5	Breakout 5d	boolean	Breakout harga tertinggi 5 candle terakhir
+243	breakout_hhv10	Breakout 10d	boolean	Breakout harga tertinggi 10 candle terakhir
+244	breakout_hhv20	Breakout 20d	boolean	Breakout harga tertinggi 20 candle terakhir
+245	breakout_hhv50	Breakout 50d	boolean	Breakout harga tertinggi 50 candle terakhir
+246	pct_1	Chg1	percent	%perubahan harga 1 candle
+247	pct_3	Chg3	percent	%perubahan harga 3 candle
+248	pct_5	Chg5	percent	%perubahan harga 5 candle
+249	pct_10	Chg10	percent	%perubahan harga 10 candle
+250	pct_20	Chg20	percent	%perubahan harga 20 candle
+251	pct_50	Chg50	percent	%perubahan harga 50 candle
+252	pct_100	Chg100	percent	%perubahan harga 100 candle
+253	pct_200	Chg200	percent	%perubahan harga 200 candle
+254	pct_vol_1	VolChg1	percent	%perubahan volume 1 candle
+255	pct_vol_3	VolChg3	percent	%perubahan volume 3 candle
+256	pct_vol_5	VolChg5	percent	%perubahan volume 5 candle
+257	pct_vol_10	VolChg10	percent	%perubahan volume 10 candle
+258	pct_vol_20	VolChg20	percent	%perubahan volume 20 candle
+259	pct_vol_50	VolChg50	percent	%perubahan volume 50 candle
+260	pct_vol_100	VolChg100	percent	%perubahan volume 100 candle
+261	pct_vol_200	VolChg200	percent	%perubahan volume 200 candle
+262	sma_3	MA3	uint	Moving Avg. 3 candle
+263	sma_5	MA5	uint	Moving Avg. 5 candle
+264	sma_10	MA10	uint	Moving Avg. 10 candle
+265	sma_20	MA20	uint	Moving Avg. 20 candle
+266	sma_50	MA50	uint	Moving Avg. 50 candle
+267	sma_100	MA100	uint	Moving Avg. 100 candle
+268	sma_200	MA200	uint	Moving Avg. 200 candle
+269	sma_gc_3_5	MA 3-5 GC	boolean	Golden Cross antara MA3 dan MA5
+270	sma_gc_5_10	MA 5-10 GC	boolean	Golden Cross antara MA5 dan MA10
+271	sma_gc_10_20	MA 10-20 GC	boolean	Golden Cross antara MA10 dan MA20
+272	sma_gc_20_50	MA 20-50 GC	boolean	Golden Cross antara MA20 dan MA50
+273	sma_gc_50_100	MA 50-100 GC	boolean	Golden Cross antara MA50 dan MA100
+274	sma_gc_100_200	MA 100-200 GC	boolean	Golden Cross antara MA100 dan MA200
+275	ema_3	EMA3	uint	Exp. Moving Avg. 3 candle
+276	ema_5	EMA5	uint	Exp. Moving Avg. 5 candle
+277	ema_10	EMA10	uint	Exp. Moving Avg. 10 candle
+278	ema_20	EMA20	uint	Exp. Moving Avg. 20 candle
+279	ema_50	EMA50	uint	Exp. Moving Avg. 50 candle
+280	ema_100	EMA100	uint	Exp. Moving Avg. 100 candle
+281	ema_200	EMA200	uint	Exp. Moving Avg. 200 candle
+282	ema_gc_3_5	EMA 3-5 GC	boolean	Golden Cross antara EMA3 dan EMA5
+283	ema_gc_5_10	EMA 5-10 GC	boolean	Golden Cross antara EMA5 dan EMA10
+284	ema_gc_10_20	EMA 10-20 GC	boolean	Golden Cross antara EMA10 dan EMA20
+285	ema_gc_20_50	EMA 20-50 GC	boolean	Golden Cross antara EMA20 dan EMA50
+286	ema_gc_50_100	EMA 50-100 GC	boolean	Golden Cross antara EMA50 dan EMA100
+287	ema_gc_100_200	EMA 100-200 GC	boolean	Golden Cross antara EMA100 dan EMA200
+288	atr_14	ATR14	float	Avg. True Range 14 candle
+289	atr_20	ATR20	float	Avg. True Range 20 candle
+290	volatility_type	Volatility	string	Volatilitas pergerakan harga (low, normal, high, extreme)
+291	stoch_k	Stoch %K	ufloat	Stochastic Fast
+292	stoch_d	Stoch %D	ufloat	Stochastic Slow
+293	stoch_k_ob	Stoch %K OB	boolean	Stochastic Fast Overbought
+294	stoch_k_os	Stoch %K OS	boolean	Stochastic Fast Oversold
+295	stoch_d_ob	Stoch %D OB	boolean	Stochastic Slow Overbought
+296	stoch_d_os	Stoch %D OS	boolean	Stochastic Slow Oversold
+297	stoch_gc	Stoch GC	boolean	Stochastic Golden Cross
+298	stochrsi_k	StochRSI %K	ufloat	StochasticRSI Fast
+299	stochrsi_d	StochRSI %D	ufloat	StochasticRSI Slow
+300	stochrsi_k_ob	StochRSI %K OB	boolean	StochasticRSI Fast Overbought
+301	stochrsi_k_os	StochRSI %K OS	boolean	StochasticRSI Fast Oversold
+302	stochrsi_d_ob	StochRSI %D OB	boolean	StochasticRSI Slow Overbought
+303	stochrsi_d_os	StochRSI %D OS	boolean	StochasticRSI Slow Oversold
+304	stochrsi_gc	StochRSI GC	boolean	StochasticRSI Golden Cross
+305	rsi	RSI	ufloat	RSI
+306	rsi_ob	RSI OB	boolean	RSI Overbought
+307	rsi_os	RSI OS	boolean	RSI Oversold
+308	rsi_bull	RSI Bull	boolean	RSI Bullish Signal (recover dari oversold)
+309	sar	SAR	uint	Parabolic SAR
+310	sar_trend	SAR Trend	string	Trend berdasarkan Parabolic SAR
+311	sar_flip_bull	SAR Flip Bull	boolean	Parabolic SAR Flip to BULL
+312	sar_flip_bear	SAR Flip Bear	boolean	Parabolic SAR Flip to BEAR
+313	macd	MACD	float	MACD
+314	macd_hist	MACD Hist	float	MACD Hist
+315	macd_signal	MACD Signal	float	MACD Signal
+316	macd_gc	MACD GC	boolean	MACD Golden Cross
+317	bband_upper	BB Up	uint	Bollinger Upper Band
+318	bband_middle	BB Mid	uint	Bollinger Middle Band
+319	bband_lower	BB Low	uint	Bollinger Lower Band
+320	sma_vol_10	MAVol10	number	Moving Avg. Volume 10 candle
+321	sma_vol_20	MAVol20	number	Moving Avg. Volume 20 candle
+322	rel_vol_10	RVol10	ufloat	Relative Volume 10 candle
+323	rel_vol_20	RVol20	ufloat	Relative Volume 20 candle
+324	is_spike_volume_1	VolSpike 1d	boolean	Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 1 candle terakhir
+325	is_spike_volume_3	VolSpike 3d	boolean	Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 3 candle terakhir
+326	is_spike_volume_5	VolSpike 5d	boolean	Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 5 candle terakhir
+327	is_spike_volume_10	VolSpike 10d	boolean	Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 10 candle terakhir
+328	is_spike_volume_20	VolSpike 20d	boolean	Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 20 candle terakhir
+329	is_spike_volume_50	VolSpike 50d	boolean	Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 50 candle terakhir
+330	csp_up	CandleUp	boolean	Candle Up / Hijau (close > open)
+331	csp_down	CandleDown	boolean	Candle Down / Merah (close < open)
+332	csp_eveningstar	EveningStar	boolean	Candlestick Pattern Evening Star
+333	csp_morningstar	MorningStar	boolean	Candlestick Pattern Morning Star
+334	csp_eveningdojistar	EveningDojiStar	boolean	Candlestick Pattern Evening Doji Star
+335	csp_morningdojistar	MorningDojiStar	boolean	Candlestick Pattern Morning Doji Star
+336	csp_bear_marubozu	BearMarubozu	boolean	Candlestick Pattern Bear Marubozu
+337	csp_bull_marubozu	BullMarubozu	boolean	Candlestick Pattern Bull Marubozu
+338	csp_3blackcrows	3BlackCrows	boolean	Candlestick Pattern 3 Black Crows
+339	csp_3whitesoldiers	3WhiteSoldiers	boolean	Candlestick Pattern 3 White Soldiers
+340	csp_darkcloudcover	DarkCloudCover	boolean	Candlestick Pattern Dark Cloud Cover
+341	csp_piercingline	PiercingLine	boolean	Candlestick Pattern Piercing Line
+342	csp_gravestonedoji	GravestoneDoji	boolean	Candlestick Pattern Gravestone Doji
+343	csp_dragonflydoji	DragonflyDoji	boolean	Candlestick Pattern Dragonfly Doji
+344	csp_doji	Doji	boolean	Candlestick Pattern Doji
+345	csp_longleggeddoji	LongLeggedDoji	boolean	Candlestick Pattern Long Legged Doji
+346	csp_bear_spinningtop	BearSpinningTop	boolean	Candlestick Pattern Bear Spinning Top
+347	csp_bull_spinningtop	BullSpinningTop	boolean	Candlestick Pattern Bull Spinning Top
+348	csp_shootingstar	ShootingStar	boolean	Candlestick Pattern Shooting Star
+349	csp_hammer	Hammer	boolean	Candlestick Pattern Hammer
+350	csp_hangingman	HangingMan	boolean	Candlestick Pattern Hanging Man
+351	csp_invertedhammer	InvertedHammer	boolean	Candlestick Pattern Inverted Hammer
+352	csp_bear_harami	BearHarami	boolean	Candlestick Pattern Bear Harami
+353	csp_bull_harami	BullHarami	boolean	Candlestick Pattern Bull Harami
+354	csp_bear_haramicross	BearHaramiCross	boolean	Candlestick Pattern Bear Harami Cross
+355	csp_bull_haramicross	BullHaramiCross	boolean	Candlestick Pattern Bull Harami Cross
+356	csp_bear_engulfing	BearEngulfing	boolean	Candlestick Pattern Bear Engulfing
+357	csp_bull_engulfing	BullEngulfing	boolean	Candlestick Pattern Bull Engulfing
+358	rotation_strength_d	RotStrength D	string	Kekuatan Rotation Chart Harian
+359	rotation_phase_d	RotPhase D	string	Fase Rotation Chart Harian
+360	rotation_direction_d	RotDir D	direction	Arah Rotation Chart Harian
+361	rotation_strength_w	RotStrength W	string	Kekuatan Rotation Chart Mingguan
+362	rotation_phase_w	RotPhase W	string	Fase Rotation Chart Mingguan
+363	rotation_direction_w	RotDir W	direction	Arah Rotation Chart Mingguan
+364	market_cap_t	Mcap (T)	ufloat	Market Cap (Triliun)
+365	scripless_m_1	Scripless m1	percent	Scripless 1 bulan lalu
+366	scripless_m_2	Scripless m2	percent	Scripless 2 bulan lalu
+367	scripless_m_3	Scripless m3	percent	Scripless 3 bulan lalu
+368	scripless_m_4	Scripless m4	percent	Scripless 4 bulan lalu
+369	scripless_m_5	Scripless m5	percent	Scripless 5 bulan lalu
+370	scripless_m_6	Scripless m6	percent	Scripless 6 bulan lalu
+371	rbpos_m_1	Bpos R m1	percent	Kepemilikan Individu Lokal 1 bulan lalu
+372	rbpos_m_2	Bpos R m2	percent	Kepemilikan Individu Lokal 2 bulan lalu
+373	rbpos_m_3	Bpos R m3	percent	Kepemilikan Individu Lokal 3 bulan lalu
+374	rbpos_m_4	Bpos R m4	percent	Kepemilikan Individu Lokal 4 bulan lalu
+375	rbpos_m_5	Bpos R m5	percent	Kepemilikan Individu Lokal 5 bulan lalu
+376	rbpos_m_6	Bpos R m6	percent	Kepemilikan Individu Lokal 6 bulan lalu
+377	ibpos_m_1	Bpos I m1	percent	Kepemilikan Institusi 1 bulan lalu
+378	ibpos_m_2	Bpos I m2	percent	Kepemilikan Institusi 2 bulan lalu
+379	ibpos_m_3	Bpos I m3	percent	Kepemilikan Institusi 3 bulan lalu
+380	ibpos_m_4	Bpos I m4	percent	Kepemilikan Institusi 4 bulan lalu
+381	ibpos_m_5	Bpos I m5	percent	Kepemilikan Institusi 5 bulan lalu
+382	ibpos_m_6	Bpos I m6	percent	Kepemilikan Institusi 6 bulan lalu
+383	fbpos_m_1	Bpos F m1	percent	Kepemilikan Asing 1 bulan lalu
+384	fbpos_m_2	Bpos F m2	percent	Kepemilikan Asing 2 bulan lalu
+385	fbpos_m_3	Bpos F m3	percent	Kepemilikan Asing 3 bulan lalu
+386	fbpos_m_4	Bpos F m4	percent	Kepemilikan Asing 4 bulan lalu
+387	fbpos_m_5	Bpos F m5	percent	Kepemilikan Asing 5 bulan lalu
+388	fbpos_m_6	Bpos F m6	percent	Kepemilikan Asing 6 bulan lalu
+389	rbpos_chg_m_1	BposChg R m1	percent	Perubahan %Kepemilikan Individu Lokal 1 bulan lalu
+390	rbpos_chg_m_2	BposChg R m2	percent	Perubahan %Kepemilikan Individu Lokal 2 bulan lalu
+391	rbpos_chg_m_3	BposChg R m3	percent	Perubahan %Kepemilikan Individu Lokal 3 bulan lalu
+392	rbpos_chg_m_4	BposChg R m4	percent	Perubahan %Kepemilikan Individu Lokal 4 bulan lalu
+393	rbpos_chg_m_5	BposChg R m5	percent	Perubahan %Kepemilikan Individu Lokal 5 bulan lalu
+394	rbpos_chg_m_6	BposChg R m6	percent	Perubahan %Kepemilikan Individu Lokal 6 bulan lalu
+395	fbpos_chg_m_1	BposChg F m1	percent	Perubahan %Kepemilikan Asing 1 bulan lalu
+396	fbpos_chg_m_2	BposChg F m2	percent	Perubahan %Kepemilikan Asing 2 bulan lalu
+397	fbpos_chg_m_3	BposChg F m3	percent	Perubahan %Kepemilikan Asing 3 bulan lalu
+398	fbpos_chg_m_4	BposChg F m4	percent	Perubahan %Kepemilikan Asing 4 bulan lalu
+399	fbpos_chg_m_5	BposChg F m5	percent	Perubahan %Kepemilikan Asing 5 bulan lalu
+400	fbpos_chg_m_6	BposChg F m6	percent	Perubahan %Kepemilikan Asing 6 bulan lalu
+401	ibpos_chg_m_1	BposChg I m1	percent	Perubahan %Kepemilikan Institusi 1 bulan lalu
+402	ibpos_chg_m_2	BposChg I m2	percent	Perubahan %Kepemilikan Institusi 2 bulan lalu
+403	ibpos_chg_m_3	BposChg I m3	percent	Perubahan %Kepemilikan Institusi 3 bulan lalu
+404	ibpos_chg_m_4	BposChg I m4	percent	Perubahan %Kepemilikan Institusi 4 bulan lalu
+405	ibpos_chg_m_5	BposChg I m5	percent	Perubahan %Kepemilikan Institusi 5 bulan lalu
+406	ibpos_chg_m_6	BposChg I m6	percent	Perubahan %Kepemilikan Institusi 6 bulan lalu
+407	local_asuransi_chg_m_1	IS Lokal Chg M1	percent	Perubahan %Kepemilikan Asuransi Lokal 1 bulan lalu
+408	local_asuransi_chg_m_2	IS Lokal Chg M2	percent	Perubahan %Kepemilikan Asuransi Lokal 2 bulan lalu
+409	local_asuransi_chg_m_3	IS Lokal Chg M3	percent	Perubahan %Kepemilikan Asuransi Lokal 3 bulan lalu
+410	local_asuransi_chg_m_4	IS Lokal Chg M4	percent	Perubahan %Kepemilikan Asuransi Lokal 4 bulan lalu
+411	local_asuransi_chg_m_5	IS Lokal Chg M5	percent	Perubahan %Kepemilikan Asuransi Lokal 5 bulan lalu
+412	local_asuransi_chg_m_6	IS Lokal Chg M6	percent	Perubahan %Kepemilikan Asuransi Lokal 6 bulan lalu
+413	local_korporat_chg_m_2	CP Lokal Chg M2	percent	Perubahan %Kepemilikan Korporat Lokal 2 bulan lalu
+414	local_korporat_chg_m_1	CP Lokal Chg M1	percent	Perubahan %Kepemilikan Korporat Lokal 1 bulan lalu
+415	local_korporat_chg_m_3	CP Lokal Chg M3	percent	Perubahan %Kepemilikan Korporat Lokal 3 bulan lalu
+416	local_korporat_chg_m_4	CP Lokal Chg M4	percent	Perubahan %Kepemilikan Korporat Lokal 4 bulan lalu
+417	local_korporat_chg_m_5	CP Lokal Chg M5	percent	Perubahan %Kepemilikan Korporat Lokal 5 bulan lalu
+418	local_korporat_chg_m_6	CP Lokal Chg M6	percent	Perubahan %Kepemilikan Korporat Lokal 6 bulan lalu
+419	local_dapen_chg_m_1	PF Lokal Chg M1	percent	Perubahan %Kepemilikan Dapen Lokal 1 bulan lalu
+420	local_dapen_chg_m_2	PF Lokal Chg M2	percent	Perubahan %Kepemilikan Dapen Lokal 2 bulan lalu
+421	local_dapen_chg_m_3	PF Lokal Chg M3	percent	Perubahan %Kepemilikan Dapen Lokal 3 bulan lalu
+422	local_dapen_chg_m_4	PF Lokal Chg M4	percent	Perubahan %Kepemilikan Dapen Lokal 4 bulan lalu
+423	local_dapen_chg_m_5	PF Lokal Chg M5	percent	Perubahan %Kepemilikan Dapen Lokal 5 bulan lalu
+424	local_dapen_chg_m_6	PF Lokal Chg M6	percent	Perubahan %Kepemilikan Dapen Lokal 6 bulan lalu
+425	local_bank_chg_m_1	IB Lokal Chg M1	percent	Perubahan %Kepemilikan Bank Lokal 1 bulan lalu
+426	local_bank_chg_m_2	IB Lokal Chg M2	percent	Perubahan %Kepemilikan Bank Lokal 2 bulan lalu
+427	local_bank_chg_m_3	IB Lokal Chg M3	percent	Perubahan %Kepemilikan Bank Lokal 3 bulan lalu
+428	local_bank_chg_m_4	IB Lokal Chg M4	percent	Perubahan %Kepemilikan Bank Lokal 4 bulan lalu
+429	local_bank_chg_m_5	IB Lokal Chg M5	percent	Perubahan %Kepemilikan Bank Lokal 5 bulan lalu
+430	local_bank_chg_m_6	IB Lokal Chg M6	percent	Perubahan %Kepemilikan Bank Lokal 6 bulan lalu
+431	local_individual_chg_m_1	ID Lokal Chg M1	percent	Perubahan %Kepemilikan Individu Lokal 1 bulan lalu
+432	local_individual_chg_m_2	ID Lokal Chg M2	percent	Perubahan %Kepemilikan Individu Lokal 2 bulan lalu
+433	local_individual_chg_m_3	ID Lokal Chg M3	percent	Perubahan %Kepemilikan Individu Lokal 3 bulan lalu
+434	local_individual_chg_m_4	ID Lokal Chg M4	percent	Perubahan %Kepemilikan Individu Lokal 4 bulan lalu
+435	local_individual_chg_m_5	ID Lokal Chg M5	percent	Perubahan %Kepemilikan Individu Lokal 5 bulan lalu
+436	local_individual_chg_m_6	ID Lokal Chg M6	percent	Perubahan %Kepemilikan Individu Lokal 6 bulan lalu
+437	local_reksadana_chg_m_1	MF Lokal Chg M1	percent	Perubahan %Kepemilikan Reksadana Lokal 1 bulan lalu
+438	local_reksadana_chg_m_2	MF Lokal Chg M2	percent	Perubahan %Kepemilikan Reksadana Lokal 2 bulan lalu
+439	local_reksadana_chg_m_3	MF Lokal Chg M3	percent	Perubahan %Kepemilikan Reksadana Lokal 3 bulan lalu
+440	local_reksadana_chg_m_4	MF Lokal Chg M4	percent	Perubahan %Kepemilikan Reksadana Lokal 4 bulan lalu
+441	local_reksadana_chg_m_5	MF Lokal Chg M5	percent	Perubahan %Kepemilikan Reksadana Lokal 5 bulan lalu
+442	local_reksadana_chg_m_6	MF Lokal Chg M6	percent	Perubahan %Kepemilikan Reksadana Lokal 6 bulan lalu
+443	local_sekuritas_chg_m_1	SC Lokal Chg M1	percent	Perubahan %Kepemilikan Sekuritas Lokal 1 bulan lalu
+444	local_sekuritas_chg_m_2	SC Lokal Chg M2	percent	Perubahan %Kepemilikan Sekuritas Lokal 2 bulan lalu
+445	local_sekuritas_chg_m_3	SC Lokal Chg M3	percent	Perubahan %Kepemilikan Sekuritas Lokal 3 bulan lalu
+446	local_sekuritas_chg_m_4	SC Lokal Chg M4	percent	Perubahan %Kepemilikan Sekuritas Lokal 4 bulan lalu
+447	local_sekuritas_chg_m_5	SC Lokal Chg M5	percent	Perubahan %Kepemilikan Sekuritas Lokal 5 bulan lalu
+448	local_sekuritas_chg_m_6	SC Lokal Chg M6	percent	Perubahan %Kepemilikan Sekuritas Lokal 6 bulan lalu
+449	local_yayasan_chg_m_1	FD Lokal Chg M1	percent	Perubahan %Kepemilikan Yayasan Lokal 1 bulan lalu
+450	local_yayasan_chg_m_2	FD Lokal Chg M2	percent	Perubahan %Kepemilikan Yayasan Lokal 2 bulan lalu
+451	local_yayasan_chg_m_3	FD Lokal Chg M3	percent	Perubahan %Kepemilikan Yayasan Lokal 3 bulan lalu
+452	local_yayasan_chg_m_4	FD Lokal Chg M4	percent	Perubahan %Kepemilikan Yayasan Lokal 4 bulan lalu
+453	local_yayasan_chg_m_5	FD Lokal Chg M5	percent	Perubahan %Kepemilikan Yayasan Lokal 5 bulan lalu
+454	local_yayasan_chg_m_6	FD Lokal Chg M6	percent	Perubahan %Kepemilikan Yayasan Lokal 6 bulan lalu
+455	local_lainnya_chg_m_1	OT Lokal Chg M1	percent	Perubahan %Kepemilikan Lainnya Lokal 1 bulan lalu
+456	local_lainnya_chg_m_2	OT Lokal Chg M2	percent	Perubahan %Kepemilikan Lainnya Lokal 2 bulan lalu
+457	local_lainnya_chg_m_3	OT Lokal Chg M3	percent	Perubahan %Kepemilikan Lainnya Lokal 3 bulan lalu
+458	local_lainnya_chg_m_4	OT Lokal Chg M4	percent	Perubahan %Kepemilikan Lainnya Lokal 4 bulan lalu
+459	local_lainnya_chg_m_5	OT Lokal Chg M5	percent	Perubahan %Kepemilikan Lainnya Lokal 5 bulan lalu
+460	local_lainnya_chg_m_6	OT Lokal Chg M6	percent	Perubahan %Kepemilikan Lainnya Lokal 6 bulan lalu
+461	foreign_asuransi_chg_m_1	IS Asing Chg M1	percent	Perubahan %Kepemilikan Asuransi Asing 1 bulan lalu
+462	foreign_asuransi_chg_m_2	IS Asing Chg M2	percent	Perubahan %Kepemilikan Asuransi Asing 2 bulan lalu
+463	foreign_asuransi_chg_m_3	IS Asing Chg M3	percent	Perubahan %Kepemilikan Asuransi Asing 3 bulan lalu
+464	foreign_asuransi_chg_m_4	IS Asing Chg M4	percent	Perubahan %Kepemilikan Asuransi Asing 4 bulan lalu
+465	foreign_asuransi_chg_m_5	IS Asing Chg M5	percent	Perubahan %Kepemilikan Asuransi Asing 5 bulan lalu
+466	foreign_asuransi_chg_m_6	IS Asing Chg M6	percent	Perubahan %Kepemilikan Asuransi Asing 6 bulan lalu
+467	foreign_korporat_chg_m_2	CP Asing Chg M2	percent	Perubahan %Kepemilikan Korporat Asing 2 bulan lalu
+468	foreign_korporat_chg_m_1	CP Asing Chg M1	percent	Perubahan %Kepemilikan Korporat Asing 1 bulan lalu
+469	foreign_korporat_chg_m_3	CP Asing Chg M3	percent	Perubahan %Kepemilikan Korporat Asing 3 bulan lalu
+470	foreign_korporat_chg_m_4	CP Asing Chg M4	percent	Perubahan %Kepemilikan Korporat Asing 4 bulan lalu
+471	foreign_korporat_chg_m_5	CP Asing Chg M5	percent	Perubahan %Kepemilikan Korporat Asing 5 bulan lalu
+472	foreign_korporat_chg_m_6	CP Asing Chg M6	percent	Perubahan %Kepemilikan Korporat Asing 6 bulan lalu
+473	foreign_dapen_chg_m_1	PF Asing Chg M1	percent	Perubahan %Kepemilikan Dapen Asing 1 bulan lalu
+474	foreign_dapen_chg_m_2	PF Asing Chg M2	percent	Perubahan %Kepemilikan Dapen Asing 2 bulan lalu
+475	foreign_dapen_chg_m_3	PF Asing Chg M3	percent	Perubahan %Kepemilikan Dapen Asing 3 bulan lalu
+476	foreign_dapen_chg_m_4	PF Asing Chg M4	percent	Perubahan %Kepemilikan Dapen Asing 4 bulan lalu
+477	foreign_dapen_chg_m_5	PF Asing Chg M5	percent	Perubahan %Kepemilikan Dapen Asing 5 bulan lalu
+478	foreign_dapen_chg_m_6	PF Asing Chg M6	percent	Perubahan %Kepemilikan Dapen Asing 6 bulan lalu
+479	foreign_bank_chg_m_1	IB Asing Chg M1	percent	Perubahan %Kepemilikan Bank Asing 1 bulan lalu
+480	foreign_bank_chg_m_2	IB Asing Chg M2	percent	Perubahan %Kepemilikan Bank Asing 2 bulan lalu
+481	foreign_bank_chg_m_3	IB Asing Chg M3	percent	Perubahan %Kepemilikan Bank Asing 3 bulan lalu
+482	foreign_bank_chg_m_4	IB Asing Chg M4	percent	Perubahan %Kepemilikan Bank Asing 4 bulan lalu
+483	foreign_bank_chg_m_5	IB Asing Chg M5	percent	Perubahan %Kepemilikan Bank Asing 5 bulan lalu
+484	foreign_bank_chg_m_6	IB Asing Chg M6	percent	Perubahan %Kepemilikan Bank Asing 6 bulan lalu
+485	foreign_individual_chg_m_1	ID Asing Chg M1	percent	Perubahan %Kepemilikan Individu Asing 1 bulan lalu
+486	foreign_individual_chg_m_2	ID Asing Chg M2	percent	Perubahan %Kepemilikan Individu Asing 2 bulan lalu
+487	foreign_individual_chg_m_3	ID Asing Chg M3	percent	Perubahan %Kepemilikan Individu Asing 3 bulan lalu
+488	foreign_individual_chg_m_4	ID Asing Chg M4	percent	Perubahan %Kepemilikan Individu Asing 4 bulan lalu
+489	foreign_individual_chg_m_5	ID Asing Chg M5	percent	Perubahan %Kepemilikan Individu Asing 5 bulan lalu
+490	foreign_individual_chg_m_6	ID Asing Chg M6	percent	Perubahan %Kepemilikan Individu Asing 6 bulan lalu
+491	foreign_reksadana_chg_m_1	MF Asing Chg M1	percent	Perubahan %Kepemilikan Reksadana Asing 1 bulan lalu
+492	foreign_reksadana_chg_m_2	MF Asing Chg M2	percent	Perubahan %Kepemilikan Reksadana Asing 2 bulan lalu
+493	foreign_reksadana_chg_m_3	MF Asing Chg M3	percent	Perubahan %Kepemilikan Reksadana Asing 3 bulan lalu
+494	foreign_reksadana_chg_m_4	MF Asing Chg M4	percent	Perubahan %Kepemilikan Reksadana Asing 4 bulan lalu
+495	foreign_reksadana_chg_m_5	MF Asing Chg M5	percent	Perubahan %Kepemilikan Reksadana Asing 5 bulan lalu
+496	foreign_reksadana_chg_m_6	MF Asing Chg M6	percent	Perubahan %Kepemilikan Reksadana Asing 6 bulan lalu
+497	foreign_sekuritas_chg_m_1	SC Asing Chg M1	percent	Perubahan %Kepemilikan Sekuritas Asing 1 bulan lalu
+498	foreign_sekuritas_chg_m_2	SC Asing Chg M2	percent	Perubahan %Kepemilikan Sekuritas Asing 2 bulan lalu
+499	foreign_sekuritas_chg_m_3	SC Asing Chg M3	percent	Perubahan %Kepemilikan Sekuritas Asing 3 bulan lalu
+500	foreign_sekuritas_chg_m_4	SC Asing Chg M4	percent	Perubahan %Kepemilikan Sekuritas Asing 4 bulan lalu
+501	foreign_sekuritas_chg_m_5	SC Asing Chg M5	percent	Perubahan %Kepemilikan Sekuritas Asing 5 bulan lalu
+502	foreign_sekuritas_chg_m_6	SC Asing Chg M6	percent	Perubahan %Kepemilikan Sekuritas Asing 6 bulan lalu
+503	foreign_yayasan_chg_m_1	FD Asing Chg M1	percent	Perubahan %Kepemilikan Yayasan Asing 1 bulan lalu
+504	foreign_yayasan_chg_m_2	FD Asing Chg M2	percent	Perubahan %Kepemilikan Yayasan Asing 2 bulan lalu
+505	foreign_yayasan_chg_m_3	FD Asing Chg M3	percent	Perubahan %Kepemilikan Yayasan Asing 3 bulan lalu
+506	foreign_yayasan_chg_m_4	FD Asing Chg M4	percent	Perubahan %Kepemilikan Yayasan Asing 4 bulan lalu
+507	foreign_yayasan_chg_m_5	FD Asing Chg M5	percent	Perubahan %Kepemilikan Yayasan Asing 5 bulan lalu
+508	foreign_yayasan_chg_m_6	FD Asing Chg M6	percent	Perubahan %Kepemilikan Yayasan Asing 6 bulan lalu
+509	foreign_lainnya_chg_m_1	OT Asing Chg M1	percent	Perubahan %Kepemilikan Lainnya Asing 1 bulan lalu
+510	foreign_lainnya_chg_m_2	OT Asing Chg M2	percent	Perubahan %Kepemilikan Lainnya Asing 2 bulan lalu
+511	foreign_lainnya_chg_m_3	OT Asing Chg M3	percent	Perubahan %Kepemilikan Lainnya Asing 3 bulan lalu
+512	foreign_lainnya_chg_m_4	OT Asing Chg M4	percent	Perubahan %Kepemilikan Lainnya Asing 4 bulan lalu
+513	foreign_lainnya_chg_m_5	OT Asing Chg M5	percent	Perubahan %Kepemilikan Lainnya Asing 5 bulan lalu
+514	foreign_lainnya_chg_m_6	OT Asing Chg M6	percent	Perubahan %Kepemilikan Lainnya Asing 6 bulan lalu
+515	scripless_chg_m_1	ScriplessChg m1	percent	Perubahan %Scripless 1 bulan lalu
+516	scripless_chg_m_2	ScriplessChg m2	percent	Perubahan %Scripless 2 bulan lalu
+517	scripless_chg_m_3	ScriplessChg m3	percent	Perubahan %Scripless 3 bulan lalu
+518	scripless_chg_m_4	ScriplessChg m4	percent	Perubahan %Scripless 4 bulan lalu
+519	scripless_chg_m_5	ScriplessChg m5	percent	Perubahan %Scripless 5 bulan lalu
+520	scripless_chg_m_6	ScriplessChg m6	percent	Perubahan %Scripless 6 bulan lalu
+521	neo_institution_buyback_m_1	Buyback m1	boolean	Potensi Buyback Institusi menurut NeoBDM 1 bulan lalu
+522	neo_institution_buyback_m_2	Buyback m2	boolean	Potensi Buyback Institusi menurut NeoBDM 2 bulan lalu
+523	neo_institution_buyback_m_3	Buyback m3	boolean	Potensi Buyback Institusi menurut NeoBDM 3 bulan lalu
+524	neo_nominee_indication_m_1	Nominee m1	boolean	Indikasi Nominee menurut NeoBDM 1 bulan lalu
+525	neo_nominee_indication_m_2	Nominee m2	boolean	Indikasi Nominee menurut NeoBDM 2 bulan lalu
+526	neo_nominee_indication_m_3	Nominee m3	boolean	Indikasi Nominee menurut NeoBDM 3 bulan lalu
+527	suspend	Suspend	boolean	Suspend
+528	special_notice	FCA	boolean	Masuk Papan Pemantauan Khusus
+529	hsc	HSC	boolean	Saham Kepemilikan Terkonsentrasi Tinggi (HSC) menurut kriteria bursa
+530	syariah	Syariah	boolean	Apakah saham Syariah atau tidak
+531	seasonality_proba_m_0	Proba m0	percent	Seasonality - Probabilitas saham naik di bulan ini secara historis
+532	seasonality_proba_m_1	Proba m1	percent	Seasonality - Probabilitas saham naik di bulan depan secara historis
+533	seasonality_expectancy_m_0	Exp m0	percent	Seasonality - Persen kenaikan saham di bulan ini secara historis
+534	seasonality_expectancy_m_1	Exp m1	percent	Seasonality - Persen kenaikan saham di bulan depan secara historis
+535	free_float	FreeFloat	percent	Free Float
+536	n_holder	Holder	number	Jumlah pemegang saham (SID)
+537	insider1p_total_pct	Total KDA 1%	percent	Persentase Total saham para pemegang saham yang kepemilikan nya di atas 1% (KDA 1%)
+538	req_smacd_gc	SMACD GC	boolean	MACD(2,10,2) Golden Cross - Member Request

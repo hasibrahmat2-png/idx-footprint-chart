@@ -1,0 +1,152 @@
+No	Section	Subsection	Column	Description	Type
+1	INFORMASI EMITEN	Skala Bisnis	Mcap (T)	Kapitalisasi Pasar dalam Triliun Rupiah	card
+2	INFORMASI EMITEN	Skala Bisnis	Tval (B)	Total Nilai Transaksi dalam Miliar Rupiah	card
+3	INFORMASI EMITEN	Catatan IDX	Suspend	saham sedang di-suspend atau tidak oleh IDX	card
+4	INFORMASI EMITEN	Catatan IDX	FCA	saham masuk Papan Pemantauan Khusus (Full Call Auction) IDX	card
+5	INFORMASI EMITEN	Catatan IDX	Syariah	apakah saham merupakan saham syariah atau tidak menurut IDX	card
+6	INFORMASI EMITEN	Catatan IDX	HSC	apakah saham terkonsentrasi tinggi (High Shareholding Concentration) menurut IDX	card
+7	ANALISA TRANSAKSI	ANALISA TRANSAKSI	[Metode][Periode]	Akum / Dist dalam Miliar Rupiah	card
+8	ANALISA TRANSAKSI	ANALISA TRANSAKSI	%[Metode][Periode]	Persen Akum / Dist terhadap total transaksi	card
+9	COMPATIBILITY	Transaction Compatibility	Comp [Metode]	Compatibility menurut AI NeoBDM	card
+10	COMPATIBILITY	Transaction Compatibility	Comp Any	Indikasi jika ada minimal 1 metode yang compatible	card
+11	COMPATIBILITY	Transaction Compatibility	%Comp [Metode]	Persentase Compatibility menurut AI NeoBDM	card
+12	COMPATIBILITY	Transaction Compatibility	%Comp [Metode] [Periode]	Persentase Compatibility dengan periode spesifik	card
+13	COMPATIBILITY	Compatibility berdasarkan Likuiditas	Likuiditas	Tingkat Likuiditas menurut NeoBDM	card
+14	COMPATIBILITY	Compatibility berdasarkan Likuiditas	Likuid	Likuid atau Tidak Likuid menurut NeoBDM	card
+15	COMPATIBILITY	Indikasi Crossing	Cross	Cross Index sedang tinggi	card
+16	COMPATIBILITY	Indikasi Crossing	F-I Cross	Terdeteksi Crossing antara Foreign ↔ Institusi	card
+17	COMPATIBILITY	Indikasi Crossing	I-Z Cross	Terdeteksi crossing antara Institusi ↔ Zombie	card
+18	COMPATIBILITY	Clean Transaction	Clean	Tingkat kebersihan transaksi (harian) bernilai dari -10 hingga 10	card
+19	COMPATIBILITY	Saham Pinky / Potensi Berkepentingan Khusus	Pinky	Terindikasi potensi aktivitas berkepentingan khusus.	card
+20	BROKER	BROKER	Top[N] Buy	Top N Net Buyer di Broker Summary	card
+21	BROKER	BROKER	Top[N] Sell	Top N Net Seller di Broker Summary	card
+22	BROKER	BROKER	Tektoker	Broker yang tektok / crossing di Broker Summary	card
+23	HARGA	Candlestick	High	Harga tertinggi candle	card
+24	HARGA	Candlestick	Low	Harga terendah candle	card
+25	HARGA	Candlestick	Close	Harga penutupan candle	card
+26	HARGA	Candlestick	HL2	(H + L) / 2	card
+27	HARGA	Candlestick	HLC3	(H + L + C) / 3	card
+28	HARGA	Candlestick	HLCC4	(H + L + C + C) / 4	card
+29	HARGA	Candlestick	OHLC4	(O + H + L + C) / 4	card
+30	HARGA	Perubahan Harga	Chg[N]	Persentase perubahan harga N candlestick	card
+31	HARGA	Harga Rata-rata	MA[N]	Moving Average N candle	card
+32	HARGA	Harga Rata-rata	MA [N1] [N2] GC	Golden Cross antara MA N1 dengan MA N2	card
+33	HARGA	Harga Rata-rata	EMA[N]	Exponential Moving Average N candle	card
+34	HARGA	Harga Rata-rata	EMA [N1] [N2] GC	Golden Cross antara EMA N1 dengan EMA N2	card
+35	VOLUME	Volume	Volume	volume transaksi	card
+36	VOLUME	Perubahan Volume	VolChg[N]	persentase perubahan volume N candle	card
+37	VOLUME	Volume Rata-Rata	MAVol[N]	rata-rata volume N candle	card
+38	VOLUME	Volume Relatif	RVol[N]	Rasio volume terhadap volume rata-rata N candle	card
+39	VOLUME	Volume Spike	VolSpike [N]d	Terdeteksi ada Volume spike (jauh lebih dari volume rata-rata) dalam N hari terkahir	card
+40	STRUKTUR	Base / Konsolidasi	Consol	Menandakan harga sedang konsolidasi / nge-base (tanpa breakout yang signifikan)	card
+41	STRUKTUR	Breakout	Breakout[N]d	Menandakan harga breakout dari high N candle terakhir	card
+42	INDIKATOR TEKNIKAL MODERN	Indikator Volatilitas	ATR14	Average True Range 14 hari	card
+43	INDIKATOR TEKNIKAL MODERN	Indikator Volatilitas	ATR20	Average True Range 20 hari	card
+44	INDIKATOR TEKNIKAL MODERN	Indikator Volatilitas	Volatility	Tingkat volatilitas menurut kriteria NeoBDM	card
+45	INDIKATOR TEKNIKAL MODERN	RSI	RSI	Relative Strength Index (0–100)	card
+46	INDIKATOR TEKNIKAL MODERN	RSI	RSI OB	RSI Overbought (RSI ≥ 80)	card
+47	INDIKATOR TEKNIKAL MODERN	RSI	RSI OS	RSI Oversold (RSI ≤ 20)	card
+48	INDIKATOR TEKNIKAL MODERN	RSI	RSI Bull	RSI Bull Signal (keluar dari oversold)	card
+49	INDIKATOR TEKNIKAL MODERN	Stochastic	Stoch %K	Fast Stochastic	card
+50	INDIKATOR TEKNIKAL MODERN	Stochastic	Stoch %K OB	Fast Stochastic Overbought	card
+51	INDIKATOR TEKNIKAL MODERN	Stochastic	Stoch %K OS	Fast Stochastic Oversold	card
+52	INDIKATOR TEKNIKAL MODERN	Stochastic	Stoch %D	Slow Stochastic	card
+53	INDIKATOR TEKNIKAL MODERN	Stochastic	Stoch %D OB	Slow Stochastic Overbought	card
+54	INDIKATOR TEKNIKAL MODERN	Stochastic	Stoch %D OS	Slow Stochastic Oversold	card
+55	INDIKATOR TEKNIKAL MODERN	Stochastic	Stoch GC	Stochastic Golden Cross	card
+56	INDIKATOR TEKNIKAL MODERN	Stochastic RSI	StochRSI %K	Fast Stochastic RSI	card
+57	INDIKATOR TEKNIKAL MODERN	Stochastic RSI	StochRSI %K OB	Fast Stochastic RSI Overbought	card
+58	INDIKATOR TEKNIKAL MODERN	Stochastic RSI	StochRSI %K OS	Fast Stochastic RSI Oversold	card
+59	INDIKATOR TEKNIKAL MODERN	Stochastic RSI	StochRSI %D	Slow Stochastic RSI	card
+60	INDIKATOR TEKNIKAL MODERN	Stochastic RSI	StochRSI %D OB	Slow Stochastic RSI Overbought	card
+61	INDIKATOR TEKNIKAL MODERN	Stochastic RSI	StochRSI %D OS	Slow Stochastic RSI Oversold	card
+62	INDIKATOR TEKNIKAL MODERN	Stochastic RSI	StochRSI GC	Stochastic RSI Golden Cross	card
+63	INDIKATOR TEKNIKAL MODERN	MACD	MACD	MACD Line	card
+64	INDIKATOR TEKNIKAL MODERN	MACD	MACD Signal	MACD Signal Line	card
+65	INDIKATOR TEKNIKAL MODERN	MACD	MACD Hist	MACD Histogram	card
+66	INDIKATOR TEKNIKAL MODERN	MACD	MACD GC	MACD Golden Cross	card
+67	INDIKATOR TEKNIKAL MODERN	Bollinger Band	BB Up	Batas atas Bollinger Band	card
+68	INDIKATOR TEKNIKAL MODERN	Bollinger Band	BB Mid	Garis tengah Bollinger Band	card
+69	INDIKATOR TEKNIKAL MODERN	Bollinger Band	BB Low	Batas bawah Bollinger Band	card
+70	INDIKATOR TEKNIKAL MODERN	Parabolic SAR	SAR	harga parabolic SAR	card
+71	INDIKATOR TEKNIKAL MODERN	Parabolic SAR	SAR Trend	BULL = close > SAR. BEAR = close ≤ SAR	card
+72	INDIKATOR TEKNIKAL MODERN	Parabolic SAR	SAR Flip Bull	parabolic SAR berpindah ke bawah harga closing	card
+73	INDIKATOR TEKNIKAL MODERN	Parabolic SAR	SAR Flip Bear	parabolic SAR berpindah ke atas harga closing	card
+74	POLA CANDLESTICK	POLA CANDLESTICK	CandleUp	Candle hijau (close > open)	card
+75	POLA CANDLESTICK	POLA CANDLESTICK	CandleDown	Candle hijau (close < open)	card
+76	POLA CANDLESTICK	POLA CANDLESTICK	EveningStar	Candlestick Pattern Evening Star	card
+77	POLA CANDLESTICK	POLA CANDLESTICK	MorningStar	Candlestick Pattern Morning Star	card
+78	POLA CANDLESTICK	POLA CANDLESTICK	EveningDojiStar	Candlestick Pattern Evening Doji Star	card
+79	POLA CANDLESTICK	POLA CANDLESTICK	MorningDojiStar	Candlestick Pattern Morning Doji Star	card
+80	POLA CANDLESTICK	POLA CANDLESTICK	BearMarubozu	Candlestick Pattern Bear Marubozu	card
+81	POLA CANDLESTICK	POLA CANDLESTICK	BullMarubozu	Candlestick Pattern Bull Marubozu	card
+82	POLA CANDLESTICK	POLA CANDLESTICK	3BlackCrows	Candlestick Pattern 3 Black Crows	card
+83	POLA CANDLESTICK	POLA CANDLESTICK	3WhiteSoldiers	Candlestick Pattern 3 White Soldiers	card
+84	POLA CANDLESTICK	POLA CANDLESTICK	DarkCloudCover	Candlestick Pattern Dark Cloud Cover	card
+85	POLA CANDLESTICK	POLA CANDLESTICK	PiercingLine	Candlestick Pattern Piercing Line	card
+86	POLA CANDLESTICK	POLA CANDLESTICK	GravestoneDoji	Candlestick Pattern Gravestone Doji	card
+87	POLA CANDLESTICK	POLA CANDLESTICK	DragonflyDoji	Candlestick Pattern Dragonfly Doji	card
+88	POLA CANDLESTICK	POLA CANDLESTICK	Doji	Candlestick Pattern Doji	card
+89	POLA CANDLESTICK	POLA CANDLESTICK	LongLeggedDoji	Candlestick Pattern Long Legged Doji	card
+90	POLA CANDLESTICK	POLA CANDLESTICK	BearSpinningTop	Candlestick Pattern Bear Spinning Top	card
+91	POLA CANDLESTICK	POLA CANDLESTICK	BullSpinningTop	Candlestick Pattern Bull Spinning Top	card
+92	POLA CANDLESTICK	POLA CANDLESTICK	ShootingStar	Candlestick Pattern Shooting Star	card
+93	POLA CANDLESTICK	POLA CANDLESTICK	Hammer	Candlestick Pattern Hammer	card
+94	POLA CANDLESTICK	POLA CANDLESTICK	HangingMan	Candlestick Pattern Hanging Man	card
+95	POLA CANDLESTICK	POLA CANDLESTICK	InvertedHammer	Candlestick Pattern Inverted Hammer	card
+96	POLA CANDLESTICK	POLA CANDLESTICK	BearHarami	Candlestick Pattern Bear Harami	card
+97	POLA CANDLESTICK	POLA CANDLESTICK	BullHarami	Candlestick Pattern Bull Harami	card
+98	POLA CANDLESTICK	POLA CANDLESTICK	BearHaramiCross	Candlestick Pattern Bear Harami Cross	card
+99	POLA CANDLESTICK	POLA CANDLESTICK	BullHaramiCross	Candlestick Pattern Bull Harami Cross	card
+100	POLA CANDLESTICK	POLA CANDLESTICK	BearEngulfing	Candlestick Pattern Bear Engulfing	card
+101	POLA CANDLESTICK	POLA CANDLESTICK	BullEngulfing	Candlestick Pattern Bull Engulfing	card
+102	ROTATION CHART	ROTATION CHART	RotStrength [periode]	Kekuatan Momentum di Rotation Chart	card
+103	ROTATION CHART	ROTATION CHART	RotPhase [periode]	Fase Momentum di Rotation Chart	card
+104	ROTATION CHART	ROTATION CHART	RotDir [periode]	Arah Momentum di Rotation Chart	card
+105	ANALISA KEPEMILIKAN	Balance Position	Bpos [kelompok] [periode]	Persentase kepemilikan kelompok pada bulan tersebut	card
+106	ANALISA KEPEMILIKAN	Balance Position	BposChg [kelompok] [periode]	Perubahan % kepemilikan kelompok pada bulan tersebut	card
+107	ANALISA KEPEMILIKAN	Scripless	Scripless [periode]	Persentase saham scripless pada bulan tersebut	card
+108	ANALISA KEPEMILIKAN	Scripless	ScriplessChg [periode]	Perubahan %scripless pada bulan tersebut	card
+109	ANALISA KEPEMILIKAN	Kepemilikan >1%	Total KDA 1%	Persentase Total saham para pemegang saham yang kepemilikan >1%	card
+110	ANALISA KEPEMILIKAN	Free Float	FreeFloat	Persentase Free Float saham	card
+111	ANALISA KEPEMILIKAN	Analisa Holder	Holder	Jumlah pemegang saham (SID)	card
+112	ANALISA KEPEMILIKAN	Analisa Kepemilikan Populer	Buyback m1–m3	Potensi buyback institusi menurut NeoBDM	card
+113	ANALISA KEPEMILIKAN	Analisa Kepemilikan Populer	Nominee m1–m3	Indikasi nominee menurut NeoBDM	card
+114	SEASONALITY	SEASONALITY	Proba m[periode]	Probability — Probabilitas saham naik di bulan tersebut secara historis	card
+115	SEASONALITY	SEASONALITY	Exp m[periode]	Expectancy — Persen kenaikan saham di bulan tersebut secara historis	card
+116	MEMBER REQUEST	MEMBER REQUEST	SMACD GC	Golden cross menggunakan MACD(2, 10, 2) untuk scalping	card
+117	ANALISA TRANSAKSI	ANALISA TRANSAKSI	M d0	Akum Bandarmologi hari ini (Miliar)	table
+118	ANALISA TRANSAKSI	ANALISA TRANSAKSI	%M d0	Persen Akum Bandarmologi hari ini Misal akum Rp 2M, total transaksi Rp 10M, maka %akum = 20%	table
+119	ANALISA TRANSAKSI	ANALISA TRANSAKSI	F d1	Foreign Flow kemarin (Miliar)	table
+120	ANALISA TRANSAKSI	ANALISA TRANSAKSI	F w0	Foreign Flow selama Senin - Jumat pada minggu ini (Miliar)	table
+121	ANALISA TRANSAKSI	ANALISA TRANSAKSI	S w1	Sultanmologi selama Senin - Jumat pada minggu lalu (Miliar)	table
+122	ANALISA TRANSAKSI	ANALISA TRANSAKSI	%NR c5	Persen akum NonRetail selama 5 candle terakhir Misal dalam 5 candle terakhir, total akum Rp 3M, dan total transaksi Rp 12M, maka %akum = 25%	table
+123	COMPATIBILITY	Transaction Compatibility	Comp NR	Apakah NR compatible di emiten yang sedang dianalisa	table
+124	COMPATIBILITY	Transaction Compatibility	%Comp M	Persentase Kompatibilitas Metode Bandarmologi terhadap suatu emiten	table
+125	COMPATIBILITY	Transaction Compatibility	%Comp F Short	Persentase Kompatibilitas Foreign Flow — jangka pendek	table
+126	COMPATIBILITY	Transaction Compatibility	%Comp I Mid	Persentase Kompatibilitas Institution Flow — jangka menengah	table
+127	COMPATIBILITY	Transaction Compatibility	%Comp Z Long	Persentase Kompatibilitas Zombiemologi — jangka panjang	table
+128	HARGA	Perubahan Harga	Chg1	% perubahan harga dalam 1 candle terakhir	table
+129	HARGA	Perubahan Harga	Chg5	% perubahan harga dalam 5 candle terakhir	table
+130	HARGA	Perubahan Harga	Chg20	% perubahan harga dalam 20 candle terakhir	table
+131	HARGA	Perubahan Harga	Chg200	% perubahan harga dalam 200 candle terakhir	table
+132	HARGA	Harga Rata-rata	MA10	Simple Moving Average — 10 candle	table
+133	HARGA	Harga Rata-rata	MA50	Simple Moving Average — 50 candle	table
+134	HARGA	Harga Rata-rata	EMA50	Exponential Moving Average — 50 candle	table
+135	HARGA	Harga Rata-rata	EMA200	Exponential Moving Average — 200 candle	table
+136	VOLUME	Perubahan Volume	VolChg1	% perubahan volume vs 1 candle lalu	table
+137	VOLUME	Perubahan Volume	VolChg20	% perubahan volume vs 20 candle lalu	table
+138	VOLUME	Volume Rata-Rata	MAVol10	Simple Moving Average volume — 10 candle	table
+139	VOLUME	Volume Rata-Rata	MAVol20	Simple Moving Average volume — 20 candle	table
+140	VOLUME	Volume Relatif	RVol10	Volume saat ini ÷ rata-rata volume 10 candle	table
+141	VOLUME	Volume Relatif	RVol20	Volume saat ini ÷ rata-rata volume 20 candle	table
+142	STRUKTUR	Breakout	Breakout 10d	Harga breakout dari high 10 candle terakhir	table
+143	STRUKTUR	Breakout	Breakout 20d	Harga breakout dari high 20 candle terakhir	table
+144	ROTATION CHART	ROTATION CHART	RotStrength D	Kekuatan rotation chart — harian	table
+145	ROTATION CHART	ROTATION CHART	RotPhase W	Fase rotation chart — mingguan	table
+146	ANALISA KEPEMILIKAN	Balance Position	Bpos F m3	Persentase Kepemilikan Asing — 3 bulan lalu	table
+147	ANALISA KEPEMILIKAN	Balance Position	BposChg R m1	Perubahan Persentase kepemilikan Individu Lokal bulan lalu	table
+148	ANALISA KEPEMILIKAN	Scripless	Scripless m1	Persentase Scripless 1 bulan lalu	table
+149	ANALISA KEPEMILIKAN	Scripless	ScriplessChg m2	Perubahan Persentase scripless 2 bulan lalu	table
+150	SEASONALITY	SEASONALITY	Proba m0	Probabilitas saham hijau secara historis di bulan ini	table
+151	SEASONALITY	SEASONALITY	Exp m1	Persen Kenaikan saham secara historis di bulan depan	table

@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 60" width="960" height="60" fill="none">
+  <!-- TradingView Toolbar Exact 1:1 Vectors -->
+  <style>
+    .tv-icon { stroke: #131722; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .tv-fill { fill: #131722; }
+    .tv-text { font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif; font-size: 14px; font-weight: 500; fill: #131722; }
+    .tv-badge { fill: #f0f3fa; rx: 16; }
+    .tv-btn-trade { fill: #ffffff; stroke: #e0e3eb; stroke-width: 1; rx: 16; }
+    .tv-btn-pub { fill: #131722; rx: 16; }
+    .tv-divider { stroke: #e0e3eb; stroke-width: 1; }
+  </style>
+
+  <!-- 1. Hamburger Menu -->
+  <g id="menu" transform="translate(14, 18)">
+    <path class="tv-icon" d="M3 6h18M3 12h18M3 18h18" stroke-width="2"/>
+  </g>
+
+  <!-- 2. Symbol Pill: XAUUSD + Diamond -->
+  <rect class="tv-badge" x="58" y="14" width="135" height="32" rx="16"/>
+  <text class="tv-text" x="72" y="35" font-weight="700">XAUUSD</text>
+  <g id="diamond-badge" transform="translate(162, 20)">
+    <rect x="0" y="0" width="20" height="20" rx="10" fill="#ffffff"/>
+    <path d="M10 4.5L15.5 10L10 15.5L4.5 10Z" stroke="#131722" stroke-width="1.3" fill="none"/>
+    <path d="M10 7.5v5M8.5 10h3" stroke="#131722" stroke-width="1.3" stroke-linecap="round"/>
+  </g>
+
+  <!-- 3. Add Symbol (Circle Plus) -->
+  <g id="compare-symbol" transform="translate(204, 18)">
+    <circle cx="12" cy="12" r="9" class="tv-icon"/>
+    <path class="tv-icon" d="M12 7.5v9M7.5 12h9"/>
+  </g>
+
+  <!-- Divider -->
+  <line class="tv-divider" x1="238" y1="18" x2="238" y2="42"/>
+
+  <!-- Timeframe: D -->
+  <text class="tv-text" x="250" y="35">D</text>
+
+  <!-- Divider -->
+  <line class="tv-divider" x1="272" y1="18" x2="272" y2="42"/>
+
+  <!-- 4. Candlesticks Chart -->
+  <g id="candlestick" transform="translate(282, 18)">
+    <!-- Left Candle -->
+    <path class="tv-icon" d="M7 4v16"/>
+    <rect x="5" y="8" width="4" height="8" rx="0.5" stroke="#131722" stroke-width="1.8" fill="none"/>
+    <!-- Right Candle -->
+    <path class="tv-icon" d="M15 5v14"/>
+    <rect x="13" y="10" width="4" height="6" rx="0.5" stroke="#131722" stroke-width="1.8" fill="none"/>
+  </g>
+
+  <!-- Divider -->
+  <line class="tv-divider" x1="316" y1="18" x2="316" y2="42"/>
+
+  <!-- 5. Indicators (Line + Bar Chart) -->
+  <g id="indicators" transform="translate(328, 18)">
+    <path class="tv-icon" d="M3 13l4.5-5 4 4.5 5-6 4.5 4"/>
+    <path class="tv-icon" d="M4 17v4M8 18v3M12 16v5M16 17v4M20 15v6"/>
+  </g>
+  <text class="tv-text" x="358" y="35">Indicators</text>
+
+  <!-- 6. Templates / 2x2 Grid -->
+  <g id="grid-templates" transform="translate(438, 18)">
+    <rect x="4" y="4" width="6.5" height="6.5" rx="1.5" class="tv-icon"/>
+    <rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5" class="tv-icon"/>
+    <rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5" class="tv-icon"/>
+    <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" class="tv-icon"/>
+  </g>
+
+  <!-- Divider -->
+  <line class="tv-divider" x1="472" y1="18" x2="472" y2="42"/>
+
+  <!-- 7. Alert (Alarm Clock + Plus) -->
+  <g id="alert" transform="translate(482, 18)">
+    <path class="tv-icon" d="M5 3.5L3 5.5M19 3.5l2 2"/>
+    <circle cx="11.5" cy="12.5" r="7.5" class="tv-icon"/>
+    <path class="tv-icon" d="M11.5 8.5v4l2.5 1.5"/>
+    <path class="tv-icon" d="M18 16v6M15 19h6" stroke-width="2"/>
+  </g>
+  <text class="tv-text" x="512" y="35">Alert</text>
+
+  <!-- 8. Replay (Double Chevron Left) -->
+  <g id="replay" transform="translate(552, 18)">
+    <path class="tv-icon" d="M13 6l-6 6 6 6M19 6l-6 6 6 6" stroke-width="2"/>
+  </g>
+  <text class="tv-text" x="580" y="35">Replay</text>
+
+  <!-- Divider -->
+  <line class="tv-divider" x1="636" y1="18" x2="636" y2="42"/>
+
+  <!-- 9. Undo -->
+  <g id="undo" transform="translate(646, 18)">
+    <path class="tv-icon" d="M9 7L4 12l5 5"/>
+    <path class="tv-icon" d="M4 12h10a6 6 0 0 1 6 6v1"/>
+  </g>
+
+  <!-- 10. Redo -->
+  <g id="redo" transform="translate(678, 18)">
+    <path class="tv-icon" d="M15 7l5 5-5 5"/>
+    <path class="tv-icon" d="M20 12H10a6 6 0 0 0-6 6v1"/>
+  </g>
+
+  <!-- 11. Layout Square -->
+  <g id="layout-single" transform="translate(714, 18)">
+    <rect x="4" y="4" width="16" height="16" rx="2" class="tv-icon"/>
+  </g>
+
+  <!-- Save Text & Dropdown Chevron -->
+  <text class="tv-text" x="740" y="35">Save</text>
+  <g id="chevron-down" transform="translate(774, 21)">
+    <path class="tv-icon" d="M4 7l4 4 4-4" stroke-width="1.8"/>
+  </g>
+
+  <!-- Divider -->
+  <line class="tv-divider" x1="798" y1="18" x2="798" y2="42"/>
+
+  <!-- 12. Quick Search (Lightning Bolt) -->
+  <g id="search-quick" transform="translate(806, 18)">
+    <circle cx="11" cy="11" r="7" class="tv-icon"/>
+    <path class="tv-icon" d="M16 16l4.5 4.5"/>
+    <path d="M11 6.5l-2.5 4.5h3l-1 4.5 4-5.5h-3.5z" fill="#131722"/>
+  </g>
+
+  <!-- 13. Settings (Hex Nut) -->
+  <g id="settings" transform="translate(838, 18)">
+    <path class="tv-icon" d="M12 3l7.5 4.3v8.7L12 20.3 4.5 16V7.3L12 3z"/>
+    <circle cx="12" cy="11.7" r="3.2" class="tv-icon"/>
+  </g>
+
+  <!-- 14. Fullscreen -->
+  <g id="fullscreen" transform="translate(870, 18)">
+    <path class="tv-icon" d="M5 9V5h4M19 9V5h-4M5 15v4h4M19 15v4h-4"/>
+  </g>
+
+  <!-- 15. Camera / Snapshot -->
+  <g id="camera" transform="translate(902, 18)">
+    <path class="tv-icon" d="M4 8h3l1.5-2.5h7L17 8h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z"/>
+    <circle cx="12" cy="14" r="3.5" class="tv-icon"/>
+  </g>
+</svg>

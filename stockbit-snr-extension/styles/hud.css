@@ -1,0 +1,375 @@
+/**
+ * Stockbit Automated S/R Extension - HUD Styles
+ * Inspired by Stockbit Pro & TradingView Dark Theme
+ */
+
+#sb-snr-hud-root {
+    position: fixed;
+    top: 65px;
+    right: 20px;
+    z-index: 999999;
+    font-family: -apple-system, BlinkMacSystemFont, "Trebuchet MS", Roboto, Ubuntu, sans-serif;
+    user-select: none;
+    pointer-events: auto;
+}
+
+/* Floating Card Container */
+.sb-snr-panel {
+    width: 290px;
+    background: rgba(19, 23, 34, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid #2a2e39;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+    color: #d1d4dc;
+    font-size: 12px;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Header */
+.sb-snr-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: #181c27;
+    border-bottom: 1px solid #2a2e39;
+    cursor: grab;
+}
+
+.sb-snr-header:active {
+    cursor: grabbing;
+}
+
+.sb-snr-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sb-snr-badge {
+    background: #2962ff;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.sb-snr-symbol {
+    font-weight: 700;
+    font-size: 13px;
+    color: #f0f3fa;
+}
+
+.sb-snr-price {
+    font-weight: 600;
+    color: #9db2c8;
+}
+
+.sb-snr-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.sb-snr-chart-status {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #9db2c8;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+}
+
+.sb-snr-chart-status.active {
+    background: rgba(38, 166, 154, 0.2);
+    color: #26a69a;
+    border: 1px solid rgba(38, 166, 154, 0.4);
+}
+
+.sb-snr-chart-status.waiting {
+    background: rgba(255, 179, 0, 0.15);
+    color: #ffb300;
+}
+
+.sb-snr-chart-status.warning {
+    background: rgba(239, 83, 80, 0.2);
+    color: #ef5350;
+    border: 1px solid rgba(239, 83, 80, 0.4);
+}
+
+.sb-snr-btn-icon {
+    background: transparent;
+    border: none;
+    color: #787b86;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all 0.15s;
+}
+
+.sb-snr-btn-icon:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Content Body */
+.sb-snr-body {
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 480px;
+    overflow-y: auto;
+}
+
+.sb-snr-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sb-snr-section-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #787b86;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Levels Row */
+.sb-snr-level-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 8px;
+    border-radius: 4px;
+    background: rgba(42, 46, 57, 0.35);
+    border-left: 3px solid transparent;
+}
+
+.sb-snr-level-row.resistance {
+    border-left-color: #ef5350;
+}
+
+.sb-snr-level-row.support {
+    border-left-color: #26a69a;
+}
+
+.sb-snr-level-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sb-snr-level-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+}
+
+.sb-snr-level-tag.res {
+    background: rgba(239, 83, 80, 0.2);
+    color: #ef5350;
+}
+
+.sb-snr-level-tag.sup {
+    background: rgba(38, 166, 154, 0.2);
+    color: #26a69a;
+}
+
+.sb-snr-level-price {
+    font-weight: 700;
+    font-size: 12px;
+    color: #f0f3fa;
+}
+
+.sb-snr-level-dist {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.sb-snr-level-dist.res {
+    color: #ef5350;
+}
+
+.sb-snr-level-dist.sup {
+    color: #26a69a;
+}
+
+/* Supply/Demand Zone Row */
+.sb-snr-zone-row {
+    padding: 6px 8px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.sb-snr-zone-row.supply {
+    background: rgba(239, 83, 80, 0.1);
+    border: 1px dashed rgba(239, 83, 80, 0.4);
+}
+
+.sb-snr-zone-row.demand {
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px dashed rgba(76, 175, 80, 0.4);
+}
+
+.sb-snr-zone-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.sb-snr-zone-header.supply {
+    color: #ef5350;
+}
+
+.sb-snr-zone-header.demand {
+    color: #4caf50;
+}
+
+.sb-snr-zone-range {
+    font-size: 10px;
+    color: #9db2c8;
+}
+
+/* Empty State / Loading State */
+.sb-snr-status-msg {
+    text-align: center;
+    padding: 10px 10px;
+    color: #9db2c8;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.sb-snr-token-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(30, 34, 45, 0.6);
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #2a2e39;
+    margin-top: 4px;
+}
+
+.sb-snr-input {
+    background: #131722;
+    border: 1px solid #2a2e39;
+    border-radius: 4px;
+    padding: 6px 8px;
+    color: #f0f3fa;
+    font-size: 11px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.sb-snr-input:focus {
+    border-color: #2962ff;
+}
+
+.sb-snr-btn-primary {
+    background: #2962ff;
+    color: #ffffff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.sb-snr-btn-primary:hover {
+    background: #1e53e5;
+}
+
+.sb-snr-btn-secondary {
+    background: #2a2e39;
+    color: #d1d4dc;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.sb-snr-btn-secondary:hover {
+    background: #363c4e;
+    color: #ffffff;
+}
+
+/* Collapsed Mini Pill */
+.sb-snr-pill {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: rgba(19, 23, 34, 0.95);
+    border: 1px solid #2a2e39;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.sb-snr-pill:hover {
+    border-color: #2962ff;
+}
+
+.sb-snr-pill-res {
+    color: #ef5350;
+}
+
+.sb-snr-pill-sup {
+    color: #26a69a;
+}
+
+/* Orderbook Injected Badges */
+.sb-snr-ob-badge {
+    display: inline-block;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 700;
+    margin-left: 6px;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+}
+
+.sb-snr-ob-badge.res {
+    background: rgba(239, 83, 80, 0.25);
+    color: #ef5350;
+    border: 1px solid rgba(239, 83, 80, 0.6);
+}
+
+.sb-snr-ob-badge.sup {
+    background: rgba(38, 166, 154, 0.25);
+    color: #26a69a;
+    border: 1px solid rgba(38, 166, 154, 0.6);
+}
+
+.sb-snr-ob-badge.zone {
+    background: rgba(255, 179, 0, 0.2);
+    color: #ffb300;
+    border: 1px dashed rgba(255, 179, 0, 0.6);
+}

@@ -1,0 +1,76 @@
+# nodejs & npm
+node_modules/
+npm-debug.log*
+
+/debug/**/*
+!/debug/README.md
+!/debug/debug-standalone.html.example
+!/debug/debug-esm.html.example
+!/debug/debug-esm.mjs.example
+!/debug/tsconfig.json
+!/debug/.eslintrc.cjs
+
+# python
+*.pyc
+
+# vscode, idea, sublime
+.idea/**
+.vscode/**
+!/.vscode/launch.json
+!/.vscode/settings.json
+*.sublime-project
+*.sublime-workspace
+
+# artifacts
+/lib/
+/dist/
+/src/**/*.js
+/src/**/*.d.ts
+/website/docs/api/
+/website/versioned_docs/**/api/
+/website/build
+/website/.docusaurus
+/website/.cache-loader
+/website/.previous-typings-cache/*.d.ts
+/website/versions.d.ts
+
+!/src/typings/**/*.d.ts
+
+# graphics tests out data
+/tests/e2e/graphics/.gendata/
+tests/e2e/coverage/.gendata
+
+# memleak log output
+tests/e2e/memleaks/.logs/
+
+# ==========================================================
+# IDX Footprint & Multi-Asset Trading Platform Invariants
+# ==========================================================
+
+# Sensitive credentials & environment variables
+.env
+.env.*
+*.key
+*.pem
+
+# Generated market datasets (huge JSON/CSV files)
+/data/
+/data_broker_positions/
+/data_broker_summary/
+/data_intraday
+/data_temp/
+/indicator-examples/public/*.json
+/indicator-examples/public/data_temp/
+
+# Build artifacts & dependencies
+/indicator-examples/node_modules/
+/indicator-examples/dist/
+node_modules/
+
+# Runtime logs, process locks & Python cache
+*.log
+*.pid
+__pycache__/
+*.pyc
+.pytest_cache/
+

@@ -1,0 +1,837 @@
+{
+  "title": "NeoBDM Referensi Kolom Market Summary",
+  "source": "https://neobdm.tech/new-market-summary/docs/columns",
+  "sections": [
+    {
+      "section_id": "s-scale",
+      "section": "INFORMASI EMITEN",
+      "prose": [],
+      "subsections": [
+        {
+          "subsection": "Skala Bisnis",
+          "search_tags": "mcap tval",
+          "prose": [
+            "Kolom"
+          ],
+          "columns": [
+            {
+              "column": "Mcap (T)",
+              "description": "Kapitalisasi Pasar dalam Triliun Rupiah"
+            },
+            {
+              "column": "Tval (B)",
+              "description": "Total Nilai Transaksi dalam Miliar Rupiah"
+            }
+          ]
+        },
+        {
+          "subsection": "Catatan IDX",
+          "search_tags": "suspend fca hsc syariah",
+          "prose": [
+            "Kolom"
+          ],
+          "columns": [
+            {
+              "column": "Suspend",
+              "description": "saham sedang di-suspend atau tidak oleh IDX"
+            },
+            {
+              "column": "FCA",
+              "description": "saham masuk Papan Pemantauan Khusus (Full Call Auction) IDX"
+            },
+            {
+              "column": "Syariah",
+              "description": "apakah saham merupakan saham syariah atau tidak menurut IDX"
+            },
+            {
+              "column": "HSC",
+              "description": "apakah saham terkonsentrasi tinggi (High Shareholding Concentration) menurut IDX"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "s-flow",
+      "section": "ANALISA TRANSAKSI",
+      "prose": [
+        "Kolom",
+        "Referensi",
+        "Metode Analisa Transaksi",
+        "Ada 6 metode yang umum digunakan di NeoBDM. Akum dan distribusinya dihitung dalam satuan Miliar Rupiah .",
+        "Persen Akum",
+        "Ada kalanya metode transaksi dihitung dalam persen terhadap total transaksi periode yang digunakan dan ditandai dengan %",
+        "Periode",
+        "Transaksi dapat dihitung dengan berbagai periode berikut:",
+        "Contoh"
+      ],
+      "subsections": []
+    },
+    {
+      "section_id": "s-compat",
+      "section": "COMPATIBILITY",
+      "prose": [],
+      "subsections": [
+        {
+          "subsection": "Transaction Compatibility",
+          "search_tags": "comp any",
+          "prose": [
+            "Kolom",
+            "Referensi",
+            "Nilai Compatibility",
+            "NeoBDM memiliki formula yang menilai kompatibilitas suatu emiten terhadap metode transaksi dari 0 - 100% Suatu metode transaksi disebut compatible apabila nilainya lebih dari 55%",
+            "Periode",
+            "NeoBDM juga menyediakan kompatibilitas jangka pendek hingga jangka panjang (Short, Mid, Long)",
+            "Contoh"
+          ],
+          "columns": [
+            {
+              "column": "Comp [Metode]",
+              "description": "Compatibility menurut AI NeoBDM"
+            },
+            {
+              "column": "Comp Any",
+              "description": "Indikasi jika ada minimal 1 metode yang compatible"
+            },
+            {
+              "column": "%Comp [Metode]",
+              "description": "Persentase Compatibility menurut AI NeoBDM"
+            },
+            {
+              "column": "%Comp [Metode] [Periode]",
+              "description": "Persentase Compatibility dengan periode spesifik"
+            }
+          ]
+        },
+        {
+          "subsection": "Compatibility berdasarkan Likuiditas",
+          "search_tags": "likuid likuiditas",
+          "prose": [
+            "Kolom",
+            "Referensi",
+            "Tingkat Likuiditas",
+            "NeoBDM mengelompokkkan likuiditas saham menjadi 4 tingkat",
+            "Catatan"
+          ],
+          "columns": [
+            {
+              "column": "Likuiditas",
+              "description": "Tingkat Likuiditas menurut NeoBDM"
+            },
+            {
+              "column": "Likuid",
+              "description": "Likuid atau Tidak Likuid menurut NeoBDM"
+            }
+          ]
+        },
+        {
+          "subsection": "Indikasi Crossing",
+          "search_tags": "cross crossing",
+          "prose": [
+            "Kolom",
+            "Referensi",
+            "Cross Index",
+            "NeoBDM memiliki indikator yang menilai compatibility analisa transaksi bernama Cross Index Cross Index bernilai 0 - 100% , dan menilai kondisi jangka menengah, bukan hanya 1 hari.",
+            "Catatan",
+            "Crossing Institusi",
+            "NeoBDM membantu menandai emiten yang transaksinya bolak-balik antara institusi dengan pihak lain",
+            "Emiten dengan ciri-ciri tersebut ditandai karena dicurigai antar pihak tersebut \"bersekongkol\" atau bisa juga pihak asing nya tidak murni asing",
+            "Catatan"
+          ],
+          "columns": [
+            {
+              "column": "Cross",
+              "description": "Cross Index sedang tinggi"
+            },
+            {
+              "column": "F-I Cross",
+              "description": "Terdeteksi Crossing antara Foreign ↔ Institusi"
+            },
+            {
+              "column": "I-Z Cross",
+              "description": "Terdeteksi crossing antara Institusi ↔ Zombie"
+            }
+          ]
+        },
+        {
+          "subsection": "Clean Transaction",
+          "search_tags": "clean",
+          "prose": [
+            "Kolom",
+            "Spektrum Kebersihan Transaksi",
+            "Kebersihan transaksi ada spektrum nya, dari yang bersih (clean) hingga kotor (tektokan) Bersih misalnya akum atau secara konsisten, sedangkan kotor misalnya diakum, dijual lagi, diakum lagi, dst Jadi kotor artinya banyak transaksi yang kena net / crossing",
+            "NeoBDM membantu dengan menandai mana yang transaksinya bersih (clean) atau kotor (tektok) Transaksi yang bersih juga umumnya ditampung oleh para retail"
+          ],
+          "columns": [
+            {
+              "column": "Clean",
+              "description": "Tingkat kebersihan transaksi (harian) bernilai dari -10 hingga 10"
+            }
+          ]
+        },
+        {
+          "subsection": "Saham Pinky / Potensi Berkepentingan Khusus",
+          "search_tags": "pinky",
+          "prose": [
+            "Kolom",
+            "Referensi"
+          ],
+          "columns": [
+            {
+              "column": "Pinky",
+              "description": "Terindikasi potensi aktivitas berkepentingan khusus."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "s-broker",
+      "section": "BROKER",
+      "prose": [
+        "Kolom"
+      ],
+      "subsections": []
+    },
+    {
+      "section_id": "s-price",
+      "section": "HARGA",
+      "prose": [],
+      "subsections": [
+        {
+          "subsection": "Candlestick",
+          "search_tags": "high low close",
+          "prose": [
+            "Kolom"
+          ],
+          "columns": [
+            {
+              "column": "High",
+              "description": "Harga tertinggi candle"
+            },
+            {
+              "column": "Low",
+              "description": "Harga terendah candle"
+            },
+            {
+              "column": "Close",
+              "description": "Harga penutupan candle"
+            },
+            {
+              "column": "HL2",
+              "description": "(H + L) / 2"
+            },
+            {
+              "column": "HLC3",
+              "description": "(H + L + C) / 3"
+            },
+            {
+              "column": "HLCC4",
+              "description": "(H + L + C + C) / 4"
+            },
+            {
+              "column": "OHLC4",
+              "description": "(O + H + L + C) / 4"
+            }
+          ]
+        },
+        {
+          "subsection": "Perubahan Harga",
+          "search_tags": "chg",
+          "prose": [
+            "Kolom",
+            "Contoh"
+          ],
+          "columns": [
+            {
+              "column": "Chg[N]",
+              "description": "Persentase perubahan harga N candlestick"
+            }
+          ]
+        },
+        {
+          "subsection": "Harga Rata-rata",
+          "search_tags": "ma sma ema gc",
+          "prose": [
+            "Kolom",
+            "Contoh"
+          ],
+          "columns": [
+            {
+              "column": "MA[N]",
+              "description": "Moving Average N candle"
+            },
+            {
+              "column": "MA [N1] [N2] GC",
+              "description": "Golden Cross antara MA N1 dengan MA N2"
+            },
+            {
+              "column": "EMA[N]",
+              "description": "Exponential Moving Average N candle"
+            },
+            {
+              "column": "EMA [N1] [N2] GC",
+              "description": "Golden Cross antara EMA N1 dengan EMA N2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "s-volume",
+      "section": "VOLUME",
+      "prose": [],
+      "subsections": [
+        {
+          "subsection": "Volume",
+          "search_tags": "volume",
+          "prose": [
+            "Kolom"
+          ],
+          "columns": [
+            {
+              "column": "Volume",
+              "description": "volume transaksi"
+            }
+          ]
+        },
+        {
+          "subsection": "Perubahan Volume",
+          "search_tags": "volchg",
+          "prose": [
+            "Kolom",
+            "Contoh"
+          ],
+          "columns": [
+            {
+              "column": "VolChg[N]",
+              "description": "persentase perubahan volume N candle"
+            }
+          ]
+        },
+        {
+          "subsection": "Volume Rata-Rata",
+          "search_tags": "mavol",
+          "prose": [
+            "Kolom",
+            "Contoh"
+          ],
+          "columns": [
+            {
+              "column": "MAVol[N]",
+              "description": "rata-rata volume N candle"
+            }
+          ]
+        },
+        {
+          "subsection": "Volume Relatif",
+          "search_tags": "rvol",
+          "prose": [
+            "Kolom",
+            "Contoh"
+          ],
+          "columns": [
+            {
+              "column": "RVol[N]",
+              "description": "Rasio volume terhadap volume rata-rata N candle"
+            }
+          ]
+        },
+        {
+          "subsection": "Volume Spike",
+          "search_tags": "spike",
+          "prose": [
+            "Kolom"
+          ],
+          "columns": [
+            {
+              "column": "VolSpike [N]d",
+              "description": "Terdeteksi ada Volume spike (jauh lebih dari volume rata-rata) dalam N hari terkahir"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "s-struktur",
+      "section": "STRUKTUR",
+      "prose": [],
+      "subsections": [
+        {
+          "subsection": "Base / Konsolidasi",
+          "search_tags": "consol konsolidasi",
+          "prose": [
+            "Kolom",
+            "Catatan"
+          ],
+          "columns": [
+            {
+              "column": "Consol",
+              "description": "Menandakan harga sedang konsolidasi / nge-base (tanpa breakout yang signifikan)"
+            }
+          ]
+        },
+        {
+          "subsection": "Breakout",
+          "search_tags": "breakout",
+          "prose": [
+            "Kolom",
+            "Contoh",
+            "Catatan"
+          ],
+          "columns": [
+            {
+              "column": "Breakout[N]d",
+              "description": "Menandakan harga breakout dari high N candle terakhir"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "s-technical",
+      "section": "INDIKATOR TEKNIKAL MODERN",
+      "prose": [],
+      "subsections": [
+        {
+          "subsection": "Indikator Volatilitas",
+          "search_tags": "atr volatility",
+          "prose": [
+            "Kolom"
+          ],
+          "columns": [
+            {
+              "column": "ATR14",
+              "description": "Average True Range 14 hari"
+            },
+            {
+              "column": "ATR20",
+              "description": "Average True Range 20 hari"
+            },
+            {
+              "column": "Volatility",
+              "description": "Tingkat volatilitas menurut kriteria NeoBDM"
+            }
+          ]
+        },
+        {
+          "subsection": "RSI",
+          "search_tags": "rsi",
+          "prose": [
+            "Kolom",
+            "Referensi",
+            "Catatan"
+          ],
+          "columns": [
+            {
+              "column": "RSI",
+              "description": "Relative Strength Index (0–100)"
+            },
+            {
+              "column": "RSI OB",
+              "description": "RSI Overbought (RSI ≥ 80)"
+            },
+            {
+              "column": "RSI OS",
+              "description": "RSI Oversold (RSI ≤ 20)"
+            },
+            {
+              "column": "RSI Bull",
+              "description": "RSI Bull Signal (keluar dari oversold)"
+            }
+          ]
+        },
+        {
+          "subsection": "Stochastic",
+          "search_tags": "stoch stochastic",
+          "prose": [
+            "Kolom",
+            "Referensi",
+            "Catatan"
+          ],
+          "columns": [
+            {
+              "column": "Stoch %K",
+              "description": "Fast Stochastic"
+            },
+            {
+              "column": "Stoch %K OB",
+              "description": "Fast Stochastic Overbought"
+            },
+            {
+              "column": "Stoch %K OS",
+              "description": "Fast Stochastic Oversold"
+            },
+            {
+              "column": "Stoch %D",
+              "description": "Slow Stochastic"
+            },
+            {
+              "column": "Stoch %D OB",
+              "description": "Slow Stochastic Overbought"
+            },
+            {
+              "column": "Stoch %D OS",
+              "description": "Slow Stochastic Oversold"
+            },
+            {
+              "column": "Stoch GC",
+              "description": "Stochastic Golden Cross"
+            }
+          ]
+        },
+        {
+          "subsection": "Stochastic RSI",
+          "search_tags": "stoch stochastic",
+          "prose": [
+            "Kolom",
+            "Referensi",
+            "Catatan"
+          ],
+          "columns": [
+            {
+              "column": "StochRSI %K",
+              "description": "Fast Stochastic RSI"
+            },
+            {
+              "column": "StochRSI %K OB",
+              "description": "Fast Stochastic RSI Overbought"
+            },
+            {
+              "column": "StochRSI %K OS",
+              "description": "Fast Stochastic RSI Oversold"
+            },
+            {
+              "column": "StochRSI %D",
+              "description": "Slow Stochastic RSI"
+            },
+            {
+              "column": "StochRSI %D OB",
+              "description": "Slow Stochastic RSI Overbought"
+            },
+            {
+              "column": "StochRSI %D OS",
+              "description": "Slow Stochastic RSI Oversold"
+            },
+            {
+              "column": "StochRSI GC",
+              "description": "Stochastic RSI Golden Cross"
+            }
+          ]
+        },
+        {
+          "subsection": "MACD",
+          "search_tags": "macd",
+          "prose": [
+            "Kolom",
+            "Referensi",
+            "Catatan"
+          ],
+          "columns": [
+            {
+              "column": "MACD",
+              "description": "MACD Line"
+            },
+            {
+              "column": "MACD Signal",
+              "description": "MACD Signal Line"
+            },
+            {
+              "column": "MACD Hist",
+              "description": "MACD Histogram"
+            },
+            {
+              "column": "MACD GC",
+              "description": "MACD Golden Cross"
+            }
+          ]
+        },
+        {
+          "subsection": "Bollinger Band",
+          "search_tags": "bollinger band bband",
+          "prose": [
+            "Kolom",
+            "Referensi",
+            "Catatan"
+          ],
+          "columns": [
+            {
+              "column": "BB Up",
+              "description": "Batas atas Bollinger Band"
+            },
+            {
+              "column": "BB Mid",
+              "description": "Garis tengah Bollinger Band"
+            },
+            {
+              "column": "BB Low",
+              "description": "Batas bawah Bollinger Band"
+            }
+          ]
+        },
+        {
+          "subsection": "Parabolic SAR",
+          "search_tags": "sar",
+          "prose": [
+            "Kolom",
+            "Referensi",
+            "Catatan"
+          ],
+          "columns": [
+            {
+              "column": "SAR",
+              "description": "harga parabolic SAR"
+            },
+            {
+              "column": "SAR Trend",
+              "description": "BULL = close > SAR. BEAR = close ≤ SAR"
+            },
+            {
+              "column": "SAR Flip Bull",
+              "description": "parabolic SAR berpindah ke bawah harga closing"
+            },
+            {
+              "column": "SAR Flip Bear",
+              "description": "parabolic SAR berpindah ke atas harga closing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "s-candlestick",
+      "section": "POLA CANDLESTICK",
+      "prose": [
+        "Kolom",
+        "Catatan"
+      ],
+      "subsections": [
+        {
+          "subsection": "Evening Star & Morning Star",
+          "search_tags": "eveningstar morningstar evening star morning star",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Evening Doji Star & Morning Doji Star",
+          "search_tags": "eveningdojistar morningdojistar evening doji star morning doji star",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Bear Marubozu & Bull Marubozu",
+          "search_tags": "bear marubozu bull marubozu",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Three Black Crows & Three White Soldiers",
+          "search_tags": "3blackcrows 3whitesoldiers three black crows three white soldiers",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Dark Cloud Cover & Piercing Line",
+          "search_tags": "darkcloudcover piercing line dark cloud cover piercing",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Gravestone Doji & Dragonfly Doji",
+          "search_tags": "gravestonedoji dragonflydoji gravestone doji dragonfly doji",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Doji & Long-Legged Doji",
+          "search_tags": "doji longleggeddoji doji long-legged doji",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Bear Spinning Top & Bull Spinning Top",
+          "search_tags": "bear_spinningtop bull_spinningtop bear spinning top bull spinning top",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Shooting Star & Hammer",
+          "search_tags": "shootingstar hammer shooting star hammer",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Hanging Man & Inverted Hammer",
+          "search_tags": "hangingman invertedhammer hanging man inverted hammer",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Bear Harami & Bull Harami",
+          "search_tags": "bear_harami bull_harami bear harami bull harami",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Bear Harami Cross & Bull Harami Cross",
+          "search_tags": "bear_haramicross bull_haramicross bear harami cross bull harami cross",
+          "prose": [],
+          "columns": []
+        },
+        {
+          "subsection": "Bear Engulfing & Bull Engulfing",
+          "search_tags": "bear_engulfing bull_engulfing bear engulfing bull engulfing",
+          "prose": [],
+          "columns": []
+        }
+      ]
+    },
+    {
+      "section_id": "s-rotation",
+      "section": "ROTATION CHART",
+      "prose": [
+        "Kolom",
+        "Referensi",
+        "Periode",
+        "NeoBDM menyediakan Rotation Chart untuk periode harian dan mingguan",
+        "Contoh",
+        "Strength / Kekuatan",
+        "Kekuatan dari momentum dibagi menjadi 3",
+        "Phase / Fase",
+        "Fase momentum dibagi menjadi 4",
+        "Direction / Arah",
+        "Arah dibagi menjadi 8 penjuru dalam bahasa inggris"
+      ],
+      "subsections": []
+    },
+    {
+      "section_id": "s-bpos",
+      "section": "ANALISA KEPEMILIKAN",
+      "prose": [],
+      "subsections": [
+        {
+          "subsection": "Balance Position",
+          "search_tags": "bpos balance",
+          "prose": [
+            "Kolom",
+            "Referensi",
+            "Kelompok",
+            "Tiga kelompok kepemilikan yang dilacak:",
+            "Periode",
+            "Tersedia untuk 6 bulan terakhir , dihitung mundur dari bulan ini",
+            "Contoh"
+          ],
+          "columns": [
+            {
+              "column": "Bpos [kelompok] [periode]",
+              "description": "Persentase kepemilikan kelompok pada bulan tersebut"
+            },
+            {
+              "column": "BposChg [kelompok] [periode]",
+              "description": "Perubahan % kepemilikan kelompok pada bulan tersebut"
+            }
+          ]
+        },
+        {
+          "subsection": "Scripless",
+          "search_tags": "scripless",
+          "prose": [
+            "Kolom",
+            "Referensi",
+            "Kelompok",
+            "Tiga kelompok kepemilikan yang dilacak:",
+            "Contoh"
+          ],
+          "columns": [
+            {
+              "column": "Scripless [periode]",
+              "description": "Persentase saham scripless pada bulan tersebut"
+            },
+            {
+              "column": "ScriplessChg [periode]",
+              "description": "Perubahan %scripless pada bulan tersebut"
+            }
+          ]
+        },
+        {
+          "subsection": "Kepemilikan >1%",
+          "search_tags": "bpos balance",
+          "prose": [
+            "Kolom",
+            "Catatan"
+          ],
+          "columns": [
+            {
+              "column": "Total KDA 1%",
+              "description": "Persentase Total saham para pemegang saham yang kepemilikan >1%"
+            }
+          ]
+        },
+        {
+          "subsection": "Free Float",
+          "search_tags": "free freefloat",
+          "prose": [
+            "Kolom",
+            "Referensi"
+          ],
+          "columns": [
+            {
+              "column": "FreeFloat",
+              "description": "Persentase Free Float saham"
+            }
+          ]
+        },
+        {
+          "subsection": "Analisa Holder",
+          "search_tags": "holder",
+          "prose": [
+            "Kolom",
+            "Referensi"
+          ],
+          "columns": [
+            {
+              "column": "Holder",
+              "description": "Jumlah pemegang saham (SID)"
+            }
+          ]
+        },
+        {
+          "subsection": "Analisa Kepemilikan Populer",
+          "search_tags": "buyback nominee",
+          "prose": [
+            "Kolom",
+            "Referensi"
+          ],
+          "columns": [
+            {
+              "column": "Buyback m1–m3",
+              "description": "Potensi buyback institusi menurut NeoBDM"
+            },
+            {
+              "column": "Nominee m1–m3",
+              "description": "Indikasi nominee menurut NeoBDM"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "s-seasonality",
+      "section": "SEASONALITY",
+      "prose": [
+        "Kolom",
+        "Periode",
+        "Contoh"
+      ],
+      "subsections": []
+    },
+    {
+      "section_id": "s-request",
+      "section": "MEMBER REQUEST",
+      "prose": [
+        "Kolom"
+      ],
+      "subsections": []
+    }
+  ]
+}

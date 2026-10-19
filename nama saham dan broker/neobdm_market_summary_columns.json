@@ -1,0 +1,9604 @@
+{
+  "total_count": 538,
+  "source": "https://neobdm.tech/api/market-summary/columns",
+  "columns": [
+    {
+      "no": 1,
+      "field": "symbol",
+      "title": "Tick",
+      "format": "string",
+      "description": "Ticker saham",
+      "filter": null
+    },
+    {
+      "no": 2,
+      "field": "tval",
+      "title": "Tval (B)",
+      "format": "ufloat",
+      "description": "Total Value Transaksi (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 3,
+      "field": "m_d_0",
+      "title": "Md0",
+      "format": "float",
+      "description": "Bandar Flow Hari ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 4,
+      "field": "m_dn_0",
+      "title": "%Md0",
+      "format": "percent",
+      "description": "%Bandar Flow Hari ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 5,
+      "field": "m_w_0",
+      "title": "Mw0",
+      "format": "float",
+      "description": "Bandar Flow Minggu ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 6,
+      "field": "m_wn_0",
+      "title": "%Mw0",
+      "format": "percent",
+      "description": "%Bandar Flow Minggu ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 7,
+      "field": "m_d_1",
+      "title": "Md1",
+      "format": "float",
+      "description": "Bandar Flow Kemarin (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 8,
+      "field": "m_dn_1",
+      "title": "%Md1",
+      "format": "percent",
+      "description": "%Bandar Flow Kemarin",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 9,
+      "field": "m_w_1",
+      "title": "Mw1",
+      "format": "float",
+      "description": "Bandar Flow Minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 10,
+      "field": "m_wn_1",
+      "title": "%Mw1",
+      "format": "percent",
+      "description": "%Bandar Flow Minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 11,
+      "field": "m_d_2",
+      "title": "Md2",
+      "format": "float",
+      "description": "Bandar Flow 2 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 12,
+      "field": "m_dn_2",
+      "title": "%Md2",
+      "format": "percent",
+      "description": "%Bandar Flow 2 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 13,
+      "field": "m_w_2",
+      "title": "Mw2",
+      "format": "float",
+      "description": "Bandar Flow 2 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 14,
+      "field": "m_wn_2",
+      "title": "%Mw2",
+      "format": "percent",
+      "description": "%Bandar Flow 2 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 15,
+      "field": "m_d_3",
+      "title": "Md3",
+      "format": "float",
+      "description": "Bandar Flow 3 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 16,
+      "field": "m_dn_3",
+      "title": "%Md3",
+      "format": "percent",
+      "description": "%Bandar Flow 3 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 17,
+      "field": "m_w_3",
+      "title": "Mw3",
+      "format": "float",
+      "description": "Bandar Flow 3 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 18,
+      "field": "m_wn_3",
+      "title": "%Mw3",
+      "format": "percent",
+      "description": "%Bandar Flow 3 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 19,
+      "field": "m_d_4",
+      "title": "Md4",
+      "format": "float",
+      "description": "Bandar Flow 4 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 20,
+      "field": "m_dn_4",
+      "title": "%Md4",
+      "format": "percent",
+      "description": "%Bandar Flow 4 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 21,
+      "field": "m_w_4",
+      "title": "Mw4",
+      "format": "float",
+      "description": "Bandar Flow 4 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 22,
+      "field": "m_wn_4",
+      "title": "%Mw4",
+      "format": "percent",
+      "description": "%Bandar Flow 4 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 23,
+      "field": "m_c_3",
+      "title": "Mc3",
+      "format": "float",
+      "description": "Bandar Flow Kumulatif 3 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 24,
+      "field": "m_cn_3",
+      "title": "%Mc3",
+      "format": "percent",
+      "description": "%Bandar Flow Kumulatif 3 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 25,
+      "field": "m_c_5",
+      "title": "Mc5",
+      "format": "float",
+      "description": "Bandar Flow Kumulatif 5 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 26,
+      "field": "m_cn_5",
+      "title": "%Mc5",
+      "format": "percent",
+      "description": "%Bandar Flow Kumulatif 5 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 27,
+      "field": "m_c_10",
+      "title": "Mc10",
+      "format": "float",
+      "description": "Bandar Flow Kumulatif 10 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 28,
+      "field": "m_cn_10",
+      "title": "%Mc10",
+      "format": "percent",
+      "description": "%Bandar Flow Kumulatif 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 29,
+      "field": "m_c_20",
+      "title": "Mc20",
+      "format": "float",
+      "description": "Bandar Flow Kumulatif 20 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 30,
+      "field": "m_cn_20",
+      "title": "%Mc20",
+      "format": "percent",
+      "description": "%Bandar Flow Kumulatif 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 31,
+      "field": "m_c_50",
+      "title": "Mc50",
+      "format": "float",
+      "description": "Bandar Flow Kumulatif 50 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 32,
+      "field": "m_cn_50",
+      "title": "%Mc50",
+      "format": "percent",
+      "description": "%Bandar Flow Kumulatif 50 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 33,
+      "field": "nr_d_0",
+      "title": "NRd0",
+      "format": "float",
+      "description": "NonRetail Flow Hari ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 34,
+      "field": "nr_dn_0",
+      "title": "%NRd0",
+      "format": "percent",
+      "description": "%NonRetail Flow Hari ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 35,
+      "field": "nr_w_0",
+      "title": "NRw0",
+      "format": "float",
+      "description": "NonRetail Flow Minggu ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 36,
+      "field": "nr_wn_0",
+      "title": "%NRw0",
+      "format": "percent",
+      "description": "%NonRetail Flow Minggu ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 37,
+      "field": "nr_d_1",
+      "title": "NRd1",
+      "format": "float",
+      "description": "NonRetail Flow Kemarin (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 38,
+      "field": "nr_dn_1",
+      "title": "%NRd1",
+      "format": "percent",
+      "description": "%NonRetail Flow Kemarin",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 39,
+      "field": "nr_w_1",
+      "title": "NRw1",
+      "format": "float",
+      "description": "NonRetail Flow Minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 40,
+      "field": "nr_wn_1",
+      "title": "%NRw1",
+      "format": "percent",
+      "description": "%NonRetail Flow Minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 41,
+      "field": "nr_d_2",
+      "title": "NRd2",
+      "format": "float",
+      "description": "NonRetail Flow 2 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 42,
+      "field": "nr_dn_2",
+      "title": "%NRd2",
+      "format": "percent",
+      "description": "%NonRetail Flow 2 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 43,
+      "field": "nr_w_2",
+      "title": "NRw2",
+      "format": "float",
+      "description": "NonRetail Flow 2 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 44,
+      "field": "nr_wn_2",
+      "title": "%NRw2",
+      "format": "percent",
+      "description": "%NonRetail Flow 2 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 45,
+      "field": "nr_d_3",
+      "title": "NRd3",
+      "format": "float",
+      "description": "NonRetail Flow 3 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 46,
+      "field": "nr_dn_3",
+      "title": "%NRd3",
+      "format": "percent",
+      "description": "%NonRetail Flow 3 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 47,
+      "field": "nr_w_3",
+      "title": "NRw3",
+      "format": "float",
+      "description": "NonRetail Flow 3 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 48,
+      "field": "nr_wn_3",
+      "title": "%NRw3",
+      "format": "percent",
+      "description": "%NonRetail Flow 3 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 49,
+      "field": "nr_d_4",
+      "title": "NRd4",
+      "format": "float",
+      "description": "NonRetail Flow 4 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 50,
+      "field": "nr_dn_4",
+      "title": "%NRd4",
+      "format": "percent",
+      "description": "%NonRetail Flow 4 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 51,
+      "field": "nr_w_4",
+      "title": "NRw4",
+      "format": "float",
+      "description": "NonRetail Flow 4 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 52,
+      "field": "nr_wn_4",
+      "title": "%NRw4",
+      "format": "percent",
+      "description": "%NonRetail Flow 4 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 53,
+      "field": "nr_c_3",
+      "title": "NRc3",
+      "format": "float",
+      "description": "NonRetail Flow Kumulatif 3 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 54,
+      "field": "nr_cn_3",
+      "title": "%NRc3",
+      "format": "percent",
+      "description": "%NonRetail Flow Kumulatif 3 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 55,
+      "field": "nr_c_5",
+      "title": "NRc5",
+      "format": "float",
+      "description": "NonRetail Flow Kumulatif 5 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 56,
+      "field": "nr_cn_5",
+      "title": "%NRc5",
+      "format": "percent",
+      "description": "%NonRetail Flow Kumulatif 5 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 57,
+      "field": "nr_c_10",
+      "title": "NRc10",
+      "format": "float",
+      "description": "NonRetail Flow Kumulatif 10 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 58,
+      "field": "nr_cn_10",
+      "title": "%NRc10",
+      "format": "percent",
+      "description": "%NonRetail Flow Kumulatif 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 59,
+      "field": "nr_c_20",
+      "title": "NRc20",
+      "format": "float",
+      "description": "NonRetail Flow Kumulatif 20 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 60,
+      "field": "nr_cn_20",
+      "title": "%NRc20",
+      "format": "percent",
+      "description": "%NonRetail Flow Kumulatif 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 61,
+      "field": "nr_c_50",
+      "title": "NRc50",
+      "format": "float",
+      "description": "NonRetail Flow Kumulatif 50 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 62,
+      "field": "nr_cn_50",
+      "title": "%NRc50",
+      "format": "percent",
+      "description": "%NonRetail Flow Kumulatif 50 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 63,
+      "field": "f_d_0",
+      "title": "Fd0",
+      "format": "float",
+      "description": "Foreign Flow Hari ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 64,
+      "field": "f_dn_0",
+      "title": "%Fd0",
+      "format": "percent",
+      "description": "%Foreign Flow Hari ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 65,
+      "field": "f_w_0",
+      "title": "Fw0",
+      "format": "float",
+      "description": "Foreign Flow Minggu ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 66,
+      "field": "f_wn_0",
+      "title": "%Fw0",
+      "format": "percent",
+      "description": "%Foreign Flow Minggu ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 67,
+      "field": "f_d_1",
+      "title": "Fd1",
+      "format": "float",
+      "description": "Foreign Flow Kemarin (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 68,
+      "field": "f_dn_1",
+      "title": "%Fd1",
+      "format": "percent",
+      "description": "%Foreign Flow Kemarin",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 69,
+      "field": "f_w_1",
+      "title": "Fw1",
+      "format": "float",
+      "description": "Foreign Flow Minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 70,
+      "field": "f_wn_1",
+      "title": "%Fw1",
+      "format": "percent",
+      "description": "%Foreign Flow Minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 71,
+      "field": "f_d_2",
+      "title": "Fd2",
+      "format": "float",
+      "description": "Foreign Flow 2 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 72,
+      "field": "f_dn_2",
+      "title": "%Fd2",
+      "format": "percent",
+      "description": "%Foreign Flow 2 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 73,
+      "field": "f_w_2",
+      "title": "Fw2",
+      "format": "float",
+      "description": "Foreign Flow 2 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 74,
+      "field": "f_wn_2",
+      "title": "%Fw2",
+      "format": "percent",
+      "description": "%Foreign Flow 2 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 75,
+      "field": "f_d_3",
+      "title": "Fd3",
+      "format": "float",
+      "description": "Foreign Flow 3 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 76,
+      "field": "f_dn_3",
+      "title": "%Fd3",
+      "format": "percent",
+      "description": "%Foreign Flow 3 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 77,
+      "field": "f_w_3",
+      "title": "Fw3",
+      "format": "float",
+      "description": "Foreign Flow 3 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 78,
+      "field": "f_wn_3",
+      "title": "%Fw3",
+      "format": "percent",
+      "description": "%Foreign Flow 3 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 79,
+      "field": "f_d_4",
+      "title": "Fd4",
+      "format": "float",
+      "description": "Foreign Flow 4 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 80,
+      "field": "f_dn_4",
+      "title": "%Fd4",
+      "format": "percent",
+      "description": "%Foreign Flow 4 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 81,
+      "field": "f_w_4",
+      "title": "Fw4",
+      "format": "float",
+      "description": "Foreign Flow 4 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 82,
+      "field": "f_wn_4",
+      "title": "%Fw4",
+      "format": "percent",
+      "description": "%Foreign Flow 4 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 83,
+      "field": "f_c_3",
+      "title": "Fc3",
+      "format": "float",
+      "description": "Foreign Flow Kumulatif 3 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 84,
+      "field": "f_cn_3",
+      "title": "%Fc3",
+      "format": "percent",
+      "description": "%Foreign Flow Kumulatif 3 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 85,
+      "field": "f_c_5",
+      "title": "Fc5",
+      "format": "float",
+      "description": "Foreign Flow Kumulatif 5 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 86,
+      "field": "f_cn_5",
+      "title": "%Fc5",
+      "format": "percent",
+      "description": "%Foreign Flow Kumulatif 5 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 87,
+      "field": "f_c_10",
+      "title": "Fc10",
+      "format": "float",
+      "description": "Foreign Flow Kumulatif 10 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 88,
+      "field": "f_cn_10",
+      "title": "%Fc10",
+      "format": "percent",
+      "description": "%Foreign Flow Kumulatif 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 89,
+      "field": "f_c_20",
+      "title": "Fc20",
+      "format": "float",
+      "description": "Foreign Flow Kumulatif 20 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 90,
+      "field": "f_cn_20",
+      "title": "%Fc20",
+      "format": "percent",
+      "description": "%Foreign Flow Kumulatif 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 91,
+      "field": "f_c_50",
+      "title": "Fc50",
+      "format": "float",
+      "description": "Foreign Flow Kumulatif 50 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 92,
+      "field": "f_cn_50",
+      "title": "%Fc50",
+      "format": "percent",
+      "description": "%Foreign Flow Kumulatif 50 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 93,
+      "field": "s_d_0",
+      "title": "Sd0",
+      "format": "float",
+      "description": "Sultan Flow Hari ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 94,
+      "field": "s_dn_0",
+      "title": "%Sd0",
+      "format": "percent",
+      "description": "%Sultan Flow Hari ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 95,
+      "field": "s_w_0",
+      "title": "Sw0",
+      "format": "float",
+      "description": "Sultan Flow Minggu ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 96,
+      "field": "s_wn_0",
+      "title": "%Sw0",
+      "format": "percent",
+      "description": "%Sultan Flow Minggu ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 97,
+      "field": "s_d_1",
+      "title": "Sd1",
+      "format": "float",
+      "description": "Sultan Flow Kemarin (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 98,
+      "field": "s_dn_1",
+      "title": "%Sd1",
+      "format": "percent",
+      "description": "%Sultan Flow Kemarin",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 99,
+      "field": "s_w_1",
+      "title": "Sw1",
+      "format": "float",
+      "description": "Sultan Flow Minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 100,
+      "field": "s_wn_1",
+      "title": "%Sw1",
+      "format": "percent",
+      "description": "%Sultan Flow Minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 101,
+      "field": "s_d_2",
+      "title": "Sd2",
+      "format": "float",
+      "description": "Sultan Flow 2 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 102,
+      "field": "s_dn_2",
+      "title": "%Sd2",
+      "format": "percent",
+      "description": "%Sultan Flow 2 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 103,
+      "field": "s_w_2",
+      "title": "Sw2",
+      "format": "float",
+      "description": "Sultan Flow 2 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 104,
+      "field": "s_wn_2",
+      "title": "%Sw2",
+      "format": "percent",
+      "description": "%Sultan Flow 2 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 105,
+      "field": "s_d_3",
+      "title": "Sd3",
+      "format": "float",
+      "description": "Sultan Flow 3 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 106,
+      "field": "s_dn_3",
+      "title": "%Sd3",
+      "format": "percent",
+      "description": "%Sultan Flow 3 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 107,
+      "field": "s_w_3",
+      "title": "Sw3",
+      "format": "float",
+      "description": "Sultan Flow 3 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 108,
+      "field": "s_wn_3",
+      "title": "%Sw3",
+      "format": "percent",
+      "description": "%Sultan Flow 3 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 109,
+      "field": "s_d_4",
+      "title": "Sd4",
+      "format": "float",
+      "description": "Sultan Flow 4 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 110,
+      "field": "s_dn_4",
+      "title": "%Sd4",
+      "format": "percent",
+      "description": "%Sultan Flow 4 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 111,
+      "field": "s_w_4",
+      "title": "Sw4",
+      "format": "float",
+      "description": "Sultan Flow 4 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 112,
+      "field": "s_wn_4",
+      "title": "%Sw4",
+      "format": "percent",
+      "description": "%Sultan Flow 4 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 113,
+      "field": "s_c_3",
+      "title": "Sc3",
+      "format": "float",
+      "description": "Sultan Flow Kumulatif 3 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 114,
+      "field": "s_cn_3",
+      "title": "%Sc3",
+      "format": "percent",
+      "description": "%Sultan Flow Kumulatif 3 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 115,
+      "field": "s_c_5",
+      "title": "Sc5",
+      "format": "float",
+      "description": "Sultan Flow Kumulatif 5 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 116,
+      "field": "s_cn_5",
+      "title": "%Sc5",
+      "format": "percent",
+      "description": "%Sultan Flow Kumulatif 5 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 117,
+      "field": "s_c_10",
+      "title": "Sc10",
+      "format": "float",
+      "description": "Sultan Flow Kumulatif 10 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 118,
+      "field": "s_cn_10",
+      "title": "%Sc10",
+      "format": "percent",
+      "description": "%Sultan Flow Kumulatif 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 119,
+      "field": "s_c_20",
+      "title": "Sc20",
+      "format": "float",
+      "description": "Sultan Flow Kumulatif 20 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 120,
+      "field": "s_cn_20",
+      "title": "%Sc20",
+      "format": "percent",
+      "description": "%Sultan Flow Kumulatif 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 121,
+      "field": "s_c_50",
+      "title": "Sc50",
+      "format": "float",
+      "description": "Sultan Flow Kumulatif 50 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 122,
+      "field": "s_cn_50",
+      "title": "%Sc50",
+      "format": "percent",
+      "description": "%Sultan Flow Kumulatif 50 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 123,
+      "field": "i_d_0",
+      "title": "Id0",
+      "format": "float",
+      "description": "Institution Flow Hari ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 124,
+      "field": "i_dn_0",
+      "title": "%Id0",
+      "format": "percent",
+      "description": "%Institution Flow Hari ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 125,
+      "field": "i_w_0",
+      "title": "Iw0",
+      "format": "float",
+      "description": "Institution Flow Minggu ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 126,
+      "field": "i_wn_0",
+      "title": "%Iw0",
+      "format": "percent",
+      "description": "%Institution Flow Minggu ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 127,
+      "field": "i_d_1",
+      "title": "Id1",
+      "format": "float",
+      "description": "Institution Flow Kemarin (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 128,
+      "field": "i_dn_1",
+      "title": "%Id1",
+      "format": "percent",
+      "description": "%Institution Flow Kemarin",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 129,
+      "field": "i_w_1",
+      "title": "Iw1",
+      "format": "float",
+      "description": "Institution Flow Minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 130,
+      "field": "i_wn_1",
+      "title": "%Iw1",
+      "format": "percent",
+      "description": "%Institution Flow Minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 131,
+      "field": "i_d_2",
+      "title": "Id2",
+      "format": "float",
+      "description": "Institution Flow 2 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 132,
+      "field": "i_dn_2",
+      "title": "%Id2",
+      "format": "percent",
+      "description": "%Institution Flow 2 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 133,
+      "field": "i_w_2",
+      "title": "Iw2",
+      "format": "float",
+      "description": "Institution Flow 2 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 134,
+      "field": "i_wn_2",
+      "title": "%Iw2",
+      "format": "percent",
+      "description": "%Institution Flow 2 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 135,
+      "field": "i_d_3",
+      "title": "Id3",
+      "format": "float",
+      "description": "Institution Flow 3 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 136,
+      "field": "i_dn_3",
+      "title": "%Id3",
+      "format": "percent",
+      "description": "%Institution Flow 3 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 137,
+      "field": "i_w_3",
+      "title": "Iw3",
+      "format": "float",
+      "description": "Institution Flow 3 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 138,
+      "field": "i_wn_3",
+      "title": "%Iw3",
+      "format": "percent",
+      "description": "%Institution Flow 3 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 139,
+      "field": "i_d_4",
+      "title": "Id4",
+      "format": "float",
+      "description": "Institution Flow 4 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 140,
+      "field": "i_dn_4",
+      "title": "%Id4",
+      "format": "percent",
+      "description": "%Institution Flow 4 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 141,
+      "field": "i_w_4",
+      "title": "Iw4",
+      "format": "float",
+      "description": "Institution Flow 4 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 142,
+      "field": "i_wn_4",
+      "title": "%Iw4",
+      "format": "percent",
+      "description": "%Institution Flow 4 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 143,
+      "field": "i_c_3",
+      "title": "Ic3",
+      "format": "float",
+      "description": "Institution Flow Kumulatif 3 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 144,
+      "field": "i_cn_3",
+      "title": "%Ic3",
+      "format": "percent",
+      "description": "%Institution Flow Kumulatif 3 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 145,
+      "field": "i_c_5",
+      "title": "Ic5",
+      "format": "float",
+      "description": "Institution Flow Kumulatif 5 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 146,
+      "field": "i_cn_5",
+      "title": "%Ic5",
+      "format": "percent",
+      "description": "%Institution Flow Kumulatif 5 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 147,
+      "field": "i_c_10",
+      "title": "Ic10",
+      "format": "float",
+      "description": "Institution Flow Kumulatif 10 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 148,
+      "field": "i_cn_10",
+      "title": "%Ic10",
+      "format": "percent",
+      "description": "%Institution Flow Kumulatif 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 149,
+      "field": "i_c_20",
+      "title": "Ic20",
+      "format": "float",
+      "description": "Institution Flow Kumulatif 20 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 150,
+      "field": "i_cn_20",
+      "title": "%Ic20",
+      "format": "percent",
+      "description": "%Institution Flow Kumulatif 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 151,
+      "field": "i_c_50",
+      "title": "Ic50",
+      "format": "float",
+      "description": "Institution Flow Kumulatif 50 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 152,
+      "field": "i_cn_50",
+      "title": "%Ic50",
+      "format": "percent",
+      "description": "%Institution Flow Kumulatif 50 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 153,
+      "field": "z_d_0",
+      "title": "Zd0",
+      "format": "float",
+      "description": "Zombie Flow Hari ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 154,
+      "field": "z_dn_0",
+      "title": "%Zd0",
+      "format": "percent",
+      "description": "%Zombie Flow Hari ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 155,
+      "field": "z_w_0",
+      "title": "Zw0",
+      "format": "float",
+      "description": "Zombie Flow Minggu ini (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 156,
+      "field": "z_wn_0",
+      "title": "%Zw0",
+      "format": "percent",
+      "description": "%Zombie Flow Minggu ini",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 157,
+      "field": "z_d_1",
+      "title": "Zd1",
+      "format": "float",
+      "description": "Zombie Flow Kemarin (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 158,
+      "field": "z_dn_1",
+      "title": "%Zd1",
+      "format": "percent",
+      "description": "%Zombie Flow Kemarin",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 159,
+      "field": "z_w_1",
+      "title": "Zw1",
+      "format": "float",
+      "description": "Zombie Flow Minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 160,
+      "field": "z_wn_1",
+      "title": "%Zw1",
+      "format": "percent",
+      "description": "%Zombie Flow Minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 161,
+      "field": "z_d_2",
+      "title": "Zd2",
+      "format": "float",
+      "description": "Zombie Flow 2 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 162,
+      "field": "z_dn_2",
+      "title": "%Zd2",
+      "format": "percent",
+      "description": "%Zombie Flow 2 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 163,
+      "field": "z_w_2",
+      "title": "Zw2",
+      "format": "float",
+      "description": "Zombie Flow 2 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 164,
+      "field": "z_wn_2",
+      "title": "%Zw2",
+      "format": "percent",
+      "description": "%Zombie Flow 2 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 165,
+      "field": "z_d_3",
+      "title": "Zd3",
+      "format": "float",
+      "description": "Zombie Flow 3 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 166,
+      "field": "z_dn_3",
+      "title": "%Zd3",
+      "format": "percent",
+      "description": "%Zombie Flow 3 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 167,
+      "field": "z_w_3",
+      "title": "Zw3",
+      "format": "float",
+      "description": "Zombie Flow 3 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 168,
+      "field": "z_wn_3",
+      "title": "%Zw3",
+      "format": "percent",
+      "description": "%Zombie Flow 3 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 169,
+      "field": "z_d_4",
+      "title": "Zd4",
+      "format": "float",
+      "description": "Zombie Flow 4 hari lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 170,
+      "field": "z_dn_4",
+      "title": "%Zd4",
+      "format": "percent",
+      "description": "%Zombie Flow 4 hari lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 171,
+      "field": "z_w_4",
+      "title": "Zw4",
+      "format": "float",
+      "description": "Zombie Flow 4 minggu lalu (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 172,
+      "field": "z_wn_4",
+      "title": "%Zw4",
+      "format": "percent",
+      "description": "%Zombie Flow 4 minggu lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 173,
+      "field": "z_c_3",
+      "title": "Zc3",
+      "format": "float",
+      "description": "Zombie Flow Kumulatif 3 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 174,
+      "field": "z_cn_3",
+      "title": "%Zc3",
+      "format": "percent",
+      "description": "%Zombie Flow Kumulatif 3 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 175,
+      "field": "z_c_5",
+      "title": "Zc5",
+      "format": "float",
+      "description": "Zombie Flow Kumulatif 5 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 176,
+      "field": "z_cn_5",
+      "title": "%Zc5",
+      "format": "percent",
+      "description": "%Zombie Flow Kumulatif 5 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 177,
+      "field": "z_c_10",
+      "title": "Zc10",
+      "format": "float",
+      "description": "Zombie Flow Kumulatif 10 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 178,
+      "field": "z_cn_10",
+      "title": "%Zc10",
+      "format": "percent",
+      "description": "%Zombie Flow Kumulatif 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 179,
+      "field": "z_c_20",
+      "title": "Zc20",
+      "format": "float",
+      "description": "Zombie Flow Kumulatif 20 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 180,
+      "field": "z_cn_20",
+      "title": "%Zc20",
+      "format": "percent",
+      "description": "%Zombie Flow Kumulatif 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 181,
+      "field": "z_c_50",
+      "title": "Zc50",
+      "format": "float",
+      "description": "Zombie Flow Kumulatif 50 candle (Miliar)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 182,
+      "field": "z_cn_50",
+      "title": "%Zc50",
+      "format": "percent",
+      "description": "%Zombie Flow Kumulatif 50 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 183,
+      "field": "m_hist",
+      "title": "History M",
+      "format": "history",
+      "description": "Bandarmologi 5 candle terakhir",
+      "filter": null
+    },
+    {
+      "no": 184,
+      "field": "nr_hist",
+      "title": "History NR",
+      "format": "history",
+      "description": "NonRetail Flow 5 candle terakhir",
+      "filter": null
+    },
+    {
+      "no": 185,
+      "field": "f_hist",
+      "title": "History F",
+      "format": "history",
+      "description": "Foreign Flow 5 candle terakhir",
+      "filter": null
+    },
+    {
+      "no": 186,
+      "field": "s_hist",
+      "title": "History S",
+      "format": "history",
+      "description": "Sultanmologi 5 candle terakhir",
+      "filter": null
+    },
+    {
+      "no": 187,
+      "field": "i_hist",
+      "title": "History I",
+      "format": "history",
+      "description": "Institution Flow 5 candle terakhir",
+      "filter": null
+    },
+    {
+      "no": 188,
+      "field": "z_hist",
+      "title": "History Z",
+      "format": "history",
+      "description": "Zombiemologi 5 candle terakhir",
+      "filter": null
+    },
+    {
+      "no": 189,
+      "field": "clean_score",
+      "title": "Clean",
+      "format": "int",
+      "description": "Clean Score (±10)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 190,
+      "field": "is_comp_m",
+      "title": "Comp M",
+      "format": "boolean",
+      "description": "Apakah Bandarmologi compatibile?",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 191,
+      "field": "is_comp_nr",
+      "title": "Comp NR",
+      "format": "boolean",
+      "description": "Apakah NonRetail compatible?",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 192,
+      "field": "is_comp_f",
+      "title": "Comp F",
+      "format": "boolean",
+      "description": "Apalah ForeignFlow compatible?",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 193,
+      "field": "is_comp_s",
+      "title": "Comp S",
+      "format": "boolean",
+      "description": "Apakah Sultanmologi compatible?",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 194,
+      "field": "is_comp_i",
+      "title": "Comp I",
+      "format": "boolean",
+      "description": "Apakah InstitutionFlow compatible?",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 195,
+      "field": "is_comp_z",
+      "title": "Comp Z",
+      "format": "boolean",
+      "description": "Apakah Zombiemologi compatible?",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 196,
+      "field": "has_comp",
+      "title": "Comp Any?",
+      "format": "boolean",
+      "description": "Apakah ada metode analisa transaksi yang compatible?",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 197,
+      "field": "comp_m",
+      "title": "%Comp M",
+      "format": "compatibility",
+      "description": "Compatibility Bandar",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 198,
+      "field": "comp_nr",
+      "title": "%Comp NR",
+      "format": "compatibility",
+      "description": "Compatibility NonRetail",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 199,
+      "field": "comp_f",
+      "title": "%Comp F",
+      "format": "compatibility",
+      "description": "Compatibility Foreign",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 200,
+      "field": "comp_s",
+      "title": "%Comp S",
+      "format": "compatibility",
+      "description": "Compatibility Sultan",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 201,
+      "field": "comp_i",
+      "title": "%Comp I",
+      "format": "compatibility",
+      "description": "Compatibility Institusi",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 202,
+      "field": "comp_z",
+      "title": "%Comp Z",
+      "format": "compatibility",
+      "description": "Compatibility Zombie",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 203,
+      "field": "comp_m_short",
+      "title": "%Comp M Short",
+      "format": "compatibility",
+      "description": "Compatibility Bandar Jangka Pendek",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 204,
+      "field": "comp_nr_short",
+      "title": "%Comp NR Short",
+      "format": "compatibility",
+      "description": "Compatibility NonRetail Jangka Pendek",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 205,
+      "field": "comp_f_short",
+      "title": "%Comp F Short",
+      "format": "compatibility",
+      "description": "Compatibility Foreign Jangka Pendek",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 206,
+      "field": "comp_s_short",
+      "title": "%Comp S Short",
+      "format": "compatibility",
+      "description": "Compatibility Sultan Jangka Pendek",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 207,
+      "field": "comp_i_short",
+      "title": "%Comp I Short",
+      "format": "compatibility",
+      "description": "Compatibility Institusi Jangka Pendek",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 208,
+      "field": "comp_z_short",
+      "title": "%Comp Z Short",
+      "format": "compatibility",
+      "description": "Compatibility Zombie Jangka Pendek",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 209,
+      "field": "comp_m_mid",
+      "title": "%Comp M Mid",
+      "format": "compatibility",
+      "description": "Compatibility Bandar Jangka Menengah",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 210,
+      "field": "comp_nr_mid",
+      "title": "%Comp NR Mid",
+      "format": "compatibility",
+      "description": "Compatibility NonRetail Jangka Menengah",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 211,
+      "field": "comp_f_mid",
+      "title": "%Comp F Mid",
+      "format": "compatibility",
+      "description": "Compatibility Foreign Jangka Menengah",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 212,
+      "field": "comp_s_mid",
+      "title": "%Comp S Mid",
+      "format": "compatibility",
+      "description": "Compatibility Sultan Jangka Menengah",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 213,
+      "field": "comp_i_mid",
+      "title": "%Comp I Mid",
+      "format": "compatibility",
+      "description": "Compatibility Institusi Jangka Menengah",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 214,
+      "field": "comp_z_mid",
+      "title": "%Comp Z Mid",
+      "format": "compatibility",
+      "description": "Compatibility Zombie Jangka Menengah",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 215,
+      "field": "comp_m_long",
+      "title": "%Comp M Long",
+      "format": "compatibility",
+      "description": "Compatibility Bandar Jangka Panjang",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 216,
+      "field": "comp_nr_long",
+      "title": "%Comp NR Long",
+      "format": "compatibility",
+      "description": "Compatibility NonRetail Jangka Panjang",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 217,
+      "field": "comp_f_long",
+      "title": "%Comp F Long",
+      "format": "compatibility",
+      "description": "Compatibility Foreign Jangka Panjang",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 218,
+      "field": "comp_s_long",
+      "title": "%Comp S Long",
+      "format": "compatibility",
+      "description": "Compatibility Sultan Jangka Panjang",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 219,
+      "field": "comp_i_long",
+      "title": "%Comp I Long",
+      "format": "compatibility",
+      "description": "Compatibility Institusi Jangka Panjang",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 220,
+      "field": "comp_z_long",
+      "title": "%Comp Z Long",
+      "format": "compatibility",
+      "description": "Compatibility Zombie Jangka Panjang",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 221,
+      "field": "top_5_buyer",
+      "title": "Top5 NetBuy",
+      "format": "string",
+      "description": "Top 5 Net Buyer di Broker Summary",
+      "filter": {
+        "type": "string_list",
+        "ops": [
+          "ANY",
+          "ALL"
+        ]
+      }
+    },
+    {
+      "no": 222,
+      "field": "top_5_seller",
+      "title": "Top5 NetSell",
+      "format": "string",
+      "description": "Top 5 Net Seller di Broker Summary",
+      "filter": {
+        "type": "string_list",
+        "ops": [
+          "ANY",
+          "ALL"
+        ]
+      }
+    },
+    {
+      "no": 223,
+      "field": "top_10_buyer",
+      "title": "Top10 NetBuy",
+      "format": "string",
+      "description": "Top 10 Net Buyer di Broker Summary",
+      "filter": {
+        "type": "string_list",
+        "ops": [
+          "ANY",
+          "ALL"
+        ]
+      }
+    },
+    {
+      "no": 224,
+      "field": "top_10_seller",
+      "title": "Top10 NetSell",
+      "format": "string",
+      "description": "Top 10 Net Seller di Broker Summary",
+      "filter": {
+        "type": "string_list",
+        "ops": [
+          "ANY",
+          "ALL"
+        ]
+      }
+    },
+    {
+      "no": 225,
+      "field": "tektoker",
+      "title": "Tektoker",
+      "format": "string",
+      "description": "Tektoker di Broker Summary",
+      "filter": {
+        "type": "string_list",
+        "ops": [
+          "ANY",
+          "ALL"
+        ]
+      }
+    },
+    {
+      "no": 226,
+      "field": "is_liquid",
+      "title": "Likuid",
+      "format": "boolean",
+      "description": "Apakah Likuid atau tidak",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 227,
+      "field": "liquidity_type",
+      "title": "Likuiditas",
+      "format": "string",
+      "description": "Tingkat likuiditas",
+      "filter": {
+        "type": "categoric",
+        "ops": [
+          "LOW",
+          "NORMAL",
+          "HIGH",
+          "EXTREME"
+        ]
+      }
+    },
+    {
+      "no": 228,
+      "field": "is_crossing",
+      "title": "Cross",
+      "format": "boolean",
+      "description": "Transaksi tektok / kotor di intraday",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 229,
+      "field": "is_pinky",
+      "title": "Pinky",
+      "format": "boolean",
+      "description": "Potensi berkepentingan khusus",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 230,
+      "field": "is_f_i_crossing",
+      "title": "F-I Cross",
+      "format": "boolean",
+      "description": "Asing-Institusi Crossing",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 231,
+      "field": "is_i_z_crossing",
+      "title": "I-Z Cross",
+      "format": "boolean",
+      "description": "Institusi-Zombie Crossing",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 232,
+      "field": "last_date",
+      "title": "Date",
+      "format": "string",
+      "description": "Tanggal terakhir",
+      "filter": null
+    },
+    {
+      "no": 233,
+      "field": "high",
+      "title": "High",
+      "format": "uint",
+      "description": "Harga tertinggi",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 234,
+      "field": "low",
+      "title": "Low",
+      "format": "uint",
+      "description": "Harga terendah",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 235,
+      "field": "close",
+      "title": "Close",
+      "format": "uint",
+      "description": "Harga closing",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 236,
+      "field": "volume",
+      "title": "Volume",
+      "format": "number",
+      "description": "Volume transaksi",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 237,
+      "field": "hl2",
+      "title": "HL2",
+      "format": "uint",
+      "description": "HL2",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 238,
+      "field": "hlc3",
+      "title": "HLC3",
+      "format": "uint",
+      "description": "HLC3",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 239,
+      "field": "hlcc4",
+      "title": "HLCC4",
+      "format": "uint",
+      "description": "HLCC4",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 240,
+      "field": "ohlc4",
+      "title": "OHLC4",
+      "format": "uint",
+      "description": "OHLC4",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 241,
+      "field": "is_consol",
+      "title": "Consol",
+      "format": "boolean",
+      "description": "Harga nge-base / konsolidasi",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 242,
+      "field": "breakout_hhv5",
+      "title": "Breakout 5d",
+      "format": "boolean",
+      "description": "Breakout harga tertinggi 5 candle terakhir",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 243,
+      "field": "breakout_hhv10",
+      "title": "Breakout 10d",
+      "format": "boolean",
+      "description": "Breakout harga tertinggi 10 candle terakhir",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 244,
+      "field": "breakout_hhv20",
+      "title": "Breakout 20d",
+      "format": "boolean",
+      "description": "Breakout harga tertinggi 20 candle terakhir",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 245,
+      "field": "breakout_hhv50",
+      "title": "Breakout 50d",
+      "format": "boolean",
+      "description": "Breakout harga tertinggi 50 candle terakhir",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 246,
+      "field": "pct_1",
+      "title": "Chg1",
+      "format": "percent",
+      "description": "%perubahan harga 1 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 247,
+      "field": "pct_3",
+      "title": "Chg3",
+      "format": "percent",
+      "description": "%perubahan harga 3 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 248,
+      "field": "pct_5",
+      "title": "Chg5",
+      "format": "percent",
+      "description": "%perubahan harga 5 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 249,
+      "field": "pct_10",
+      "title": "Chg10",
+      "format": "percent",
+      "description": "%perubahan harga 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 250,
+      "field": "pct_20",
+      "title": "Chg20",
+      "format": "percent",
+      "description": "%perubahan harga 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 251,
+      "field": "pct_50",
+      "title": "Chg50",
+      "format": "percent",
+      "description": "%perubahan harga 50 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 252,
+      "field": "pct_100",
+      "title": "Chg100",
+      "format": "percent",
+      "description": "%perubahan harga 100 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 253,
+      "field": "pct_200",
+      "title": "Chg200",
+      "format": "percent",
+      "description": "%perubahan harga 200 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 254,
+      "field": "pct_vol_1",
+      "title": "VolChg1",
+      "format": "percent",
+      "description": "%perubahan volume 1 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 255,
+      "field": "pct_vol_3",
+      "title": "VolChg3",
+      "format": "percent",
+      "description": "%perubahan volume 3 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 256,
+      "field": "pct_vol_5",
+      "title": "VolChg5",
+      "format": "percent",
+      "description": "%perubahan volume 5 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 257,
+      "field": "pct_vol_10",
+      "title": "VolChg10",
+      "format": "percent",
+      "description": "%perubahan volume 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 258,
+      "field": "pct_vol_20",
+      "title": "VolChg20",
+      "format": "percent",
+      "description": "%perubahan volume 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 259,
+      "field": "pct_vol_50",
+      "title": "VolChg50",
+      "format": "percent",
+      "description": "%perubahan volume 50 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 260,
+      "field": "pct_vol_100",
+      "title": "VolChg100",
+      "format": "percent",
+      "description": "%perubahan volume 100 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 261,
+      "field": "pct_vol_200",
+      "title": "VolChg200",
+      "format": "percent",
+      "description": "%perubahan volume 200 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 262,
+      "field": "sma_3",
+      "title": "MA3",
+      "format": "uint",
+      "description": "Moving Avg. 3 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 263,
+      "field": "sma_5",
+      "title": "MA5",
+      "format": "uint",
+      "description": "Moving Avg. 5 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 264,
+      "field": "sma_10",
+      "title": "MA10",
+      "format": "uint",
+      "description": "Moving Avg. 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 265,
+      "field": "sma_20",
+      "title": "MA20",
+      "format": "uint",
+      "description": "Moving Avg. 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 266,
+      "field": "sma_50",
+      "title": "MA50",
+      "format": "uint",
+      "description": "Moving Avg. 50 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 267,
+      "field": "sma_100",
+      "title": "MA100",
+      "format": "uint",
+      "description": "Moving Avg. 100 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 268,
+      "field": "sma_200",
+      "title": "MA200",
+      "format": "uint",
+      "description": "Moving Avg. 200 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 269,
+      "field": "sma_gc_3_5",
+      "title": "MA 3-5 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara MA3 dan MA5",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 270,
+      "field": "sma_gc_5_10",
+      "title": "MA 5-10 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara MA5 dan MA10",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 271,
+      "field": "sma_gc_10_20",
+      "title": "MA 10-20 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara MA10 dan MA20",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 272,
+      "field": "sma_gc_20_50",
+      "title": "MA 20-50 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara MA20 dan MA50",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 273,
+      "field": "sma_gc_50_100",
+      "title": "MA 50-100 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara MA50 dan MA100",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 274,
+      "field": "sma_gc_100_200",
+      "title": "MA 100-200 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara MA100 dan MA200",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 275,
+      "field": "ema_3",
+      "title": "EMA3",
+      "format": "uint",
+      "description": "Exp. Moving Avg. 3 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 276,
+      "field": "ema_5",
+      "title": "EMA5",
+      "format": "uint",
+      "description": "Exp. Moving Avg. 5 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 277,
+      "field": "ema_10",
+      "title": "EMA10",
+      "format": "uint",
+      "description": "Exp. Moving Avg. 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 278,
+      "field": "ema_20",
+      "title": "EMA20",
+      "format": "uint",
+      "description": "Exp. Moving Avg. 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 279,
+      "field": "ema_50",
+      "title": "EMA50",
+      "format": "uint",
+      "description": "Exp. Moving Avg. 50 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 280,
+      "field": "ema_100",
+      "title": "EMA100",
+      "format": "uint",
+      "description": "Exp. Moving Avg. 100 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 281,
+      "field": "ema_200",
+      "title": "EMA200",
+      "format": "uint",
+      "description": "Exp. Moving Avg. 200 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 282,
+      "field": "ema_gc_3_5",
+      "title": "EMA 3-5 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara EMA3 dan EMA5",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 283,
+      "field": "ema_gc_5_10",
+      "title": "EMA 5-10 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara EMA5 dan EMA10",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 284,
+      "field": "ema_gc_10_20",
+      "title": "EMA 10-20 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara EMA10 dan EMA20",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 285,
+      "field": "ema_gc_20_50",
+      "title": "EMA 20-50 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara EMA20 dan EMA50",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 286,
+      "field": "ema_gc_50_100",
+      "title": "EMA 50-100 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara EMA50 dan EMA100",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 287,
+      "field": "ema_gc_100_200",
+      "title": "EMA 100-200 GC",
+      "format": "boolean",
+      "description": "Golden Cross antara EMA100 dan EMA200",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 288,
+      "field": "atr_14",
+      "title": "ATR14",
+      "format": "float",
+      "description": "Avg. True Range 14 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 289,
+      "field": "atr_20",
+      "title": "ATR20",
+      "format": "float",
+      "description": "Avg. True Range 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 290,
+      "field": "volatility_type",
+      "title": "Volatility",
+      "format": "string",
+      "description": "Volatilitas pergerakan harga (low, normal, high, extreme)",
+      "filter": {
+        "type": "categoric",
+        "ops": [
+          "LOW",
+          "NORMAL",
+          "HIGH",
+          "EXTREME"
+        ]
+      }
+    },
+    {
+      "no": 291,
+      "field": "stoch_k",
+      "title": "Stoch %K",
+      "format": "ufloat",
+      "description": "Stochastic Fast",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 292,
+      "field": "stoch_d",
+      "title": "Stoch %D",
+      "format": "ufloat",
+      "description": "Stochastic Slow",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 293,
+      "field": "stoch_k_ob",
+      "title": "Stoch %K OB",
+      "format": "boolean",
+      "description": "Stochastic Fast Overbought",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 294,
+      "field": "stoch_k_os",
+      "title": "Stoch %K OS",
+      "format": "boolean",
+      "description": "Stochastic Fast Oversold",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 295,
+      "field": "stoch_d_ob",
+      "title": "Stoch %D OB",
+      "format": "boolean",
+      "description": "Stochastic Slow Overbought",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 296,
+      "field": "stoch_d_os",
+      "title": "Stoch %D OS",
+      "format": "boolean",
+      "description": "Stochastic Slow Oversold",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 297,
+      "field": "stoch_gc",
+      "title": "Stoch GC",
+      "format": "boolean",
+      "description": "Stochastic Golden Cross",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 298,
+      "field": "stochrsi_k",
+      "title": "StochRSI %K",
+      "format": "ufloat",
+      "description": "StochasticRSI Fast",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 299,
+      "field": "stochrsi_d",
+      "title": "StochRSI %D",
+      "format": "ufloat",
+      "description": "StochasticRSI Slow",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 300,
+      "field": "stochrsi_k_ob",
+      "title": "StochRSI %K OB",
+      "format": "boolean",
+      "description": "StochasticRSI Fast Overbought",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 301,
+      "field": "stochrsi_k_os",
+      "title": "StochRSI %K OS",
+      "format": "boolean",
+      "description": "StochasticRSI Fast Oversold",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 302,
+      "field": "stochrsi_d_ob",
+      "title": "StochRSI %D OB",
+      "format": "boolean",
+      "description": "StochasticRSI Slow Overbought",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 303,
+      "field": "stochrsi_d_os",
+      "title": "StochRSI %D OS",
+      "format": "boolean",
+      "description": "StochasticRSI Slow Oversold",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ],
+        "unit": "Miliar"
+      }
+    },
+    {
+      "no": 304,
+      "field": "stochrsi_gc",
+      "title": "StochRSI GC",
+      "format": "boolean",
+      "description": "StochasticRSI Golden Cross",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 305,
+      "field": "rsi",
+      "title": "RSI",
+      "format": "ufloat",
+      "description": "RSI",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 306,
+      "field": "rsi_ob",
+      "title": "RSI OB",
+      "format": "boolean",
+      "description": "RSI Overbought",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 307,
+      "field": "rsi_os",
+      "title": "RSI OS",
+      "format": "boolean",
+      "description": "RSI Oversold",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 308,
+      "field": "rsi_bull",
+      "title": "RSI Bull",
+      "format": "boolean",
+      "description": "RSI Bullish Signal (recover dari oversold)",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 309,
+      "field": "sar",
+      "title": "SAR",
+      "format": "uint",
+      "description": "Parabolic SAR",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 310,
+      "field": "sar_trend",
+      "title": "SAR Trend",
+      "format": "string",
+      "description": "Trend berdasarkan Parabolic SAR",
+      "filter": {
+        "type": "categoric",
+        "ops": [
+          "BULL",
+          "BEAR"
+        ]
+      }
+    },
+    {
+      "no": 311,
+      "field": "sar_flip_bull",
+      "title": "SAR Flip Bull",
+      "format": "boolean",
+      "description": "Parabolic SAR Flip to BULL",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 312,
+      "field": "sar_flip_bear",
+      "title": "SAR Flip Bear",
+      "format": "boolean",
+      "description": "Parabolic SAR Flip to BEAR",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 313,
+      "field": "macd",
+      "title": "MACD",
+      "format": "float",
+      "description": "MACD",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 314,
+      "field": "macd_hist",
+      "title": "MACD Hist",
+      "format": "float",
+      "description": "MACD Hist",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 315,
+      "field": "macd_signal",
+      "title": "MACD Signal",
+      "format": "float",
+      "description": "MACD Signal",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 316,
+      "field": "macd_gc",
+      "title": "MACD GC",
+      "format": "boolean",
+      "description": "MACD Golden Cross",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 317,
+      "field": "bband_upper",
+      "title": "BB Up",
+      "format": "uint",
+      "description": "Bollinger Upper Band",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 318,
+      "field": "bband_middle",
+      "title": "BB Mid",
+      "format": "uint",
+      "description": "Bollinger Middle Band",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 319,
+      "field": "bband_lower",
+      "title": "BB Low",
+      "format": "uint",
+      "description": "Bollinger Lower Band",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 320,
+      "field": "sma_vol_10",
+      "title": "MAVol10",
+      "format": "number",
+      "description": "Moving Avg. Volume 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 321,
+      "field": "sma_vol_20",
+      "title": "MAVol20",
+      "format": "number",
+      "description": "Moving Avg. Volume 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 322,
+      "field": "rel_vol_10",
+      "title": "RVol10",
+      "format": "ufloat",
+      "description": "Relative Volume 10 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 323,
+      "field": "rel_vol_20",
+      "title": "RVol20",
+      "format": "ufloat",
+      "description": "Relative Volume 20 candle",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 324,
+      "field": "is_spike_volume_1",
+      "title": "VolSpike 1d",
+      "format": "boolean",
+      "description": "Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 1 candle terakhir",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 325,
+      "field": "is_spike_volume_3",
+      "title": "VolSpike 3d",
+      "format": "boolean",
+      "description": "Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 3 candle terakhir",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 326,
+      "field": "is_spike_volume_5",
+      "title": "VolSpike 5d",
+      "format": "boolean",
+      "description": "Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 5 candle terakhir",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 327,
+      "field": "is_spike_volume_10",
+      "title": "VolSpike 10d",
+      "format": "boolean",
+      "description": "Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 10 candle terakhir",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 328,
+      "field": "is_spike_volume_20",
+      "title": "VolSpike 20d",
+      "format": "boolean",
+      "description": "Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 20 candle terakhir",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 329,
+      "field": "is_spike_volume_50",
+      "title": "VolSpike 50d",
+      "format": "boolean",
+      "description": "Apakah terdeteksi volume spike (jauh lebih besar dari volume rata-rata) dalam 50 candle terakhir",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 330,
+      "field": "csp_up",
+      "title": "CandleUp",
+      "format": "boolean",
+      "description": "Candle Up / Hijau (close > open)",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 331,
+      "field": "csp_down",
+      "title": "CandleDown",
+      "format": "boolean",
+      "description": "Candle Down / Merah (close < open)",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 332,
+      "field": "csp_eveningstar",
+      "title": "EveningStar",
+      "format": "boolean",
+      "description": "Candlestick Pattern Evening Star",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 333,
+      "field": "csp_morningstar",
+      "title": "MorningStar",
+      "format": "boolean",
+      "description": "Candlestick Pattern Morning Star",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 334,
+      "field": "csp_eveningdojistar",
+      "title": "EveningDojiStar",
+      "format": "boolean",
+      "description": "Candlestick Pattern Evening Doji Star",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 335,
+      "field": "csp_morningdojistar",
+      "title": "MorningDojiStar",
+      "format": "boolean",
+      "description": "Candlestick Pattern Morning Doji Star",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 336,
+      "field": "csp_bear_marubozu",
+      "title": "BearMarubozu",
+      "format": "boolean",
+      "description": "Candlestick Pattern Bear Marubozu",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 337,
+      "field": "csp_bull_marubozu",
+      "title": "BullMarubozu",
+      "format": "boolean",
+      "description": "Candlestick Pattern Bull Marubozu",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 338,
+      "field": "csp_3blackcrows",
+      "title": "3BlackCrows",
+      "format": "boolean",
+      "description": "Candlestick Pattern 3 Black Crows",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 339,
+      "field": "csp_3whitesoldiers",
+      "title": "3WhiteSoldiers",
+      "format": "boolean",
+      "description": "Candlestick Pattern 3 White Soldiers",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 340,
+      "field": "csp_darkcloudcover",
+      "title": "DarkCloudCover",
+      "format": "boolean",
+      "description": "Candlestick Pattern Dark Cloud Cover",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 341,
+      "field": "csp_piercingline",
+      "title": "PiercingLine",
+      "format": "boolean",
+      "description": "Candlestick Pattern Piercing Line",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 342,
+      "field": "csp_gravestonedoji",
+      "title": "GravestoneDoji",
+      "format": "boolean",
+      "description": "Candlestick Pattern Gravestone Doji",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 343,
+      "field": "csp_dragonflydoji",
+      "title": "DragonflyDoji",
+      "format": "boolean",
+      "description": "Candlestick Pattern Dragonfly Doji",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 344,
+      "field": "csp_doji",
+      "title": "Doji",
+      "format": "boolean",
+      "description": "Candlestick Pattern Doji",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 345,
+      "field": "csp_longleggeddoji",
+      "title": "LongLeggedDoji",
+      "format": "boolean",
+      "description": "Candlestick Pattern Long Legged Doji",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 346,
+      "field": "csp_bear_spinningtop",
+      "title": "BearSpinningTop",
+      "format": "boolean",
+      "description": "Candlestick Pattern Bear Spinning Top",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 347,
+      "field": "csp_bull_spinningtop",
+      "title": "BullSpinningTop",
+      "format": "boolean",
+      "description": "Candlestick Pattern Bull Spinning Top",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 348,
+      "field": "csp_shootingstar",
+      "title": "ShootingStar",
+      "format": "boolean",
+      "description": "Candlestick Pattern Shooting Star",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 349,
+      "field": "csp_hammer",
+      "title": "Hammer",
+      "format": "boolean",
+      "description": "Candlestick Pattern Hammer",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 350,
+      "field": "csp_hangingman",
+      "title": "HangingMan",
+      "format": "boolean",
+      "description": "Candlestick Pattern Hanging Man",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 351,
+      "field": "csp_invertedhammer",
+      "title": "InvertedHammer",
+      "format": "boolean",
+      "description": "Candlestick Pattern Inverted Hammer",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 352,
+      "field": "csp_bear_harami",
+      "title": "BearHarami",
+      "format": "boolean",
+      "description": "Candlestick Pattern Bear Harami",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 353,
+      "field": "csp_bull_harami",
+      "title": "BullHarami",
+      "format": "boolean",
+      "description": "Candlestick Pattern Bull Harami",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 354,
+      "field": "csp_bear_haramicross",
+      "title": "BearHaramiCross",
+      "format": "boolean",
+      "description": "Candlestick Pattern Bear Harami Cross",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 355,
+      "field": "csp_bull_haramicross",
+      "title": "BullHaramiCross",
+      "format": "boolean",
+      "description": "Candlestick Pattern Bull Harami Cross",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 356,
+      "field": "csp_bear_engulfing",
+      "title": "BearEngulfing",
+      "format": "boolean",
+      "description": "Candlestick Pattern Bear Engulfing",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 357,
+      "field": "csp_bull_engulfing",
+      "title": "BullEngulfing",
+      "format": "boolean",
+      "description": "Candlestick Pattern Bull Engulfing",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 358,
+      "field": "rotation_strength_d",
+      "title": "RotStrength D",
+      "format": "string",
+      "description": "Kekuatan Rotation Chart Harian",
+      "filter": {
+        "type": "categoric",
+        "ops": [
+          "WEAK",
+          "STRONG",
+          "ABNORMAL"
+        ]
+      }
+    },
+    {
+      "no": 359,
+      "field": "rotation_phase_d",
+      "title": "RotPhase D",
+      "format": "string",
+      "description": "Fase Rotation Chart Harian",
+      "filter": {
+        "type": "categoric",
+        "ops": [
+          "UNDERPERFORM",
+          "IMPROVING",
+          "OUTPERFORM",
+          "WEAKENING"
+        ]
+      }
+    },
+    {
+      "no": 360,
+      "field": "rotation_direction_d",
+      "title": "RotDir D",
+      "format": "direction",
+      "description": "Arah Rotation Chart Harian",
+      "filter": {
+        "type": "categoric",
+        "ops": [
+          "U",
+          "UR",
+          "R",
+          "BR",
+          "B",
+          "BL",
+          "L",
+          "UL"
+        ]
+      }
+    },
+    {
+      "no": 361,
+      "field": "rotation_strength_w",
+      "title": "RotStrength W",
+      "format": "string",
+      "description": "Kekuatan Rotation Chart Mingguan",
+      "filter": {
+        "type": "categoric",
+        "ops": [
+          "WEAK",
+          "STRONG",
+          "ABNORMAL"
+        ]
+      }
+    },
+    {
+      "no": 362,
+      "field": "rotation_phase_w",
+      "title": "RotPhase W",
+      "format": "string",
+      "description": "Fase Rotation Chart Mingguan",
+      "filter": {
+        "type": "categoric",
+        "ops": [
+          "UNDERPERFORM",
+          "IMPROVING",
+          "OUTPERFORM",
+          "WEAKENING"
+        ]
+      }
+    },
+    {
+      "no": 363,
+      "field": "rotation_direction_w",
+      "title": "RotDir W",
+      "format": "direction",
+      "description": "Arah Rotation Chart Mingguan",
+      "filter": {
+        "type": "categoric",
+        "ops": [
+          "U",
+          "UR",
+          "R",
+          "BR",
+          "B",
+          "BL",
+          "L",
+          "UL"
+        ]
+      }
+    },
+    {
+      "no": 364,
+      "field": "market_cap_t",
+      "title": "Mcap (T)",
+      "format": "ufloat",
+      "description": "Market Cap (Triliun)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "Triliun"
+      }
+    },
+    {
+      "no": 365,
+      "field": "scripless_m_1",
+      "title": "Scripless m1",
+      "format": "percent",
+      "description": "Scripless 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 366,
+      "field": "scripless_m_2",
+      "title": "Scripless m2",
+      "format": "percent",
+      "description": "Scripless 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 367,
+      "field": "scripless_m_3",
+      "title": "Scripless m3",
+      "format": "percent",
+      "description": "Scripless 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 368,
+      "field": "scripless_m_4",
+      "title": "Scripless m4",
+      "format": "percent",
+      "description": "Scripless 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 369,
+      "field": "scripless_m_5",
+      "title": "Scripless m5",
+      "format": "percent",
+      "description": "Scripless 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 370,
+      "field": "scripless_m_6",
+      "title": "Scripless m6",
+      "format": "percent",
+      "description": "Scripless 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 371,
+      "field": "rbpos_m_1",
+      "title": "Bpos R m1",
+      "format": "percent",
+      "description": "Kepemilikan Individu Lokal 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 372,
+      "field": "rbpos_m_2",
+      "title": "Bpos R m2",
+      "format": "percent",
+      "description": "Kepemilikan Individu Lokal 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 373,
+      "field": "rbpos_m_3",
+      "title": "Bpos R m3",
+      "format": "percent",
+      "description": "Kepemilikan Individu Lokal 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 374,
+      "field": "rbpos_m_4",
+      "title": "Bpos R m4",
+      "format": "percent",
+      "description": "Kepemilikan Individu Lokal 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 375,
+      "field": "rbpos_m_5",
+      "title": "Bpos R m5",
+      "format": "percent",
+      "description": "Kepemilikan Individu Lokal 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 376,
+      "field": "rbpos_m_6",
+      "title": "Bpos R m6",
+      "format": "percent",
+      "description": "Kepemilikan Individu Lokal 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 377,
+      "field": "ibpos_m_1",
+      "title": "Bpos I m1",
+      "format": "percent",
+      "description": "Kepemilikan Institusi 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 378,
+      "field": "ibpos_m_2",
+      "title": "Bpos I m2",
+      "format": "percent",
+      "description": "Kepemilikan Institusi 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 379,
+      "field": "ibpos_m_3",
+      "title": "Bpos I m3",
+      "format": "percent",
+      "description": "Kepemilikan Institusi 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 380,
+      "field": "ibpos_m_4",
+      "title": "Bpos I m4",
+      "format": "percent",
+      "description": "Kepemilikan Institusi 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 381,
+      "field": "ibpos_m_5",
+      "title": "Bpos I m5",
+      "format": "percent",
+      "description": "Kepemilikan Institusi 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 382,
+      "field": "ibpos_m_6",
+      "title": "Bpos I m6",
+      "format": "percent",
+      "description": "Kepemilikan Institusi 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 383,
+      "field": "fbpos_m_1",
+      "title": "Bpos F m1",
+      "format": "percent",
+      "description": "Kepemilikan Asing 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 384,
+      "field": "fbpos_m_2",
+      "title": "Bpos F m2",
+      "format": "percent",
+      "description": "Kepemilikan Asing 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 385,
+      "field": "fbpos_m_3",
+      "title": "Bpos F m3",
+      "format": "percent",
+      "description": "Kepemilikan Asing 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 386,
+      "field": "fbpos_m_4",
+      "title": "Bpos F m4",
+      "format": "percent",
+      "description": "Kepemilikan Asing 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 387,
+      "field": "fbpos_m_5",
+      "title": "Bpos F m5",
+      "format": "percent",
+      "description": "Kepemilikan Asing 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 388,
+      "field": "fbpos_m_6",
+      "title": "Bpos F m6",
+      "format": "percent",
+      "description": "Kepemilikan Asing 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 389,
+      "field": "rbpos_chg_m_1",
+      "title": "BposChg R m1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 390,
+      "field": "rbpos_chg_m_2",
+      "title": "BposChg R m2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 391,
+      "field": "rbpos_chg_m_3",
+      "title": "BposChg R m3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 392,
+      "field": "rbpos_chg_m_4",
+      "title": "BposChg R m4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 393,
+      "field": "rbpos_chg_m_5",
+      "title": "BposChg R m5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 394,
+      "field": "rbpos_chg_m_6",
+      "title": "BposChg R m6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 395,
+      "field": "fbpos_chg_m_1",
+      "title": "BposChg F m1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asing 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 396,
+      "field": "fbpos_chg_m_2",
+      "title": "BposChg F m2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asing 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 397,
+      "field": "fbpos_chg_m_3",
+      "title": "BposChg F m3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asing 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 398,
+      "field": "fbpos_chg_m_4",
+      "title": "BposChg F m4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asing 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 399,
+      "field": "fbpos_chg_m_5",
+      "title": "BposChg F m5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asing 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 400,
+      "field": "fbpos_chg_m_6",
+      "title": "BposChg F m6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asing 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 401,
+      "field": "ibpos_chg_m_1",
+      "title": "BposChg I m1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Institusi 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 402,
+      "field": "ibpos_chg_m_2",
+      "title": "BposChg I m2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Institusi 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 403,
+      "field": "ibpos_chg_m_3",
+      "title": "BposChg I m3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Institusi 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 404,
+      "field": "ibpos_chg_m_4",
+      "title": "BposChg I m4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Institusi 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 405,
+      "field": "ibpos_chg_m_5",
+      "title": "BposChg I m5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Institusi 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 406,
+      "field": "ibpos_chg_m_6",
+      "title": "BposChg I m6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Institusi 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 407,
+      "field": "local_asuransi_chg_m_1",
+      "title": "IS Lokal Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Lokal 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 408,
+      "field": "local_asuransi_chg_m_2",
+      "title": "IS Lokal Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Lokal 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 409,
+      "field": "local_asuransi_chg_m_3",
+      "title": "IS Lokal Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Lokal 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 410,
+      "field": "local_asuransi_chg_m_4",
+      "title": "IS Lokal Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Lokal 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 411,
+      "field": "local_asuransi_chg_m_5",
+      "title": "IS Lokal Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Lokal 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 412,
+      "field": "local_asuransi_chg_m_6",
+      "title": "IS Lokal Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Lokal 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 413,
+      "field": "local_korporat_chg_m_2",
+      "title": "CP Lokal Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Lokal 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 414,
+      "field": "local_korporat_chg_m_1",
+      "title": "CP Lokal Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Lokal 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 415,
+      "field": "local_korporat_chg_m_3",
+      "title": "CP Lokal Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Lokal 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 416,
+      "field": "local_korporat_chg_m_4",
+      "title": "CP Lokal Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Lokal 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 417,
+      "field": "local_korporat_chg_m_5",
+      "title": "CP Lokal Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Lokal 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 418,
+      "field": "local_korporat_chg_m_6",
+      "title": "CP Lokal Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Lokal 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 419,
+      "field": "local_dapen_chg_m_1",
+      "title": "PF Lokal Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Lokal 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 420,
+      "field": "local_dapen_chg_m_2",
+      "title": "PF Lokal Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Lokal 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 421,
+      "field": "local_dapen_chg_m_3",
+      "title": "PF Lokal Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Lokal 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 422,
+      "field": "local_dapen_chg_m_4",
+      "title": "PF Lokal Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Lokal 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 423,
+      "field": "local_dapen_chg_m_5",
+      "title": "PF Lokal Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Lokal 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 424,
+      "field": "local_dapen_chg_m_6",
+      "title": "PF Lokal Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Lokal 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 425,
+      "field": "local_bank_chg_m_1",
+      "title": "IB Lokal Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Lokal 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 426,
+      "field": "local_bank_chg_m_2",
+      "title": "IB Lokal Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Lokal 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 427,
+      "field": "local_bank_chg_m_3",
+      "title": "IB Lokal Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Lokal 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 428,
+      "field": "local_bank_chg_m_4",
+      "title": "IB Lokal Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Lokal 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 429,
+      "field": "local_bank_chg_m_5",
+      "title": "IB Lokal Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Lokal 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 430,
+      "field": "local_bank_chg_m_6",
+      "title": "IB Lokal Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Lokal 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 431,
+      "field": "local_individual_chg_m_1",
+      "title": "ID Lokal Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 432,
+      "field": "local_individual_chg_m_2",
+      "title": "ID Lokal Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 433,
+      "field": "local_individual_chg_m_3",
+      "title": "ID Lokal Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 434,
+      "field": "local_individual_chg_m_4",
+      "title": "ID Lokal Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 435,
+      "field": "local_individual_chg_m_5",
+      "title": "ID Lokal Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 436,
+      "field": "local_individual_chg_m_6",
+      "title": "ID Lokal Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Lokal 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 437,
+      "field": "local_reksadana_chg_m_1",
+      "title": "MF Lokal Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Lokal 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 438,
+      "field": "local_reksadana_chg_m_2",
+      "title": "MF Lokal Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Lokal 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 439,
+      "field": "local_reksadana_chg_m_3",
+      "title": "MF Lokal Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Lokal 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 440,
+      "field": "local_reksadana_chg_m_4",
+      "title": "MF Lokal Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Lokal 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 441,
+      "field": "local_reksadana_chg_m_5",
+      "title": "MF Lokal Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Lokal 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 442,
+      "field": "local_reksadana_chg_m_6",
+      "title": "MF Lokal Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Lokal 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 443,
+      "field": "local_sekuritas_chg_m_1",
+      "title": "SC Lokal Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Lokal 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 444,
+      "field": "local_sekuritas_chg_m_2",
+      "title": "SC Lokal Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Lokal 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 445,
+      "field": "local_sekuritas_chg_m_3",
+      "title": "SC Lokal Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Lokal 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 446,
+      "field": "local_sekuritas_chg_m_4",
+      "title": "SC Lokal Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Lokal 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 447,
+      "field": "local_sekuritas_chg_m_5",
+      "title": "SC Lokal Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Lokal 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 448,
+      "field": "local_sekuritas_chg_m_6",
+      "title": "SC Lokal Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Lokal 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 449,
+      "field": "local_yayasan_chg_m_1",
+      "title": "FD Lokal Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Lokal 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 450,
+      "field": "local_yayasan_chg_m_2",
+      "title": "FD Lokal Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Lokal 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 451,
+      "field": "local_yayasan_chg_m_3",
+      "title": "FD Lokal Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Lokal 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 452,
+      "field": "local_yayasan_chg_m_4",
+      "title": "FD Lokal Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Lokal 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 453,
+      "field": "local_yayasan_chg_m_5",
+      "title": "FD Lokal Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Lokal 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 454,
+      "field": "local_yayasan_chg_m_6",
+      "title": "FD Lokal Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Lokal 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 455,
+      "field": "local_lainnya_chg_m_1",
+      "title": "OT Lokal Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Lokal 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 456,
+      "field": "local_lainnya_chg_m_2",
+      "title": "OT Lokal Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Lokal 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 457,
+      "field": "local_lainnya_chg_m_3",
+      "title": "OT Lokal Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Lokal 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 458,
+      "field": "local_lainnya_chg_m_4",
+      "title": "OT Lokal Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Lokal 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 459,
+      "field": "local_lainnya_chg_m_5",
+      "title": "OT Lokal Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Lokal 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 460,
+      "field": "local_lainnya_chg_m_6",
+      "title": "OT Lokal Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Lokal 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 461,
+      "field": "foreign_asuransi_chg_m_1",
+      "title": "IS Asing Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Asing 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 462,
+      "field": "foreign_asuransi_chg_m_2",
+      "title": "IS Asing Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Asing 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 463,
+      "field": "foreign_asuransi_chg_m_3",
+      "title": "IS Asing Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Asing 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 464,
+      "field": "foreign_asuransi_chg_m_4",
+      "title": "IS Asing Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Asing 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 465,
+      "field": "foreign_asuransi_chg_m_5",
+      "title": "IS Asing Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Asing 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 466,
+      "field": "foreign_asuransi_chg_m_6",
+      "title": "IS Asing Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Asuransi Asing 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 467,
+      "field": "foreign_korporat_chg_m_2",
+      "title": "CP Asing Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Asing 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 468,
+      "field": "foreign_korporat_chg_m_1",
+      "title": "CP Asing Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Asing 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 469,
+      "field": "foreign_korporat_chg_m_3",
+      "title": "CP Asing Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Asing 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 470,
+      "field": "foreign_korporat_chg_m_4",
+      "title": "CP Asing Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Asing 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 471,
+      "field": "foreign_korporat_chg_m_5",
+      "title": "CP Asing Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Asing 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 472,
+      "field": "foreign_korporat_chg_m_6",
+      "title": "CP Asing Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Korporat Asing 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 473,
+      "field": "foreign_dapen_chg_m_1",
+      "title": "PF Asing Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Asing 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 474,
+      "field": "foreign_dapen_chg_m_2",
+      "title": "PF Asing Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Asing 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 475,
+      "field": "foreign_dapen_chg_m_3",
+      "title": "PF Asing Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Asing 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 476,
+      "field": "foreign_dapen_chg_m_4",
+      "title": "PF Asing Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Asing 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 477,
+      "field": "foreign_dapen_chg_m_5",
+      "title": "PF Asing Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Asing 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 478,
+      "field": "foreign_dapen_chg_m_6",
+      "title": "PF Asing Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Dapen Asing 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 479,
+      "field": "foreign_bank_chg_m_1",
+      "title": "IB Asing Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Asing 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 480,
+      "field": "foreign_bank_chg_m_2",
+      "title": "IB Asing Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Asing 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 481,
+      "field": "foreign_bank_chg_m_3",
+      "title": "IB Asing Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Asing 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 482,
+      "field": "foreign_bank_chg_m_4",
+      "title": "IB Asing Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Asing 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 483,
+      "field": "foreign_bank_chg_m_5",
+      "title": "IB Asing Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Asing 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 484,
+      "field": "foreign_bank_chg_m_6",
+      "title": "IB Asing Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Bank Asing 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 485,
+      "field": "foreign_individual_chg_m_1",
+      "title": "ID Asing Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Asing 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 486,
+      "field": "foreign_individual_chg_m_2",
+      "title": "ID Asing Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Asing 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 487,
+      "field": "foreign_individual_chg_m_3",
+      "title": "ID Asing Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Asing 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 488,
+      "field": "foreign_individual_chg_m_4",
+      "title": "ID Asing Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Asing 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 489,
+      "field": "foreign_individual_chg_m_5",
+      "title": "ID Asing Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Asing 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 490,
+      "field": "foreign_individual_chg_m_6",
+      "title": "ID Asing Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Individu Asing 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 491,
+      "field": "foreign_reksadana_chg_m_1",
+      "title": "MF Asing Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Asing 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 492,
+      "field": "foreign_reksadana_chg_m_2",
+      "title": "MF Asing Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Asing 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 493,
+      "field": "foreign_reksadana_chg_m_3",
+      "title": "MF Asing Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Asing 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 494,
+      "field": "foreign_reksadana_chg_m_4",
+      "title": "MF Asing Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Asing 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 495,
+      "field": "foreign_reksadana_chg_m_5",
+      "title": "MF Asing Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Asing 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 496,
+      "field": "foreign_reksadana_chg_m_6",
+      "title": "MF Asing Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Reksadana Asing 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 497,
+      "field": "foreign_sekuritas_chg_m_1",
+      "title": "SC Asing Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Asing 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 498,
+      "field": "foreign_sekuritas_chg_m_2",
+      "title": "SC Asing Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Asing 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 499,
+      "field": "foreign_sekuritas_chg_m_3",
+      "title": "SC Asing Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Asing 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 500,
+      "field": "foreign_sekuritas_chg_m_4",
+      "title": "SC Asing Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Asing 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 501,
+      "field": "foreign_sekuritas_chg_m_5",
+      "title": "SC Asing Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Asing 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 502,
+      "field": "foreign_sekuritas_chg_m_6",
+      "title": "SC Asing Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Sekuritas Asing 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 503,
+      "field": "foreign_yayasan_chg_m_1",
+      "title": "FD Asing Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Asing 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 504,
+      "field": "foreign_yayasan_chg_m_2",
+      "title": "FD Asing Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Asing 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 505,
+      "field": "foreign_yayasan_chg_m_3",
+      "title": "FD Asing Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Asing 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 506,
+      "field": "foreign_yayasan_chg_m_4",
+      "title": "FD Asing Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Asing 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 507,
+      "field": "foreign_yayasan_chg_m_5",
+      "title": "FD Asing Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Asing 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 508,
+      "field": "foreign_yayasan_chg_m_6",
+      "title": "FD Asing Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Yayasan Asing 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 509,
+      "field": "foreign_lainnya_chg_m_1",
+      "title": "OT Asing Chg M1",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Asing 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 510,
+      "field": "foreign_lainnya_chg_m_2",
+      "title": "OT Asing Chg M2",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Asing 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 511,
+      "field": "foreign_lainnya_chg_m_3",
+      "title": "OT Asing Chg M3",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Asing 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 512,
+      "field": "foreign_lainnya_chg_m_4",
+      "title": "OT Asing Chg M4",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Asing 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 513,
+      "field": "foreign_lainnya_chg_m_5",
+      "title": "OT Asing Chg M5",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Asing 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 514,
+      "field": "foreign_lainnya_chg_m_6",
+      "title": "OT Asing Chg M6",
+      "format": "percent",
+      "description": "Perubahan %Kepemilikan Lainnya Asing 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 515,
+      "field": "scripless_chg_m_1",
+      "title": "ScriplessChg m1",
+      "format": "percent",
+      "description": "Perubahan %Scripless 1 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 516,
+      "field": "scripless_chg_m_2",
+      "title": "ScriplessChg m2",
+      "format": "percent",
+      "description": "Perubahan %Scripless 2 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 517,
+      "field": "scripless_chg_m_3",
+      "title": "ScriplessChg m3",
+      "format": "percent",
+      "description": "Perubahan %Scripless 3 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 518,
+      "field": "scripless_chg_m_4",
+      "title": "ScriplessChg m4",
+      "format": "percent",
+      "description": "Perubahan %Scripless 4 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 519,
+      "field": "scripless_chg_m_5",
+      "title": "ScriplessChg m5",
+      "format": "percent",
+      "description": "Perubahan %Scripless 5 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 520,
+      "field": "scripless_chg_m_6",
+      "title": "ScriplessChg m6",
+      "format": "percent",
+      "description": "Perubahan %Scripless 6 bulan lalu",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 521,
+      "field": "neo_institution_buyback_m_1",
+      "title": "Buyback m1",
+      "format": "boolean",
+      "description": "Potensi Buyback Institusi menurut NeoBDM 1 bulan lalu",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 522,
+      "field": "neo_institution_buyback_m_2",
+      "title": "Buyback m2",
+      "format": "boolean",
+      "description": "Potensi Buyback Institusi menurut NeoBDM 2 bulan lalu",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 523,
+      "field": "neo_institution_buyback_m_3",
+      "title": "Buyback m3",
+      "format": "boolean",
+      "description": "Potensi Buyback Institusi menurut NeoBDM 3 bulan lalu",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 524,
+      "field": "neo_nominee_indication_m_1",
+      "title": "Nominee m1",
+      "format": "boolean",
+      "description": "Indikasi Nominee menurut NeoBDM 1 bulan lalu",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 525,
+      "field": "neo_nominee_indication_m_2",
+      "title": "Nominee m2",
+      "format": "boolean",
+      "description": "Indikasi Nominee menurut NeoBDM 2 bulan lalu",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 526,
+      "field": "neo_nominee_indication_m_3",
+      "title": "Nominee m3",
+      "format": "boolean",
+      "description": "Indikasi Nominee menurut NeoBDM 3 bulan lalu",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 527,
+      "field": "suspend",
+      "title": "Suspend",
+      "format": "boolean",
+      "description": "Suspend",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 528,
+      "field": "special_notice",
+      "title": "FCA",
+      "format": "boolean",
+      "description": "Masuk Papan Pemantauan Khusus",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 529,
+      "field": "hsc",
+      "title": "HSC",
+      "format": "boolean",
+      "description": "Saham Kepemilikan Terkonsentrasi Tinggi (HSC) menurut kriteria bursa",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 530,
+      "field": "syariah",
+      "title": "Syariah",
+      "format": "boolean",
+      "description": "Apakah saham Syariah atau tidak",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "no": 531,
+      "field": "seasonality_proba_m_0",
+      "title": "Proba m0",
+      "format": "percent",
+      "description": "Seasonality - Probabilitas saham naik di bulan ini secara historis",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 532,
+      "field": "seasonality_proba_m_1",
+      "title": "Proba m1",
+      "format": "percent",
+      "description": "Seasonality - Probabilitas saham naik di bulan depan secara historis",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 533,
+      "field": "seasonality_expectancy_m_0",
+      "title": "Exp m0",
+      "format": "percent",
+      "description": "Seasonality - Persen kenaikan saham di bulan ini secara historis",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 534,
+      "field": "seasonality_expectancy_m_1",
+      "title": "Exp m1",
+      "format": "percent",
+      "description": "Seasonality - Persen kenaikan saham di bulan depan secara historis",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 535,
+      "field": "free_float",
+      "title": "FreeFloat",
+      "format": "percent",
+      "description": "Free Float",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 536,
+      "field": "n_holder",
+      "title": "Holder",
+      "format": "number",
+      "description": "Jumlah pemegang saham (SID)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ]
+      }
+    },
+    {
+      "no": 537,
+      "field": "insider1p_total_pct",
+      "title": "Total KDA 1%",
+      "format": "percent",
+      "description": "Persentase Total saham para pemegang saham yang kepemilikan nya di atas 1% (KDA 1%)",
+      "filter": {
+        "type": "number",
+        "ops": [
+          ">=",
+          "<=",
+          ">",
+          "<",
+          "=",
+          "!="
+        ],
+        "unit": "%"
+      }
+    },
+    {
+      "no": 538,
+      "field": "req_smacd_gc",
+      "title": "SMACD GC",
+      "format": "boolean",
+      "description": "MACD(2,10,2) Golden Cross - Member Request",
+      "filter": {
+        "type": "boolean",
+        "ops": [
+          true,
+          false
+        ]
+      }
+    }
+  ]
+}

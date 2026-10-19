@@ -1,0 +1,2564 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="NeoBDM menawarkan fitur analisa transaksi saham Indonesia dari metode Bandarmologi dan Foreign Flow, Kepemilikan saham, Momentum dan seasonality. Selain screening saham, Anda juga dapat belajar Analisa Teknikal, Risk dan Money Management, dan Psikologi Trading dengan fasilitas Livestream yang disediakan oleh NeoBDM.">
+  <meta name="author" content="NeoBDM Technology"> 
+  <meta name="keywords" content="Saham Indikator Bandarmologi NeoBDM Foreign Flow Screening Belajar Analisa Teknikal Chart Indonesia">  
+
+  <meta property="og:title" content="Belajar Analisa Saham Bersama NeoBDM">
+  <meta property="og:description" content="NeoBDM menawarkan fitur analisa transaksi saham Indonesia dari metode Bandarmologi dan Foreign Flow, Kepemilikan saham, Momentum dan seasonality. Selain screening saham, Anda juga dapat belajar Analisa Teknikal, Risk dan Money Management, dan Psikologi Trading dengan fasilitas Livestream yang disediakan oleh NeoBDM.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  
+  <title>NeoBDM | Referensi Kolom Market Summary</title>
+
+  <link rel="shortcut icon" href="/static/images/favicon.f76ec46710b3.ico">
+
+  
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="/static/css/bootstrap5/bootstrap.min.d52735b0d665.css">
+  <link rel="stylesheet" href="/static/css/fontawesome/all.min.a40bd035b7b2.css">
+  <link rel="stylesheet" href="/static/css/adminlte/adminlte.min.37aa1bb734e4.css">
+  <link rel="stylesheet" href="/static/css/toastr/toastr.min.f284028c6780.css">
+  
+<link href="/static/css/custom/custom.b20305f099b8.css" rel="stylesheet">
+<style>
+  :root {
+    --docs-bg: #0f1117;
+    --docs-surface: #16181f;
+    --docs-surface2: #1e2029;
+    --docs-border: #2a2d3a;
+    --docs-accent: #f7ec4f;
+    --docs-green: rgb(0, 177, 97, 0.5);
+    --docs-yellow: rgba(195, 192, 0, 0.3);
+    --docs-red: #f76f6f;
+    --docs-muted: #7a7f96;
+    --docs-text: #e2e4ef;
+    --docs-text2: #c2c5d8;
+
+    /* Typography scale */
+    --fs-2xs: 11.5px;
+    --fs-xs: 12.5px;
+    --fs-sm: 13.5px;
+    --fs-base: 15px;
+    --fs-md: 16px;
+    --fs-h2: 19px;
+    --fs-h1: 25px;
+    --lh-base: 1.7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--docs-bg); color: var(--docs-text); font-family: 'Inter','Segoe UI',system-ui,sans-serif; font-size:var(--fs-base); line-height:var(--lh-base); min-height:100vh; }
+
+  .docs-wrapper { display:flex; min-height:100vh; }
+
+  /* Sidebar */
+  .docs-sidebar { width:240px; flex-shrink:0; background:var(--docs-surface); border-right:1px solid var(--docs-border); position:sticky; top:0; height:100vh; overflow-y:auto; padding:24px 0; transition:transform .25s ease; }
+  .sidebar-logo { padding:0 18px 18px; border-bottom:1px solid var(--docs-border); margin-bottom:12px; }
+  .sidebar-logo h2 { font-size:var(--fs-xs); font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--docs-accent); }
+  .sidebar-logo p  { font-size:var(--fs-2xs); color:var(--docs-muted); margin-top:2px; }
+  .sidebar-label { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--docs-muted); padding:10px 18px 3px; }
+  .sidebar-link { display:flex; align-items:center; gap:8px; padding:7px 18px; font-size:var(--fs-sm); font-weight:600; color:var(--docs-text2); cursor:pointer; border:none; background:none; width:100%; text-align:left; transition:background .15s,color .15s; }
+  .sidebar-link:hover, .sidebar-link.active { background:rgba(79,142,247,.12); color:var(--docs-accent); }
+  .dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+
+  /* Sidebar subsection links */
+  .sidebar-sublist { display:flex; flex-direction:column; margin:1px 0 6px; overflow:hidden; max-height:0; transition:max-height .2s ease; }
+  .sidebar-sublist.open { max-height:600px; }
+  .sidebar-sublink { display:block; padding:5px 18px 5px 40px; font-size:var(--fs-2xs); font-weight:500; color:var(--docs-muted); cursor:pointer; border:none; background:none; width:100%; text-align:left; border-left:2px solid transparent; transition:color .15s,border-color .15s; }
+  .sidebar-sublink:hover, .sidebar-sublink.active { color:var(--docs-accent); border-left-color:var(--docs-accent); }
+
+  /* Sidebar mobile controls */
+  .sidebar-toggle { display:none; align-items:center; justify-content:center; width:38px; height:38px; border-radius:8px; background:var(--docs-surface); border:1px solid var(--docs-border); color:var(--docs-text); font-size:16px; cursor:pointer; position:fixed; top:14px; left:14px; z-index:60; }
+  .sidebar-backdrop { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:45; }
+
+  /* Main */
+  .docs-main { flex:1; min-width:0; padding:40px 48px; max-width:1280px; }
+  .page-title { margin-bottom:28px; }
+  .page-title h1 { font-size:26px; font-weight:800; }
+  .page-title p  { font-size:var(--fs-sm); color:var(--docs-muted); margin-top:4px; }
+
+  @media (max-width: 880px) {
+    .sidebar-toggle { display:flex; }
+    .docs-sidebar { position:fixed; top:0; left:0; width:78vw; max-width:280px; transform:translateX(-100%); z-index:50; box-shadow:2px 0 24px rgba(0,0,0,.4); }
+    .docs-sidebar.open { transform:translateX(0); }
+    .sidebar-backdrop.show { display:block; }
+    .docs-main { padding:64px 18px 40px; }
+  }
+
+  /* Search */
+  .search-wrap { position:relative; margin-bottom:32px; }
+  .search-wrap span { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--docs-muted); font-size:13px; pointer-events:none; }
+  #gsearch { width:100%; max-width:420px; background:var(--docs-surface); border:1px solid var(--docs-border); border-radius:8px; color:var(--docs-text); font-size:var(--fs-sm); padding:9px 12px 9px 34px; outline:none; transition:border-color .2s; }
+  #gsearch:focus { border-color:var(--docs-accent); }
+  #gsearch::placeholder { color:var(--docs-muted); }
+
+  /* Section */
+  .docs-section { margin-bottom:56px; scroll-margin-top:20px; }
+  .docs-subsection { margin-bottom:30px; padding-left:16px; border-left:2px solid var(--docs-border); scroll-margin-top:20px; }
+
+  .section-header { display:flex; align-items:center; gap:8px; margin-bottom:18px; padding-bottom:12px; border-bottom:1px solid var(--docs-border); }
+  .section-icon { width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+  .section-header h1 { font-size:var(--fs-h1); font-weight:800; letter-spacing:.02em; }
+  .section-header h2 { font-size:var(--fs-h2); font-weight:700; color:var(--docs-text2); }
+
+  /* Subsections get a lighter-weight header treatment so H1/H2 hierarchy is scannable at a glance */
+  .docs-subsection .section-header { margin-bottom:14px; padding-bottom:8px; border-bottom:1px dashed var(--docs-border); }
+
+  /* Copy-link button next to each section/subsection heading */
+  .copy-link-btn { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:6px; border:none; background:none; color:var(--docs-muted); font-size:13px; cursor:pointer; opacity:0; transition:opacity .12s,background .12s,color .12s; flex-shrink:0; }
+  .section-header:hover .copy-link-btn, .copy-link-btn:focus-visible { opacity:1; }
+  .copy-link-btn:hover { background:rgba(247,236,79,.12); color:var(--docs-accent); }
+  .copy-link-btn.copied { opacity:1; color:var(--docs-green-solid,#3ecf8e); }
+  .copy-link-toast { font-size:11px; font-weight:600; color:var(--docs-muted); margin-left:2px; opacity:0; transition:opacity .15s; }
+  .copy-link-toast.show { opacity:1; }
+
+  /* Prose */
+  .docs-prose { font-size:var(--fs-base); color:var(--docs-text2); line-height:var(--lh-base); margin-bottom:14px; }
+  .docs-prose strong { color:var(--docs-text); }
+  .docs-prose span { color:var(--docs-accent);font-family:monospace;font-weight:700 }
+
+  /* Warning Card */
+  .warning-box { background:var(--docs-yellow); border:1px solid var(--docs-border); border-left:3px solid var(--docs-accent); border-radius:8px; padding:13px 16px; margin-bottom:14px; font-size:var(--fs-sm); color:var(--docs-text); line-height:1.85; }
+
+  /* Nomenclature grid */
+  .nom-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:8px; margin-bottom:14px; }
+  .nom-card { background:var(--docs-surface); border:1px solid var(--docs-border); border-radius:8px; padding:10px 13px; }
+  .nom-card .token { font-family:'JetBrains Mono','Fira Code',monospace; font-size:var(--fs-sm); font-weight:700; color:var(--docs-accent); margin-bottom:3px; }
+  .nom-card .def   { font-size:var(--fs-xs); color:var(--docs-text2); }
+
+  /* Example table */
+  .ex-table-wrap { overflow-x:auto; border-radius:8px; border:1px solid var(--docs-border); }
+  .ex-table { width:100%; border-collapse:collapse; font-size:var(--fs-sm); }
+  .ex-table th { background:var(--docs-surface); color:var(--docs-muted); font-weight:600; text-align:left; padding:9px 14px; border-bottom:1px solid var(--docs-border); white-space:nowrap; }
+  .ex-table td { background:var(--docs-surface2); padding:8px 14px; border-bottom:1px solid rgba(255,255,255,.04); color:var(--docs-text2); vertical-align:top; }
+  .ex-table tr:last-child td { border-bottom:none; }
+  .ex-table .tag { display:inline-block; background:rgba(79,142,247,.12); border:1px solid rgba(79,142,247,.25); border-radius:4px; padding:1px 7px; font-family:'JetBrains Mono','Fira Code',monospace; font-size:var(--fs-xs); color:var(--docs-accent); white-space:nowrap; }
+
+  /* Simple col cards */
+  .col-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:8px; }
+  .col-card { background:var(--docs-green); border:1px solid var(--docs-green); border-radius:8px; padding:11px 14px; transition:border-color .15s; }
+  .col-card:hover { border-color:var(--docs-accent); }
+  .col-card .ct { font-size:var(--fs-sm); font-weight:700; font-family:'JetBrains Mono','Fira Code',monospace; color:var(--docs-accent); }
+  .col-card .cd { font-size:var(--fs-xs); color:var(--docs-text); margin-top:5px; line-height:1.55; }
+
+  #no-results { display:none; text-align:center; padding:60px 0; color:var(--docs-muted); font-size:14px; }
+  ::-webkit-scrollbar { width:5px; }
+  ::-webkit-scrollbar-thumb { background:var(--docs-border); border-radius:3px; }
+</style>
+
+</head>
+
+<body class="hold-transition layout-fixed layout-footer-fixed dark-mode sidebar-collapse">
+  <div class="wrapper">
+
+    <!-- Content wrapper -->
+    <div>
+      <!-- Header -->
+      
+      
+      <!-- /.header -->
+
+      <!-- Content -->
+      
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Buka navigasi" aria-expanded="false" aria-controls="docsSidebar">☰</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="docs-wrapper">
+
+  <!-- ── Sidebar ── -->
+  <nav class="docs-sidebar" id="docsSidebar">
+    <div class="sidebar-logo">
+      <h2>Referensi Kolom</h2>
+      <p>Market Summary</p>
+    </div>
+    <div class="sidebar-label">Kategori</div>
+    <button class="sidebar-link active" onclick="goTo('s-scale', event)"><span class="dot" style="background:#4f8ef7"></span>Informasi Emiten</button>
+    <div class="sidebar-sublist" data-parent="s-scale"></div>
+    <button class="sidebar-link" onclick="goTo('s-flow', event)"><span class="dot" style="background:#7c6aff"></span>Analisa Transaksi</button>
+    <div class="sidebar-sublist" data-parent="s-flow"></div>
+    <button class="sidebar-link" onclick="goTo('s-compat', event)"><span class="dot" style="background:#3ecf8e"></span>Compatibility</button>
+    <div class="sidebar-sublist" data-parent="s-compat"></div>
+    <button class="sidebar-link" onclick="goTo('s-broker', event)"><span class="dot" style="background:#cf3eb0"></span>Broker</button>
+    <div class="sidebar-sublist" data-parent="s-broker"></div>
+    <button class="sidebar-link" onclick="goTo('s-price', event)"><span class="dot" style="background:#f5c542"></span>Harga</button>
+    <div class="sidebar-sublist" data-parent="s-price"></div>
+    <button class="sidebar-link" onclick="goTo('s-volume', event)"><span class="dot" style="background:#f76f6f"></span>Volume</button>
+    <div class="sidebar-sublist" data-parent="s-volume"></div>
+    <button class="sidebar-link" onclick="goTo('s-struktur', event)"><span class="dot" style="background:#ff9f43"></span>Struktur</button>
+    <div class="sidebar-sublist" data-parent="s-struktur"></div>
+    <button class="sidebar-link" onclick="goTo('s-technical', event)"><span class="dot" style="background:#68d391"></span>Indikator Teknikal</button>
+    <div class="sidebar-sublist" data-parent="s-technical"></div>
+    <button class="sidebar-link" onclick="goTo('s-candlestick', event)"><span class="dot" style="background:#f7ec4f"></span>Pola Candlestick</button>
+    <div class="sidebar-sublist" data-parent="s-candlestick"></div>
+    <button class="sidebar-link" onclick="goTo('s-rotation', event)"><span class="dot" style="background:#76e4f7"></span>Rotation Chart</button>
+    <div class="sidebar-sublist" data-parent="s-rotation"></div>
+    <button class="sidebar-link" onclick="goTo('s-bpos', event)"><span class="dot" style="background:#fbb6ce"></span>Analisa Kepemilikan</button>
+    <div class="sidebar-sublist" data-parent="s-bpos"></div>
+    <button class="sidebar-link" onclick="goTo('s-seasonality', event)"><span class="dot" style="background:#b794f4"></span>Seasonality</button>
+    <div class="sidebar-sublist" data-parent="s-seasonality"></div>
+    <button class="sidebar-link" onclick="goTo('s-request', event)"><span class="dot" style="background:#062add"></span>Member Request</button>
+    <div class="sidebar-sublist" data-parent="s-request"></div>
+  </nav>
+
+  <!-- ── Konten Utama ── -->
+  <main class="docs-main">
+    <div class="search-wrap">
+      <span>🔍</span>
+      <input type="text" id="gsearch" placeholder="Cari kolom…" oninput="filterAll(this.value)">
+    </div>
+    <div id="no-results">Tidak ada kolom yang cocok dengan pencarian.</div>
+
+
+    <!-- ═══════════════════════════════
+         SKALA BISNIS
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-scale" data-section>
+      <div class="section-header">
+        <h1>INFORMASI EMITEN</h1>
+      </div>
+
+      <section class="docs-subsection" data-search="mcap tval">
+        <div class="section-header">
+          <h2>Skala Bisnis</h2>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid">
+          <div class="col-card">
+            <div class="ct">Mcap (T)</div>
+            <div class="cd">Kapitalisasi Pasar dalam Triliun Rupiah</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Tval (B)</div>
+            <div class="cd">Total Nilai Transaksi dalam Miliar Rupiah</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="suspend fca hsc syariah">
+        <div class="section-header">
+          <h2>Catatan IDX</h2>
+        </div>
+        
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid">
+          <div class="col-card">
+            <div class="ct">Suspend</div>
+            <div class="cd">saham sedang di-suspend atau tidak oleh IDX</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">FCA</div>
+            <div class="cd">saham masuk Papan Pemantauan Khusus (Full Call Auction) IDX</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Syariah</div>
+            <div class="cd">apakah saham merupakan saham syariah atau tidak menurut IDX</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">HSC</div>
+            <div class="cd">apakah saham terkonsentrasi tinggi (High Shareholding Concentration) menurut IDX</div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ═══════════════════════════════
+         FLOW TRANSAKSI
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-flow" data-section data-search="Md0 %Md0 Mw0 %Mw0 Md1 %Md1 Mw1 %Mw1 Md2 %Md2 Mw2 %Mw2 Md3 %Md3 Mw3 %Mw3 Md4 %Md4 Mw4 %Mw4 Mc3 %Mc3 Mc5 %Mc5 Mc10 %Mc10 Mc20 %Mc20 NRd0 %NRd0 NRw0 %NRw0 NRd1 %NRd1 NRw1 %NRw1 NRd2 %NRd2 NRw2 %NRw2 NRd3 %NRd3 NRw3 %NRw3 NRd4 %NRd4 NRw4 %NRw4 NRc3 %NRc3 NRc5 %NRc5 NRc10 %NRc10 NRc20 %NRc20 Fd0 %Fd0 Fw0 %Fw0 Fd1 %Fd1 Fw1 %Fw1 Fd2 %Fd2 Fw2 %Fw2 Fd3 %Fd3 Fw3 %Fw3 Fd4 %Fd4 Fw4 %Fw4 Fc3 %Fc3 Fc5 %Fc5 Fc10 %Fc10 Fc20 %Fc20 Sd0 %Sd0 Sw0 %Sw0 Sd1 %Sd1 Sw1 %Sw1 Sd2 %Sd2 Sw2 %Sw2 Sd3 %Sd3 Sw3 %Sw3 Sd4 %Sd4 Sw4 %Sw4 Sc3 %Sc3 Sc5 %Sc5 Sc10 %Sc10 Sc20 %Sc20 Id0 %Id0 Iw0 %Iw0 Id1 %Id1 Iw1 %Iw1 Id2 %Id2 Iw2 %Iw2 Id3 %Id3 Iw3 %Iw3 Id4 %Id4 Iw4 %Iw4 Ic3 %Ic3 Ic5 %Ic5 Ic10 %Ic10 Ic20 %Ic20 Zd0 %Zd0 Zw0 %Zw0 Zd1 %Zd1 Zw1 %Zw1 Zd2 %Zd2 Zw2 %Zw2 Zd3 %Zd3 Zw3 %Zw3 Zd4 %Zd4 Zw4 %Zw4 Zc3 %Zc3 Zc5 %Zc5 Zc10 %Zc10 Zc20 %Zc20">
+      <div class="section-header">
+        <h1>ANALISA TRANSAKSI</h1>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+      <div class="col-grid mb-2">
+        <div class="col-card">
+          <div class="ct">[Metode][Periode]</div>
+          <div class="cd">Akum / Dist dalam Miliar Rupiah</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">%[Metode][Periode]</div>
+          <div class="cd">Persen Akum / Dist terhadap total transaksi</div>
+        </div>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+      <div class="docs-prose">
+        Jika ingin menggunakan kolom ini, ada baiknya sudah menyelesaikan tutorial berikut:<br>
+        <ul class="list-disc ml-4">
+            <li><a href="/tutorial/5VSoqy1YlTdjHcBn" target="_blank" class="underline" style="color:var(--docs-accent)">Transaction Chart 101</a></li>
+            <li><a href="/tutorial/EUR4aLIZcaBOGQlU" target="_blank" class="underline" style="color:var(--docs-accent)">Market Summary 101</a></li>
+        </ul>
+      </div>
+
+      <!-- Metode -->
+      <p class="docs-prose mb-2"><strong>Metode Analisa Transaksi</strong></p>
+      <p class="docs-prose">
+        Ada 6 metode yang umum digunakan di NeoBDM. Akum dan distribusinya dihitung dalam satuan <strong>Miliar Rupiah</strong>.
+      </p>
+      <div class="nom-grid">
+        <div class="nom-card"><div class="token text-lg">M</div><div class="def">Bandarmologi</div></div>
+        <div class="nom-card"><div class="token text-lg">NR</div><div class="def">NonRetail Flow</div></div>
+        <div class="nom-card"><div class="token text-lg">F</div><div class="def">Foreign Flow</div></div>
+        <div class="nom-card"><div class="token text-lg">S</div><div class="def">Sultanmologi</div></div>
+        <div class="nom-card"><div class="token text-lg">I</div><div class="def">Institution Flow</div></div>
+        <div class="nom-card"><div class="token text-lg">Z</div><div class="def">Zombiemologi</div></div>
+      </div>
+      <p class="docs-prose mb-2"><strong>Persen Akum</strong></p>
+      <p class="docs-prose">
+        Ada kalanya metode transaksi dihitung dalam <strong>persen terhadap total transaksi periode yang digunakan</strong> dan ditandai dengan %
+      </p>
+      <div class="nom-grid">
+        <div class="nom-card"><div class="token text-lg">%M</div><div class="def">Persen akum Bandarmologi</div></div>
+        <div class="nom-card"><div class="token text-lg">%NR</div><div class="def">Persen akum NonRetail Flow</div></div>
+        <div class="nom-card"><div class="token text-lg">%F</div><div class="def">Persen akum Foreign Flow</div></div>
+        <div class="nom-card"><div class="token text-lg">%S</div><div class="def">Persen akum Sultanmologi</div></div>
+        <div class="nom-card"><div class="token text-lg">%I</div><div class="def">Persen akum Institution Flow</div></div>
+        <div class="nom-card"><div class="token text-lg">%Z</div><div class="def">Persen akum Zombiemologi</div></div>
+      </div>
+
+      <!-- Periode -->
+      <p class="docs-prose mb-2"><strong>Periode</strong></p>
+      <p class="docs-prose">
+        Transaksi dapat dihitung dengan berbagai periode berikut:
+      </p>
+      <div class="nom-grid">
+        <div class="nom-card"><div class="token text-lg">D</div><div class="def">Daily</div></div>
+        <div class="nom-card"><div class="token text-lg">W</div><div class="def">Weekly (Senin - Jumat)</div></div>
+        <div class="nom-card"><div class="token text-lg">C</div><div class="def">Cumulative (Jumlah Candle)</div></div>
+      </div>
+
+      <!-- Contoh -->
+      <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+      <div class="ex-table-wrap mb-1.5">
+        <table class="ex-table">
+          <thead>
+            <tr><th>Kolom</th><th>Arti</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="tag">M d0</span></td><td>Akum Bandarmologi <strong>hari ini</strong> (Miliar)</td></tr>
+            <tr><td><span class="tag">%M d0</span></td><td>Persen Akum Bandarmologi hari ini<br>Misal akum Rp 2M, total transaksi Rp 10M, maka %akum = 20%</td></tr>
+            <tr><td><span class="tag">F d1</span></td><td>Foreign Flow <strong>kemarin</strong> (Miliar)</td></tr>
+            <tr><td><span class="tag">F w0</span></td><td>Foreign Flow selama Senin - Jumat pada <strong>minggu ini</strong> (Miliar)</td></tr>
+            <tr><td><span class="tag">S w1</span></td><td>Sultanmologi selama Senin - Jumat pada <strong>minggu lalu</strong> (Miliar)</td></tr>
+            <tr><td><span class="tag">%NR c5</span></td><td>Persen akum NonRetail selama 5 candle terakhir<br>Misal dalam 5 candle terakhir, total akum Rp 3M, dan total transaksi Rp 12M, maka %akum = 25%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════
+         COMPATIBILITY
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-compat" data-section>
+      <div class="section-header">
+        <h1>COMPATIBILITY</h1>
+      </div>
+
+      <section class="docs-subsection" data-search="comp any">
+        <div class="section-header">
+          <h2>Transaction Compatibility</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-2">
+          <div class="col-card">
+            <div class="ct">Comp [Metode]</div>
+            <div class="cd">Compatibility menurut AI NeoBDM</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Comp Any</div>
+            <div class="cd">Indikasi jika ada minimal 1 metode yang compatible</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">%Comp [Metode]</div>
+            <div class="cd">Persentase Compatibility menurut AI NeoBDM</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">%Comp [Metode] [Periode]</div>
+            <div class="cd">Persentase Compatibility dengan periode spesifik</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah menyelesaikan tutorial berikut:<br>
+          <ul class="list-disc ml-4">
+              <li><a href="/tutorial/EUR4aLIZcaBOGQlU" target="_blank" class="underline" style="color:var(--docs-accent)">Market Summary 101</a></li>
+          </ul>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Nilai Compatibility</strong></p>
+        <p class="docs-prose">
+          NeoBDM memiliki formula yang menilai kompatibilitas suatu emiten terhadap metode transaksi dari <strong>0 - 100%</strong><br>
+          Suatu metode transaksi disebut compatible apabila nilainya <strong>lebih dari 55%</strong>
+        </p>
+
+        <p class="docs-prose mb-2"><strong>Periode</strong></p>
+        <p class="docs-prose">
+          NeoBDM juga menyediakan kompatibilitas jangka pendek hingga jangka panjang (Short, Mid, Long)
+        </p>
+  
+        <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+        <div class="ex-table-wrap mb-4">
+          <table class="ex-table">
+            <thead><tr><th>Kolom</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag">Comp NR</span></td><td>Apakah NR compatible di emiten yang sedang dianalisa</td></tr>
+              <tr><td><span class="tag">Comp Any</span></td><td>minimal ada 1 metode yang compatible</td></tr>
+              <tr><td><span class="tag">%Comp M</span></td><td>Persentase Kompatibilitas Metode Bandarmologi terhadap suatu emiten</td></tr>
+              <tr><td><span class="tag">%Comp F Short</span></td><td>Persentase Kompatibilitas Foreign Flow — jangka pendek</td></tr>
+              <tr><td><span class="tag">%Comp I Mid</span></td><td>Persentase Kompatibilitas Institution Flow — jangka menengah</td></tr>
+              <tr><td><span class="tag">%Comp Z Long</span></td><td>Persentase Kompatibilitas Zombiemologi — jangka panjang</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="likuid likuiditas">
+        <div class="section-header">
+          <h2>Compatibility berdasarkan Likuiditas</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-2">
+          <div class="col-card">
+            <div class="ct">Likuiditas</div>
+            <div class="cd">Tingkat Likuiditas menurut NeoBDM</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Likuid</div>
+            <div class="cd">Likuid atau Tidak Likuid menurut NeoBDM</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah menyelesaikan tutorial berikut:<br>
+          <ul class="list-disc ml-4">
+              <li><a href="/tutorial/EUR4aLIZcaBOGQlU" target="_blank" class="underline" style="color:var(--docs-accent)">Seri untuk Pemula - Ep 7</a></li>
+          </ul>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Tingkat Likuiditas</strong></p>
+        <p class="docs-prose">
+          NeoBDM mengelompokkkan likuiditas saham menjadi 4 tingkat
+        </p>
+  
+        <div class="nom-grid">
+          <div class="nom-card"><div class="token text-lg">LOW</div><div class="def">Tidak likuid</div></div>
+          <div class="nom-card"><div class="token text-lg">MEDIUM</div><div class="def">Kurang likuid</div></div>
+          <div class="nom-card"><div class="token text-lg">HIGH</div><div class="def">Likuid</div></div>
+          <div class="nom-card"><div class="token text-lg">EXTREME</div><div class="def">Sangat likuid</div></div>
+        </div>
+  
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Perlu diperhatikan bahwa likuiditas sangat dipengaruhi hal lain seperti besarnya size entry, dan tebalnya antrian (<a href="/tutorial/EUR4aLIZcaBOGQlU" target="_blank" class="underline" style="color:var(--docs-accent)">Seri untuk Pemula - Ep 7</a>)<br>
+          Oleh sebab itu, indikator likuiditas dari NeoBDM mesti disesuaikan terhadap kondisi masing-masing
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="cross crossing">
+        <div class="section-header">
+          <h2>Indikasi Crossing</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-2">
+          <div class="col-card">
+            <div class="ct">Cross</div>
+            <div class="cd">Cross Index sedang tinggi</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">F-I Cross</div>
+            <div class="cd">Terdeteksi Crossing antara Foreign ↔ Institusi</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">I-Z Cross</div>
+            <div class="cd">Terdeteksi crossing antara Institusi ↔ Zombie</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah menyelesaikan tutorial berikut:<br>
+          <ul class="list-disc ml-4">
+              <li><a href="/tutorial/5VSoqy1YlTdjHcBn" target="_blank" class="underline" style="color:var(--docs-accent)">Transaction Chart 101</a></li>
+              <li><a href="/tutorial/EUR4aLIZcaBOGQlU" target="_blank" class="underline" style="color:var(--docs-accent)">Market Summary 101</a></li>
+          </ul>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Cross Index</strong></p>
+        <p class="docs-prose">
+          NeoBDM memiliki indikator yang menilai compatibility analisa transaksi bernama Cross Index<br>
+          Cross Index bernilai <strong>0 - 100%</strong>, dan menilai kondisi jangka menengah, bukan hanya 1 hari.<br>
+        </p>
+
+        <div class="nom-grid">
+          <div class="nom-card"><div class="token text-lg">&gt;70%</div><div class="def">Transaksi kotor (kena net / crossing)</div></div>
+          <div class="nom-card"><div class="token text-lg">&lt;30%</div><div class="def">Transaksi bersih (pindah tangan)</div></div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Analisa transaksi sebaiknya digunakan pada kondisi normal dimana Cross Index mendekati 50%<br>
+          Diluar itu, analisa transaksi jangan diterima mentah karena sedang kotor dan tidak dapat diandalkan
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Crossing Institusi</strong></p>
+        <p class="docs-prose">
+          NeoBDM membantu menandai emiten yang transaksinya bolak-balik antara institusi dengan pihak lain
+        </p>
+        <div class="nom-grid">
+          <div class="nom-card"><div class="token text-lg">F-I Cross</div><div class="def">Saat Foreign jualan, yang nampung adalah institusi, dan sebaliknya</div></div>
+          <div class="nom-card"><div class="token text-lg">I-Z Cross</div><div class="def">Saat Insitutsi jualan, yang nampung adalah zombie, dan sebaliknya</div></div>
+        </div>
+        <p class="docs-prose">
+          Emiten dengan ciri-ciri tersebut ditandai karena dicurigai antar pihak tersebut "bersekongkol" atau bisa juga pihak asing nya tidak murni asing
+        </p>
+
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Pada emiten blue-chip, Foreign-Institusi crossing merupakan hal yang wajar terjadi sehingga dapat diabaikan
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="clean">
+        <div class="section-header">
+          <h2>Clean Transaction</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-2">
+          <div class="col-card">
+            <div class="ct">Clean</div>
+            <div class="cd">Tingkat kebersihan transaksi (harian) bernilai dari -10 hingga 10</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Spektrum Kebersihan Transaksi</strong></p>
+        <p class="docs-prose">
+          Kebersihan transaksi ada spektrum nya, dari yang bersih (clean) hingga kotor (tektokan)<br>
+          Bersih misalnya akum atau secara konsisten, sedangkan kotor misalnya diakum, dijual lagi, diakum lagi, dst<br>
+          Jadi kotor artinya banyak transaksi yang kena net / crossing<br>
+        </p>
+        <p class="docs-prose">
+          NeoBDM membantu dengan menandai mana yang transaksinya bersih (clean) atau kotor (tektok)<br>
+          Transaksi yang bersih juga umumnya ditampung oleh para retail<br>
+        </p>
+      </section>
+
+      <section class="docs-subsection" data-search="pinky">
+        <div class="section-header">
+          <h2>Saham Pinky / Potensi Berkepentingan Khusus</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-2">
+          <div class="col-card">
+            <div class="ct">Pinky</div>
+            <div class="cd">Terindikasi potensi aktivitas berkepentingan khusus.</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah menyelesaikan tutorial berikut:<br>
+          <ul class="list-disc ml-4">
+              <li><a href="/tutorial/b3D4Y8lqku45MkgY" target="_blank" class="underline" style="color:var(--docs-accent)">Mengenal Saham Pinky dan Potensi Repo</a></li>
+          </ul>
+        </div>
+      </section>
+    </section>
+
+    <!-- ═══════════════════════════════
+         Broker
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-broker" data-section data-search="buyer seller top">
+      <div class="section-header">
+        <h1>BROKER</h1>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+      <div class="col-grid mb-4">
+        <div class="col-card">
+          <div class="ct">Top[N] Buy</div><div class="cd">Top N Net Buyer di Broker Summary</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">Top[N] Sell</div><div class="cd">Top N Net Seller di Broker Summary</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">Tektoker</div><div class="cd">Broker yang tektok / crossing di Broker Summary</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════
+         HARGA
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-price" data-section>
+      <div class="section-header">
+        <h1>HARGA</h1>
+      </div>
+
+      <section class="docs-subsection" data-search="high low close">
+        <div class="section-header">
+          <h2>Candlestick</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">High</div><div class="cd">Harga tertinggi candle</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Low</div><div class="cd">Harga terendah candle</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Close</div><div class="cd">Harga penutupan candle</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">HL2</div><div class="cd">(H + L) / 2</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">HLC3</div><div class="cd">(H + L + C) / 3</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">HLCC4</div><div class="cd">(H + L + C + C) / 4</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">OHLC4</div><div class="cd">(O + H + L + C) / 4</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="chg">
+        <div class="section-header">
+          <h2>Perubahan Harga</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">Chg[N]</div><div class="cd">Persentase perubahan harga N candlestick</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+        <div class="ex-table-wrap mb-1.5">
+          <table class="ex-table">
+            <thead><tr><th>Kolom</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag">Chg1</span></td><td>% perubahan harga dalam <strong>1</strong> candle terakhir</td></tr>
+              <tr><td><span class="tag">Chg5</span></td><td>% perubahan harga dalam <strong>5</strong> candle terakhir</td></tr>
+              <tr><td><span class="tag">Chg20</span></td><td>% perubahan harga dalam <strong>20</strong> candle terakhir</td></tr>
+              <tr><td><span class="tag">Chg200</span></td><td>% perubahan harga dalam <strong>200</strong> candle terakhir</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="ma sma ema gc">
+        <div class="section-header">
+          <h2>Harga Rata-rata</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">MA[N]</div><div class="cd">Moving Average N candle</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">MA [N1] [N2] GC</div><div class="cd">Golden Cross antara MA N1 dengan MA N2</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">EMA[N]</div><div class="cd">Exponential Moving Average N candle</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">EMA [N1] [N2] GC</div><div class="cd">Golden Cross antara EMA N1 dengan EMA N2</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+        <div class="ex-table-wrap mb-1.5">
+          <table class="ex-table">
+            <thead><tr><th>Kolom</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag">MA10</span></td><td>Simple Moving Average — 10 candle</td></tr>
+              <tr><td><span class="tag">MA50</span></td><td>Simple Moving Average — 50 candle</td></tr>
+              <tr><td><span class="tag">EMA50</span></td><td>Exponential Moving Average — 50 candle</td></tr>
+              <tr><td><span class="tag">EMA200</span></td><td>Exponential Moving Average — 200 candle</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <!-- ═══════════════════════════════
+         VOLUME
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-volume" data-section>
+      <div class="section-header">
+        <h1>VOLUME</h1>
+      </div>
+
+      <section class="docs-subsection" data-search="volume">
+        <div class="section-header">
+          <h2>Volume</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">Volume</div><div class="cd">volume transaksi</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="volchg">
+        <div class="section-header">
+          <h2>Perubahan Volume</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">VolChg[N]</div><div class="cd">persentase perubahan volume N candle</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+        <div class="ex-table-wrap mb-1.5">
+          <table class="ex-table">
+            <thead><tr><th>Kolom</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag">VolChg1</span></td><td>% perubahan volume vs 1 candle lalu</td></tr>
+              <tr><td><span class="tag">VolChg20</span></td><td>% perubahan volume vs 20 candle lalu</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="mavol">
+        <div class="section-header">
+          <h2>Volume Rata-Rata</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">MAVol[N]</div><div class="cd">rata-rata volume N candle</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+        <div class="ex-table-wrap mb-1.5">
+          <table class="ex-table">
+            <thead><tr><th>Kolom</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag">MAVol10</span></td><td>Simple Moving Average volume — 10 candle</td></tr>
+              <tr><td><span class="tag">MAVol20</span></td><td>Simple Moving Average volume — 20 candle</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="rvol">
+        <div class="section-header">
+          <h2>Volume Relatif</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">RVol[N]</div><div class="cd">Rasio volume terhadap volume rata-rata N candle</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+        <div class="ex-table-wrap mb-1.5">
+          <table class="ex-table">
+            <thead><tr><th>Kolom</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag">RVol10</span></td><td>Volume saat ini ÷ rata-rata volume 10 candle</td></tr>
+              <tr><td><span class="tag">RVol20</span></td><td>Volume saat ini ÷ rata-rata volume 20 candle</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="spike">
+        <div class="section-header">
+          <h2>Volume Spike</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">VolSpike [N]d</div><div class="cd">Terdeteksi ada Volume spike (jauh lebih dari volume rata-rata) dalam N hari terkahir</div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- ═══════════════════════════════
+         STRUKTUR
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-struktur" data-section>
+      <div class="section-header">
+        <h1>STRUKTUR</h1>
+      </div>
+
+      <section class="docs-subsection" data-search="consol konsolidasi">
+        <div class="section-header">
+          <h2>Base / Konsolidasi</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">Consol</div><div class="cd">Menandakan harga sedang konsolidasi / nge-base (tanpa breakout yang signifikan)</div>
+          </div>
+        </div>
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Base / Konsolidasi itu sangat subjektif. NeoBDM hanya menyediakan satu dari sekian banyak bentuk konsolidasi yang belum tentu sesuai dengan pandangan masing-masing orang.
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="breakout">
+        <div class="section-header">
+          <h2>Breakout</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">Breakout[N]d</div><div class="cd">Menandakan harga breakout dari high N candle terakhir</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+        <div class="ex-table-wrap mb-1.5">
+          <table class="ex-table">
+            <thead><tr><th>Kolom</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag">Breakout 10d</span></td><td>Harga breakout dari high 10 candle terakhir</td></tr>
+              <tr><td><span class="tag">Breakout 20d</span></td><td>Harga breakout dari high 20 candle terakhir</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Breakout itu sangat subjektif. NeoBDM hanya menyediakan satu dari sekian banyak indikasi breakout yang belum tentu sesuai dengan pandangan masing-masing orang.
+        </div>
+      </section>
+    </section>
+
+
+    <!-- ═══════════════════════════════
+         INDIKATOR TEKNIKAL
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-technical" data-section>
+      <div class="section-header">
+        <h1>INDIKATOR TEKNIKAL MODERN</h1>
+      </div>
+
+      <section class="docs-subsection" data-search="atr volatility">
+        <div class="section-header">
+          <h2>Indikator Volatilitas</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">ATR14</div><div class="cd">Average True Range 14 hari</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">ATR20</div><div class="cd">Average True Range 20 hari</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Volatility</div><div class="cd">Tingkat volatilitas menurut kriteria NeoBDM</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="rsi">
+        <div class="section-header">
+          <h2>RSI</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">RSI</div><div class="cd">Relative Strength Index (0–100)</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">RSI OB</div><div class="cd">RSI Overbought (RSI &ge; 80)</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">RSI OS</div><div class="cd">RSI Oversold (RSI &le; 20)</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">RSI Bull</div><div class="cd">RSI Bull Signal (keluar dari oversold)</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah memahami indikator tersebut<br>
+          <ul class="list-disc ml-4">
+              <li><a href="https://www.investopedia.com/terms/r/rsi.asp" target="_blank" class="underline" style="color:var(--docs-accent)">Investopedia - RSI Indicator</a></li>
+          </ul>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Hindari penggunaan indikator sebagai sinyal buy / sell secara mentah
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="stoch stochastic">
+        <div class="section-header">
+          <h2>Stochastic</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">Stoch %K</div><div class="cd">Fast Stochastic</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Stoch %K OB</div><div class="cd">Fast Stochastic Overbought</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Stoch %K OS</div><div class="cd">Fast Stochastic Oversold</div>
+          </div>
+
+          <div class="col-card">
+            <div class="ct">Stoch %D</div><div class="cd">Slow Stochastic</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Stoch %D OB</div><div class="cd">Slow Stochastic Overbought</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Stoch %D OS</div><div class="cd">Slow Stochastic Oversold</div>
+          </div>
+
+          <div class="col-card">
+            <div class="ct">Stoch GC</div><div class="cd">Stochastic Golden Cross</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah memahami indikator tersebut<br>
+          <ul class="list-disc ml-4">
+              <li><a href="https://www.investopedia.com/terms/s/stochasticoscillator.asp" target="_blank" class="underline" style="color:var(--docs-accent)">Investopedia - Stochastic Oscillator</a></li>
+          </ul>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Hindari penggunaan indikator sebagai sinyal buy / sell secara mentah
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="stoch stochastic">
+        <div class="section-header">
+          <h2>Stochastic RSI</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">StochRSI %K</div><div class="cd">Fast Stochastic RSI</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">StochRSI %K OB</div><div class="cd">Fast Stochastic RSI Overbought</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">StochRSI %K OS</div><div class="cd">Fast Stochastic RSI Oversold</div>
+          </div>
+
+          <div class="col-card">
+            <div class="ct">StochRSI %D</div><div class="cd">Slow Stochastic RSI</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">StochRSI %D OB</div><div class="cd">Slow Stochastic RSI Overbought</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">StochRSI %D OS</div><div class="cd">Slow Stochastic RSI Oversold</div>
+          </div>
+
+          <div class="col-card">
+            <div class="ct">StochRSI GC</div><div class="cd">Stochastic RSI Golden Cross</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah memahami indikator tersebut<br>
+          <ul class="list-disc ml-4">
+              <li><a href="https://www.investopedia.com/terms/s/stochrsi.asp" target="_blank" class="underline" style="color:var(--docs-accent)">Investopedia - StochRSI</a></li>
+          </ul>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Hindari penggunaan indikator sebagai sinyal buy / sell secara mentah
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="macd">
+        <div class="section-header">
+          <h2>MACD</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">MACD</div><div class="cd">MACD Line</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">MACD Signal</div><div class="cd">MACD Signal Line</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">MACD Hist</div><div class="cd">MACD Histogram</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">MACD GC</div><div class="cd">MACD Golden Cross</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah memahami indikator tersebut<br>
+          <ul class="list-disc ml-4">
+              <li><a href="https://www.investopedia.com/terms/m/macd.asp" target="_blank" class="underline" style="color:var(--docs-accent)">Investopedia - MACD</a></li>
+          </ul>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Hindari penggunaan indikator sebagai sinyal buy / sell secara mentah
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="bollinger band bband">
+        <div class="section-header">
+          <h2>Bollinger Band</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">BB Up</div><div class="cd">Batas atas Bollinger Band</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">BB Mid</div><div class="cd">Garis tengah Bollinger Band</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">BB Low</div><div class="cd">Batas bawah Bollinger Band</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah memahami indikator tersebut<br>
+          <ul class="list-disc ml-4">
+              <li><a href="https://www.investopedia.com/terms/b/bollingerbands.asp" target="_blank" class="underline" style="color:var(--docs-accent)">Investopedia - MACD</a></li>
+          </ul>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Hindari penggunaan indikator sebagai sinyal buy / sell secara mentah
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="sar">
+        <div class="section-header">
+          <h2>Parabolic SAR</h2>
+        </div>
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">SAR</div><div class="cd">harga parabolic SAR</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">SAR Trend</div><div class="cd">BULL = close &gt; SAR. BEAR = close &le; SAR</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">SAR Flip Bull</div><div class="cd">parabolic SAR berpindah ke bawah harga closing</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">SAR Flip Bear</div><div class="cd">parabolic SAR berpindah ke atas harga closing</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah memahami indikator tersebut<br>
+          <ul class="list-disc ml-4">
+              <li><a href="https://www.investopedia.com/trading/introduction-to-parabolic-sar/" target="_blank" class="underline" style="color:var(--docs-accent)">Investopedia - Parabolic SAR</a></li>
+          </ul>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Hindari penggunaan indikator sebagai sinyal buy / sell secara mentah
+        </div>
+      </section>
+    </section>
+
+
+    <!-- ═══════════════════════════════
+         CANDLESTICK PATTERNS
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-candlestick" data-section>
+      <div class="section-header">
+        <h1>POLA CANDLESTICK</h1>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+      <div class="col-grid mb-4">
+        <div class="col-card">
+          <div class="ct">CandleUp</div><div class="cd">Candle hijau (close &gt; open)</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">CandleDown</div><div class="cd">Candle hijau (close &lt; open)</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">EveningStar</div><div class="cd">Candlestick Pattern Evening Star</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">MorningStar</div><div class="cd">Candlestick Pattern Morning Star</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">EveningDojiStar</div><div class="cd">Candlestick Pattern Evening Doji Star</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">MorningDojiStar</div><div class="cd">Candlestick Pattern Morning Doji Star</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">BearMarubozu</div><div class="cd">Candlestick Pattern Bear Marubozu</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">BullMarubozu</div><div class="cd">Candlestick Pattern Bull Marubozu</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">3BlackCrows</div><div class="cd">Candlestick Pattern 3 Black Crows</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">3WhiteSoldiers</div><div class="cd">Candlestick Pattern 3 White Soldiers</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">DarkCloudCover</div><div class="cd">Candlestick Pattern Dark Cloud Cover</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">PiercingLine</div><div class="cd">Candlestick Pattern Piercing Line</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">GravestoneDoji</div><div class="cd">Candlestick Pattern Gravestone Doji</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">DragonflyDoji</div><div class="cd">Candlestick Pattern Dragonfly Doji</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">Doji</div><div class="cd">Candlestick Pattern Doji</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">LongLeggedDoji</div><div class="cd">Candlestick Pattern Long Legged Doji</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">BearSpinningTop</div><div class="cd">Candlestick Pattern Bear Spinning Top</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">BullSpinningTop</div><div class="cd">Candlestick Pattern Bull Spinning Top</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">ShootingStar</div><div class="cd">Candlestick Pattern Shooting Star</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">Hammer</div><div class="cd">Candlestick Pattern Hammer</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">HangingMan</div><div class="cd">Candlestick Pattern Hanging Man</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">InvertedHammer</div><div class="cd">Candlestick Pattern Inverted Hammer</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">BearHarami</div><div class="cd">Candlestick Pattern Bear Harami</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">BullHarami</div><div class="cd">Candlestick Pattern Bull Harami</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">BearHaramiCross</div><div class="cd">Candlestick Pattern Bear Harami Cross</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">BullHaramiCross</div><div class="cd">Candlestick Pattern Bull Harami Cross</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">BearEngulfing</div><div class="cd">Candlestick Pattern Bear Engulfing</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">BullEngulfing</div><div class="cd">Candlestick Pattern Bull Engulfing</div>
+        </div>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+      <div class="warning-box">
+        Hindari penggunaan pola candlestick sebagai sinyal buy / sell secara mentah
+      </div>
+
+      <section class="docs-subsection" data-search="eveningstar morningstar evening star morning star">
+        <div class="section-header">
+          <h2>Evening Star &amp; Morning Star</h2>
+        </div>
+        <div class="warning-box py-1">
+          Muncul di puncak uptrend (bearish) / dasar downtrend (bullish)
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Evening Star</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="123.9" x2="55.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="130.3" width="27.7" height="38.5" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="85.4" x2="121.0" y2="133.5" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="91.8" width="27.7" height="38.5" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="157.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="187.0" y1="34.0" x2="187.0" y2="95.0" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="173.1" y="40.5" width="27.7" height="51.3" fill="#34d399" opacity="1" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="18.0" x2="253.0" y2="37.2" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="24.4" width="27.7" height="6.4" fill="#34d399" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="27.6" x2="319.0" y2="85.4" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="34.0" width="27.7" height="44.9" fill="#f87171" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="79.0" x2="385.0" y2="130.3" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="85.4" width="27.7" height="38.5" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Tiga candle: candle bullish besar, lalu candle kecil yang gap up (bintang), lalu candle bearish besar yang menutup jauh ke dalam body candle pertama. Menandakan pembalikan dari naik ke turun.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Morning Star</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="66.1" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="21.2" width="27.7" height="38.5" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="56.5" x2="121.0" y2="104.6" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="59.7" width="27.7" height="38.5" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="157.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="187.0" y1="95.0" x2="187.0" y2="156.0" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="173.1" y="98.2" width="27.7" height="51.3" fill="#f87171" opacity="1" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="152.8" x2="253.0" y2="172.0" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="159.2" width="27.7" height="6.4" fill="#f87171" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="104.6" x2="319.0" y2="162.4" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="111.0" width="27.7" height="44.9" fill="#34d399" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="59.7" x2="385.0" y2="111.0" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="66.1" width="27.7" height="38.5" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Kebalikan dari Evening Star: candle bearish besar, candle kecil gap down, lalu candle bullish besar yang menutup jauh ke dalam body candle pertama. Menandakan pembalikan dari turun ke naik.</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="eveningdojistar morningdojistar evening doji star morning doji star">
+        <div class="section-header">
+          <h2>Evening Doji Star &amp; Morning Doji Star</h2>
+        </div>
+        <div class="warning-box py-1">
+          Sama seperti Evening/Morning Star, tapi candle tengah adalah doji sempurna (open ≈ close)
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Evening Doji Star</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="122.9" x2="55.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="129.4" width="27.7" height="39.3" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="83.5" x2="121.0" y2="132.7" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="90.1" width="27.7" height="39.3" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="157.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="187.0" y1="31.1" x2="187.0" y2="93.4" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="173.1" y="37.7" width="27.7" height="52.4" fill="#34d399" opacity="1" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="18.0" x2="253.0" y2="37.7" stroke="#9ca3af" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="26.5" width="27.7" height="2.2" fill="#9ca3af" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="24.6" x2="319.0" y2="83.5" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="31.1" width="27.7" height="45.9" fill="#f87171" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="77.0" x2="385.0" y2="129.4" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="83.5" width="27.7" height="39.3" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Variasi Evening Star dengan candle tengah berupa doji, menunjukkan keraguan pasar yang lebih ekstrem sebelum berbalik turun.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Morning Doji Star</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="67.1" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="21.3" width="27.7" height="39.3" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="57.3" x2="121.0" y2="106.5" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="60.6" width="27.7" height="39.3" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="157.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="187.0" y1="96.6" x2="187.0" y2="158.9" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="173.1" y="99.9" width="27.7" height="52.4" fill="#f87171" opacity="1" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="152.3" x2="253.0" y2="172.0" stroke="#9ca3af" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="162.2" width="27.7" height="2.2" fill="#9ca3af" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="106.5" x2="319.0" y2="165.4" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="113.0" width="27.7" height="45.9" fill="#34d399" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="60.6" x2="385.0" y2="113.0" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="67.1" width="27.7" height="39.3" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Variasi Morning Star dengan candle tengah berupa doji, menunjukkan keraguan pasar yang lebih ekstrem sebelum berbalik naik.</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="bear marubozu bull marubozu">
+        <div class="section-header">
+          <h2>Bear Marubozu &amp; Bull Marubozu</h2>
+        </div>
+        
+        <div class="warning-box py-1">
+          Body penuh tanpa (atau nyaris tanpa) shadow — menandakan dominasi penuh satu sisi selama sesi
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Bear Marubozu</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="50.4" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="20.7" width="27.7" height="27.0" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="45.0" x2="121.0" y2="74.7" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="47.7" width="27.7" height="24.3" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="69.3" x2="187.0" y2="96.4" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="72.0" width="27.7" height="21.6" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="90.9" x2="253.0" y2="115.3" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="93.6" width="27.7" height="18.9" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="112.6" x2="319.0" y2="150.4" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="112.6" width="27.7" height="37.8" fill="#f87171" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="147.7" x2="385.0" y2="172.0" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="150.4" width="27.7" height="18.9" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Candle bearish dengan open = high dan close = low (nyaris tanpa shadow), menunjukkan tekanan jual mendominasi sepanjang sesi. Sering muncul saat downtrend menguat.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Bull Marubozu</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="139.6" x2="55.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="142.3" width="27.7" height="27.0" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="115.3" x2="121.0" y2="145.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="118.0" width="27.7" height="24.3" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="93.6" x2="187.0" y2="120.7" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="96.4" width="27.7" height="21.6" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="74.7" x2="253.0" y2="99.1" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="77.4" width="27.7" height="18.9" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="39.6" x2="319.0" y2="77.4" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="39.6" width="27.7" height="37.8" fill="#34d399" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="18.0" x2="385.0" y2="42.3" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="20.7" width="27.7" height="18.9" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Candle bullish dengan open = low dan close = high (nyaris tanpa shadow), menunjukkan tekanan beli mendominasi sepanjang sesi. Sering muncul saat uptrend menguat.</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="3blackcrows 3whitesoldiers three black crows three white soldiers">
+        <div class="section-header">
+          <h2>Three Black Crows &amp; Three White Soldiers</h2>
+        </div>
+        <div class="warning-box py-1">
+          Tiga candle berturut-turut, masing-masing open di dalam body candle sebelumnya lalu ditutup lebih ekstrem
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Three Black Crows</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="64.2" x2="55.0" y2="122.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="71.9" width="27.7" height="46.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="18.0" x2="121.0" y2="75.8" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="25.7" width="27.7" height="46.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="157.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="187.0" y1="21.9" x2="187.0" y2="87.3" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="173.1" y="29.5" width="27.7" height="50.0" fill="#f87171" opacity="1" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="41.1" x2="253.0" y2="110.4" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="48.8" width="27.7" height="53.9" fill="#f87171" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="71.9" x2="319.0" y2="141.2" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="79.6" width="27.7" height="53.9" fill="#f87171" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="125.8" x2="385.0" y2="172.0" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="133.5" width="27.7" height="30.8" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Tiga candle bearish panjang berturut-turut, tiap candle membuka di dalam body candle sebelumnya lalu ditutup lebih rendah. Sinyal pembalikan kuat dari uptrend ke downtrend.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Three White Soldiers</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="68.1" x2="55.0" y2="125.8" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="71.9" width="27.7" height="46.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="114.2" x2="121.0" y2="172.0" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="118.1" width="27.7" height="46.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="157.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="187.0" y1="102.7" x2="187.0" y2="168.2" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="173.1" y="110.4" width="27.7" height="50.1" fill="#34d399" opacity="1" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="79.6" x2="253.0" y2="148.9" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="87.3" width="27.7" height="53.9" fill="#34d399" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="48.8" x2="319.0" y2="118.1" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="56.5" width="27.7" height="53.9" fill="#34d399" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="18.0" x2="385.0" y2="64.2" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="25.7" width="27.7" height="30.8" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Tiga candle bullish panjang berturut-turut, tiap candle membuka di dalam body candle sebelumnya lalu ditutup lebih tinggi. Sinyal pembalikan kuat dari downtrend ke uptrend.</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="darkcloudcover piercing line dark cloud cover piercing">
+        <div class="section-header">
+          <h2>Dark Cloud Cover &amp; Piercing Line</h2>
+        </div>
+        <div class="warning-box py-1">
+          Dua candle: candle tren berlanjut, lalu candle lawan arah yang menembus lebih dari separuh body candle pertama
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Dark Cloud Cover</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="134.4" x2="55.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="141.2" width="27.7" height="27.4" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="103.6" x2="121.0" y2="144.6" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="110.4" width="27.7" height="30.8" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="69.3" x2="187.0" y2="113.8" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="76.2" width="27.7" height="34.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="24.8" x2="253.0" y2="79.6" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="31.7" width="27.7" height="44.5" fill="#34d399" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="18.0" x2="319.0" y2="69.3" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="21.4" width="27.7" height="41.1" fill="#f87171" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="62.5" x2="385.0" y2="107.0" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="69.3" width="27.7" height="30.8" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Candle bullish besar diikuti candle bearish yang dibuka gap up di atas high sebelumnya, lalu ditutup di bawah titik tengah body candle bullish tersebut. Menandakan pembalikan turun.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Piercing Line</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="55.6" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="21.4" width="27.7" height="27.4" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="45.4" x2="121.0" y2="86.4" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="48.8" width="27.7" height="30.8" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="76.2" x2="187.0" y2="120.7" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="79.6" width="27.7" height="34.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="110.4" x2="253.0" y2="165.2" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="113.8" width="27.7" height="44.5" fill="#f87171" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="120.7" x2="319.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="127.5" width="27.7" height="41.1" fill="#34d399" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="83.0" x2="385.0" y2="127.5" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="89.9" width="27.7" height="30.8" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Candle bearish besar diikuti candle bullish yang dibuka gap down di bawah low sebelumnya, lalu ditutup di atas titik tengah body candle bearish tersebut. Menandakan pembalikan naik.</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="gravestonedoji dragonflydoji gravestone doji dragonfly doji">
+        <div class="section-header">
+          <h2>Gravestone Doji &amp; Dragonfly Doji</h2>
+        </div>
+        <div class="warning-box py-1">
+          Doji dengan hanya satu shadow panjang di salah satu sisi
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Gravestone Doji</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="137.4" x2="55.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="143.7" width="27.7" height="25.1" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="112.3" x2="121.0" y2="146.9" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="118.6" width="27.7" height="25.1" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="87.1" x2="187.0" y2="121.7" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="93.4" width="27.7" height="25.1" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="62.0" x2="253.0" y2="96.6" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="68.3" width="27.7" height="25.1" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="18.0" x2="319.0" y2="71.4" stroke="#9ca3af" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="68.3" width="27.7" height="2.2" fill="#9ca3af" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="62.0" x2="385.0" y2="112.3" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="68.3" width="27.7" height="37.7" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Open = close = low, dengan shadow atas yang sangat panjang dan nyaris tanpa shadow bawah. Muncul di puncak uptrend, menandakan penolakan harga tinggi — sinyal bearish.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Dragonfly Doji</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="52.6" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="21.1" width="27.7" height="25.1" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="43.1" x2="121.0" y2="77.7" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="46.3" width="27.7" height="25.1" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="68.3" x2="187.0" y2="102.9" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="71.4" width="27.7" height="25.1" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="93.4" x2="253.0" y2="128.0" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="96.6" width="27.7" height="25.1" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="118.6" x2="319.0" y2="172.0" stroke="#9ca3af" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="121.7" width="27.7" height="2.2" fill="#9ca3af" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="77.7" x2="385.0" y2="128.0" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="84.0" width="27.7" height="37.7" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Open = close = high, dengan shadow bawah yang sangat panjang dan nyaris tanpa shadow atas. Muncul di dasar downtrend, menandakan penolakan harga rendah — sinyal bullish.</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="doji longleggeddoji doji long-legged doji">
+        <div class="section-header">
+          <h2>Doji &amp; Long-Legged Doji</h2>
+        </div>
+        <div class="warning-box py-1">
+          Sama-sama open ≈ close (indecision) — bedanya murni panjang shadow, bukan arah tren
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Doji</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-slate-500/10 text-slate-300 border-slate-500/30">Netral</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="69.3" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="23.1" width="27.7" height="41.1" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="59.1" x2="121.0" y2="105.3" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="64.2" width="27.7" height="35.9" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="95.0" x2="187.0" y2="136.1" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="100.1" width="27.7" height="30.8" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="125.8" x2="253.0" y2="161.7" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="130.9" width="27.7" height="25.7" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="146.3" x2="319.0" y2="166.9" stroke="#9ca3af" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="154.0" width="27.7" height="2.6" fill="#9ca3af" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="136.1" x2="385.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="146.3" width="27.7" height="10.3" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Open hampir sama dengan close, shadow atas & bawah relatif pendek. Menandakan keseimbangan sesaat antara pembeli dan penjual, arah lanjutan belum pasti.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Long-Legged Doji</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-slate-500/10 text-slate-300 border-slate-500/30">Netral</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="55.6" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="21.8" width="27.7" height="30.0" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="48.0" x2="121.0" y2="81.9" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="51.8" width="27.7" height="26.3" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="74.3" x2="187.0" y2="104.4" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="78.1" width="27.7" height="22.5" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="96.9" x2="253.0" y2="123.2" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="100.6" width="27.7" height="18.8" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="66.8" x2="319.0" y2="172.0" stroke="#9ca3af" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="117.5" width="27.7" height="2.2" fill="#9ca3af" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="104.4" x2="385.0" y2="130.7" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="111.9" width="27.7" height="7.5" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Sama seperti Doji biasa (open ≈ close), tapi shadow atas DAN bawah jauh lebih panjang — menandakan pertarungan bull vs bear yang jauh lebih ekstrem dalam satu sesi, meski akhirnya balik seri.</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="bear_spinningtop bull_spinningtop bear spinning top bull spinning top">
+        <div class="section-header">
+          <h2>Bear Spinning Top &amp; Bull Spinning Top</h2>
+        </div>
+        <div class="warning-box py-1">
+          Body kecil dengan shadow atas & bawah yang seimbang — momentum tren mulai melemah
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Bear Spinning Top</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="132.6" x2="55.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="139.8" width="27.7" height="28.7" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="104.0" x2="121.0" y2="143.3" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="111.1" width="27.7" height="28.7" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="75.3" x2="187.0" y2="114.7" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="82.5" width="27.7" height="28.7" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="46.7" x2="253.0" y2="86.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="53.8" width="27.7" height="28.7" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="18.0" x2="319.0" y2="78.9" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="43.1" width="27.7" height="10.7" fill="#f87171" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="46.7" x2="385.0" y2="82.5" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="50.2" width="27.7" height="25.1" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Muncul di puncak uptrend: body kecil dengan shadow atas-bawah seimbang menandakan momentum naik mulai melemah, berpotensi berbalik turun (perlu konfirmasi lanjutan).</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Bull Spinning Top</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="57.4" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="21.6" width="27.7" height="28.7" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="46.7" x2="121.0" y2="86.0" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="50.2" width="27.7" height="28.7" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="75.3" x2="187.0" y2="114.7" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="78.9" width="27.7" height="28.7" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="104.0" x2="253.0" y2="143.3" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="107.5" width="27.7" height="28.7" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="111.1" x2="319.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="136.2" width="27.7" height="10.7" fill="#34d399" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="107.5" x2="385.0" y2="143.3" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="114.7" width="27.7" height="25.1" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Muncul di dasar downtrend: body kecil dengan shadow atas-bawah seimbang menandakan momentum turun mulai melemah, berpotensi berbalik naik (perlu konfirmasi lanjutan).</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="shootingstar hammer shooting star hammer">
+        <div class="section-header">
+          <h2>Shooting Star &amp; Hammer</h2>
+        </div>
+        <div class="warning-box py-1">
+          Perhatikan pasangan Hanging Man / Inverted Hammer di bawah — bentuknya mirip tapi konteksnya sengaja dibuat beda
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Shooting Star</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="138.8" x2="55.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="144.8" width="27.7" height="24.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="114.6" x2="121.0" y2="147.8" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="120.7" width="27.7" height="24.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="90.5" x2="187.0" y2="123.7" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="96.5" width="27.7" height="24.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="66.3" x2="253.0" y2="99.5" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="72.4" width="27.7" height="24.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="18.0" x2="319.0" y2="72.4" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="63.3" width="27.7" height="6.0" fill="#f87171" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="66.3" x2="385.0" y2="108.6" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="69.3" width="27.7" height="33.2" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Muncul di puncak uptrend: body kecil di dekat harga terendah candle, shadow atas panjang, nyaris tanpa shadow bawah. Menunjukkan penolakan harga tinggi — sinyal bearish.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Hammer</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="51.2" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="21.0" width="27.7" height="24.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="42.2" x2="121.0" y2="75.4" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="45.2" width="27.7" height="24.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="66.3" x2="187.0" y2="99.5" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="69.3" width="27.7" height="24.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="90.5" x2="253.0" y2="123.7" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="93.5" width="27.7" height="24.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="117.6" x2="319.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="120.7" width="27.7" height="6.0" fill="#34d399" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="81.4" x2="385.0" y2="123.7" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="87.5" width="27.7" height="33.2" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Muncul di dasar downtrend: body kecil di dekat harga tertinggi candle, shadow bawah panjang, nyaris tanpa shadow atas. Menunjukkan penolakan harga rendah — sinyal bullish.</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="hangingman invertedhammer hanging man inverted hammer">
+        <div class="section-header">
+          <h2>Hanging Man &amp; Inverted Hammer</h2>
+        </div>
+        <div class="warning-box py-1">
+          PENTING: Hanging Man bentuknya identik dengan Hammer, tapi muncul di puncak UPTREND. Inverted Hammer identik dengan Shooting Star, tapi muncul di dasar DOWNTREND.
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Hanging Man</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="124.9" x2="55.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="133.5" width="27.7" height="34.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="90.7" x2="121.0" y2="137.8" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="99.3" width="27.7" height="34.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="56.5" x2="187.0" y2="103.6" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="65.1" width="27.7" height="34.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="22.3" x2="253.0" y2="69.3" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="30.8" width="27.7" height="34.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="18.0" x2="319.0" y2="99.3" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="26.6" width="27.7" height="8.6" fill="#f87171" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="26.6" x2="385.0" y2="90.7" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="35.1" width="27.7" height="47.1" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Body kecil di dekat harga tertinggi candle, shadow bawah panjang — bentuk yang sama persis dengan Hammer. Bedanya, ini muncul setelah UPTREND sehingga jadi sinyal bearish, bukan bullish.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Inverted Hammer</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="65.1" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="22.3" width="27.7" height="34.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="52.2" x2="121.0" y2="99.3" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="56.5" width="27.7" height="34.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="86.4" x2="187.0" y2="133.5" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="90.7" width="27.7" height="34.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="253.0" y1="120.7" x2="253.0" y2="167.7" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="239.1" y="124.9" width="27.7" height="34.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="90.7" x2="319.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="154.9" width="27.7" height="8.6" fill="#34d399" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="99.3" x2="385.0" y2="163.4" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="107.8" width="27.7" height="47.1" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Body kecil di dekat harga terendah candle, shadow atas panjang — bentuk yang sama persis dengan Shooting Star. Bedanya, ini muncul setelah DOWNTREND sehingga jadi sinyal bullish, bukan bearish.</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="bear_harami bull_harami bear harami bull harami">
+        <div class="section-header">
+          <h2>Bear Harami &amp; Bull Harami</h2>
+        </div>
+        <div class="warning-box py-1">
+          Candle besar diikuti candle kecil yang body-nya sepenuhnya terkurung di dalam body candle sebelumnya
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Bear Harami</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="137.4" x2="55.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="143.7" width="27.7" height="25.1" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="106.0" x2="121.0" y2="146.9" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="112.3" width="27.7" height="31.4" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="68.3" x2="187.0" y2="115.4" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="74.6" width="27.7" height="37.7" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="18.0" x2="253.0" y2="77.7" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="24.3" width="27.7" height="50.3" fill="#34d399" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="36.9" x2="319.0" y2="62.0" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="40.0" width="27.7" height="18.9" fill="#f87171" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="52.6" x2="385.0" y2="93.4" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="58.9" width="27.7" height="28.3" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Candle bullish besar melanjutkan uptrend, diikuti candle bearish kecil yang body-nya terkurung penuh di dalam body candle sebelumnya. Menandakan momentum naik mulai kehabisan tenaga.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Bull Harami</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="52.6" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="21.1" width="27.7" height="25.1" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="43.1" x2="121.0" y2="84.0" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="46.3" width="27.7" height="31.4" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="74.6" x2="187.0" y2="121.7" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="77.7" width="27.7" height="37.7" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="112.3" x2="253.0" y2="172.0" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="115.4" width="27.7" height="50.3" fill="#f87171" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="128.0" x2="319.0" y2="153.1" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="131.1" width="27.7" height="18.9" fill="#34d399" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="96.6" x2="385.0" y2="137.4" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="102.9" width="27.7" height="28.3" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Candle bearish besar melanjutkan downtrend, diikuti candle bullish kecil yang body-nya terkurung penuh di dalam body candle sebelumnya. Menandakan momentum turun mulai kehabisan tenaga.</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="bear_haramicross bull_haramicross bear harami cross bull harami cross">
+        <div class="section-header">
+          <h2>Bear Harami Cross &amp; Bull Harami Cross</h2>
+        </div>
+        <div class="warning-box py-1">
+          Sama seperti Harami, tapi candle kedua adalah doji — sinyal keraguan yang lebih tegas
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Bear Harami Cross</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="137.4" x2="55.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="143.7" width="27.7" height="25.1" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="106.0" x2="121.0" y2="146.9" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="112.3" width="27.7" height="31.4" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="68.3" x2="187.0" y2="115.4" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="74.6" width="27.7" height="37.7" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="18.0" x2="253.0" y2="77.7" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="24.3" width="27.7" height="50.3" fill="#34d399" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="43.1" x2="319.0" y2="55.7" stroke="#9ca3af" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="48.2" width="27.7" height="2.2" fill="#9ca3af" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="43.1" x2="385.0" y2="87.1" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="49.4" width="27.7" height="31.4" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Candle bullish besar melanjutkan uptrend, diikuti sebuah doji yang terkurung penuh di dalam body candle sebelumnya. Versi Bear Harami yang lebih kuat karena doji menandakan keraguan ekstrem.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Bull Harami Cross</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="52.6" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="21.1" width="27.7" height="25.1" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="43.1" x2="121.0" y2="84.0" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="46.3" width="27.7" height="31.4" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="74.6" x2="187.0" y2="121.7" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="77.7" width="27.7" height="37.7" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="112.3" x2="253.0" y2="172.0" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="115.4" width="27.7" height="50.3" fill="#f87171" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="134.3" x2="319.0" y2="146.9" stroke="#9ca3af" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="140.6" width="27.7" height="2.2" fill="#9ca3af" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="102.9" x2="385.0" y2="146.9" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="109.1" width="27.7" height="31.4" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Candle bearish besar melanjutkan downtrend, diikuti sebuah doji yang terkurung penuh di dalam body candle sebelumnya. Versi Bull Harami yang lebih kuat karena doji menandakan keraguan ekstrem.</p>
+          </div>
+        </div>
+      </section>
+      <section class="docs-subsection" data-search="bear_engulfing bull_engulfing bear engulfing bull engulfing">
+        <div class="section-header">
+          <h2>Bear Engulfing &amp; Bull Engulfing</h2>
+        </div>
+        <div class="warning-box py-1">
+          Candle kedua sepenuhnya "menelan" body candle pertama, arah berlawanan
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Bear Engulfing</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-rose-500/10 text-rose-300 border-rose-500/30">Bearish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="124.9" x2="55.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="133.5" width="27.7" height="34.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="90.7" x2="121.0" y2="137.8" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="99.3" width="27.7" height="34.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="56.5" x2="187.0" y2="103.6" stroke="#34d399" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="65.1" width="27.7" height="34.2" fill="#34d399" opacity="0.32" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="30.8" x2="253.0" y2="69.3" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="39.4" width="27.7" height="25.7" fill="#34d399" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="18.0" x2="319.0" y2="99.3" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="26.6" width="27.7" height="64.2" fill="#f87171" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="82.2" x2="385.0" y2="142.1" stroke="#f87171" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="90.7" width="27.7" height="42.8" fill="#f87171" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Candle bullish kecil melanjutkan uptrend, langsung diikuti candle bearish besar yang body-nya menelan penuh body candle sebelumnya. Sinyal pembalikan turun yang kuat.</p>
+          </div>
+          
+          <div class="flex flex-col rounded-xl border border-white/10 bg-[#1a1c25] p-4">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <h3 class="text-[15px] font-bold text-[#e2e4ef]">Bull Engulfing</h3>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Bullish</span>
+              </div>
+            </div>
+            <div class="rounded-lg bg-[#0f1117] border border-white/5 p-2 mb-3">
+              <svg viewBox="0 0 440 190" class="w-full h-auto"><line x1="55.0" y1="18.0" x2="55.0" y2="65.1" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="41.1" y="22.3" width="27.7" height="34.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="121.0" y1="52.2" x2="121.0" y2="99.3" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="107.1" y="56.5" width="27.7" height="34.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <line x1="187.0" y1="86.4" x2="187.0" y2="133.5" stroke="#f87171" stroke-width="2" opacity="0.32"/>
+                <rect x="173.1" y="90.7" width="27.7" height="34.2" fill="#f87171" opacity="0.32" rx="1.5"/>
+                <rect x="223.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="253.0" y1="120.7" x2="253.0" y2="159.2" stroke="#f87171" stroke-width="2" opacity="1"/>
+                <rect x="239.1" y="124.9" width="27.7" height="25.7" fill="#f87171" opacity="1" rx="1.5"/>
+                <rect x="289.0" y="4" width="60.0" height="182" rx="7" fill="#facc15" opacity="0.30"/>
+                <line x1="319.0" y1="90.7" x2="319.0" y2="172.0" stroke="#34d399" stroke-width="2" opacity="1"/>
+                <rect x="305.1" y="99.3" width="27.7" height="64.2" fill="#34d399" opacity="1" rx="1.5"/>
+                <line x1="385.0" y1="47.9" x2="385.0" y2="107.8" stroke="#34d399" stroke-width="2" opacity="0.5" stroke-dasharray="3 3"/>
+                <rect x="371.1" y="56.5" width="27.7" height="42.8" fill="#34d399" opacity="0.5" rx="1.5" stroke-dasharray="3 3"/>
+                <text x="385.0" y="187" font-size="8" fill="#7a7f96" text-anchor="middle" font-family="monospace">next</text></svg>
+            </div>
+            <p class="text-[13px] leading-relaxed text-[#c2c5d8]">Candle bearish kecil melanjutkan downtrend, langsung diikuti candle bullish besar yang body-nya menelan penuh body candle sebelumnya. Sinyal pembalikan naik yang kuat.</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+
+    <!-- ═══════════════════════════════
+         ROTATION CHART
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-rotation" data-section data-search="rotation rotstrength rotphase rotdir">
+      <div class="section-header">
+        <h1>ROTATION CHART</h1>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+      <div class="col-grid mb-4">
+        <div class="col-card">
+          <div class="ct">RotStrength [periode]</div><div class="cd">Kekuatan Momentum di Rotation Chart</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">RotPhase [periode]</div><div class="cd">Fase Momentum di Rotation Chart</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">RotDir [periode]</div><div class="cd">Arah Momentum di Rotation Chart</div>
+        </div>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+      <div class="docs-prose">
+        Jika ingin menggunakan kolom ini, ada baiknya sudah menyelesaikan tutorial berikut:<br>
+        <ul class="list-disc ml-4">
+            <li><a href="/tutorial/e9s3g8v18okkqPRB" target="_blank" class="underline" style="color:var(--docs-accent)">Rotation Chart 101</a></li>
+        </ul>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Periode</strong></p>
+      <p class="docs-prose">
+        NeoBDM menyediakan Rotation Chart untuk periode harian dan mingguan
+      </p>
+
+      <div class="nom-grid">
+        <div class="nom-card"><div class="token text-lg">D</div><div class="def">Daily</div></div>
+        <div class="nom-card"><div class="token text-lg">W</div><div class="def">Weekly</div></div>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+      <div class="ex-table-wrap mb-1.5">
+        <table class="ex-table">
+          <thead><tr><th>Kolom</th><th>Arti</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag">RotStrength D</span></td><td>Kekuatan rotation chart — harian</td></tr>
+            <tr><td><span class="tag">RotPhase W</span></td><td>Fase rotation chart — mingguan</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Strength / Kekuatan</strong></p>
+      <p class="docs-prose">
+        Kekuatan dari momentum dibagi menjadi 3
+      </p>
+      <div class="nom-grid">
+        <div class="nom-card"><div class="token text-lg">WEAK</div><div class="def">Lemah - mirip dengan Benchmark</div></div>
+        <div class="nom-card"><div class="token text-lg">STRONG</div><div class="def">Kuat - Baik</div></div>
+        <div class="nom-card"><div class="token text-lg">ABNORMAL</div><div class="def">Abnormal - Terlewat kuat</div></div>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Phase / Fase</strong></p>
+      <p class="docs-prose">
+        Fase momentum dibagi menjadi 4
+      </p>
+      <div class="nom-grid">
+        <div class="nom-card"><div class="token text-lg">UNDERPERFORM</div><div class="def">Kalah terhadap benchmark</div></div>
+        <div class="nom-card"><div class="token text-lg">IMPROVING</div><div class="def">Fase penguatan</div></div>
+        <div class="nom-card"><div class="token text-lg">OUTPERFORM</div><div class="def">Mengalahkan benchmark</div></div>
+        <div class="nom-card"><div class="token text-lg">WEAKENING</div><div class="def">Fase pelemahan</div></div>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Direction / Arah</strong></p>
+      <p class="docs-prose">
+        Arah dibagi menjadi 8 penjuru dalam bahasa inggris
+      </p>
+      <div class="nom-grid">
+        <div class="nom-card"><div class="token text-lg">U</div><div class="def">Atas</div></div>
+        <div class="nom-card"><div class="token text-lg">UR</div><div class="def">Kanan-Atas</div></div>
+        <div class="nom-card"><div class="token text-lg">R</div><div class="def">Kanan</div></div>
+        <div class="nom-card"><div class="token text-lg">BR</div><div class="def">Kanan-Bawah</div></div>
+        <div class="nom-card"><div class="token text-lg">B</div><div class="def">Bawah</div></div>
+        <div class="nom-card"><div class="token text-lg">BL</div><div class="def">Kiri-Bawah</div></div>
+        <div class="nom-card"><div class="token text-lg">L</div><div class="def">Kiri</div></div>
+        <div class="nom-card"><div class="token text-lg">UL</div><div class="def">Kiri-Atas</div></div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════
+         BALANCE POSITION
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-bpos" data-section>
+      <div class="section-header">
+        <h1>ANALISA KEPEMILIKAN</h1>
+      </div>
+
+      <section class="docs-subsection" data-search="bpos balance">
+        <div class="section-header">
+          <h2>Balance Position</h2>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">Bpos [kelompok] [periode]</div><div class="cd">Persentase kepemilikan kelompok pada bulan tersebut</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">BposChg [kelompok] [periode]</div><div class="cd">Perubahan % kepemilikan kelompok pada bulan tersebut</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah menyelesaikan tutorial berikut:<br>
+          <ul class="list-disc ml-4">
+              <li><a href="/clip/a92gGW1n2GGfXfcC/" target="_blank" class="underline" style="color:var(--docs-accent)">Clip - Apa itu Analisa Kepemilikan?</a></li>
+              <li><a href="/clip/H8g8BYxKNXNKNenc/" target="_blank" class="underline" style="color:var(--docs-accent)">Clip - 3 Jenis Pengelompokan Kepemilikan Saham</a></li>
+              <li><a href="/tutorial/kVE02cY8BPksOY1H" target="_blank" class="underline" style="color:var(--docs-accent)">Diskusi Terkait Saham Scripless</a></li>
+          </ul>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Kelompok</strong></p>
+        <p class="docs-prose">
+          Tiga kelompok kepemilikan yang dilacak:
+        </p>
+        <div class="nom-grid">
+          <div class="nom-card"><div class="token text-lg">R</div><div class="def">Individu Lokal</div></div>
+          <div class="nom-card"><div class="token text-lg">I</div><div class="def">Institusi</div></div>
+          <div class="nom-card"><div class="token text-lg">F</div><div class="def">Asing</div></div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Periode</strong></p>
+        <p class="docs-prose">
+          Tersedia untuk <strong>6 bulan terakhir</strong>, dihitung mundur dari bulan ini
+        </p>
+        <div class="nom-grid">
+          <div class="nom-card"><div class="token text-lg">m1 – m6</div><div class="def">m1 = 1 bulan lalu<br>m6 = 6 bulan lalu</div></div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+        <div class="ex-table-wrap mb-1.5">
+          <table class="ex-table">
+            <thead><tr><th>Kolom</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag">Bpos F m3</span></td><td>Persentase Kepemilikan Asing — 3 bulan lalu</td></tr>
+              <tr><td><span class="tag">BposChg R m1</span></td><td>Perubahan Persentase kepemilikan Individu Lokal bulan lalu</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="scripless">
+        <div class="section-header">
+          <h2>Scripless</h2>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">Scripless [periode]</div><div class="cd">Persentase saham scripless pada bulan tersebut</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">ScriplessChg [periode]</div><div class="cd">Perubahan %scripless pada bulan tersebut</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah menyelesaikan tutorial berikut:<br>
+          <ul class="list-disc ml-4">
+              <li><a href="/clip/H8g8BYxKNXNKNenc/" target="_blank" class="underline" style="color:var(--docs-accent)">Clip - 3 Jenis Pengelompokan Kepemilikan Saham</a></li>
+              <li><a href="/tutorial/kVE02cY8BPksOY1H" target="_blank" class="underline" style="color:var(--docs-accent)">Diskusi Terkait Saham Scripless</a></li>
+              <li><a href="/clip/VFYc3nsoM4Y7ig1V/" target="_blank" class="underline" style="color:var(--docs-accent)">Dampak Ketika Saham Scripless Berkurang</a></li>
+          </ul>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Kelompok</strong></p>
+        <p class="docs-prose">
+          Tiga kelompok kepemilikan yang dilacak:
+        </p>
+        <div class="nom-grid">
+          <div class="nom-card"><div class="token text-lg">R</div><div class="def">Individu Lokal</div></div>
+          <div class="nom-card"><div class="token text-lg">I</div><div class="def">Institusi</div></div>
+          <div class="nom-card"><div class="token text-lg">F</div><div class="def">Asing</div></div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+        <div class="ex-table-wrap mb-1.5">
+          <table class="ex-table">
+            <thead><tr><th>Kolom</th><th>Arti</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag">Scripless m1</span></td><td>Persentase Scripless 1 bulan lalu</td></tr>
+              <tr><td><span class="tag">ScriplessChg m2</span></td><td>Perubahan Persentase scripless 2 bulan lalu</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="bpos balance">
+        <div class="section-header">
+          <h2>Kepemilikan >1%</h2>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">Total KDA 1%</div><div class="cd">Persentase Total saham para pemegang saham yang kepemilikan >1%</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Catatan</strong></p>
+        <div class="warning-box">
+          Total KDA 1% berbeda dengan High Shareholding Concentration (HSC).<br><br>HSC merupakan status resmi yang menandai 
+          emiten terkonsentrasi tinggi berdasarkan kriteria dan kajian oleh bursa, sedangkan KDA 1% (Kepemilikan di atas 1%)
+          adalah informasi kepemilikan yang dirilis oleh bursa sehingga Total KDA 1% hanyalah total dari semua kepemilikan para KDA 1%<br><br>
+          Total tersebut dapat menjadi perkiraan seberapa banyak saham yang dipegang oleh pengendali sehingga ada kemiripan dengan tujuan yang ingin dicapai HSC
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="free freefloat">
+        <div class="section-header">
+          <h2>Free Float</h2>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">FreeFloat</div><div class="cd">Persentase Free Float saham</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah menyelesaikan tutorial berikut:<br>
+          <ul class="list-disc ml-4">
+              <li><a href="/clip/a92gGW1n2GGfXfcC/" target="_blank" class="underline" style="color:var(--docs-accent)">Clip - Apa itu Analisa Kepemilikan?</a></li>
+              <li><a href="/clip/hjw7peGPmXeKyyRw/" target="_blank" class="underline" style="color:var(--docs-accent)">Clip - Apa itu Free Float Saham?</a></li>
+              <li><a href="/clip/H8g8BYxKNXNKNenc/" target="_blank" class="underline" style="color:var(--docs-accent)">Clip - 3 Jenis Pengelompokan Kepemilikan Saham</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="holder">
+        <div class="section-header">
+          <h2>Analisa Holder</h2>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">Holder</div><div class="cd">Jumlah pemegang saham (SID)</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah menyelesaikan tutorial berikut:<br>
+          <ul class="list-disc ml-4">
+              <li><a href="/clip/a92gGW1n2GGfXfcC/" target="_blank" class="underline" style="color:var(--docs-accent)">Clip - Apa itu Analisa Kepemilikan?</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="docs-subsection" data-search="buyback nominee">
+        <div class="section-header">
+          <h2>Analisa Kepemilikan Populer</h2>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+        <div class="col-grid mb-4">
+          <div class="col-card">
+            <div class="ct">Buyback m1–m3</div>
+            <div class="cd">Potensi buyback institusi menurut NeoBDM</div>
+          </div>
+          <div class="col-card">
+            <div class="ct">Nominee m1–m3</div>
+            <div class="cd">Indikasi nominee menurut NeoBDM</div>
+          </div>
+        </div>
+
+        <p class="docs-prose mb-2"><strong>Referensi</strong></p>
+        <div class="docs-prose">
+          Jika ingin menggunakan kolom ini, ada baiknya sudah menyelesaikan tutorial berikut:<br>
+          <ul class="list-disc ml-4">
+              <li><a href="/clip/a92gGW1n2GGfXfcC/" target="_blank" class="underline" style="color:var(--docs-accent)">Clip - Apa itu Analisa Kepemilikan?</a></li>
+              <li><a href="/clip/gfUyFJVXFq3RQQbT/" target="_blank" class="underline" style="color:var(--docs-accent)">Clip - Apa itu nominee?</a></li>
+          </ul>
+        </div>
+      </section>
+    </section>
+
+    <!-- ═══════════════════════════════
+         SEASONALITY
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-seasonality" data-section data-search="seasonality proba exp">
+      <div class="section-header">
+        <h1>SEASONALITY</h1>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+      <div class="col-grid mb-4">
+        <div class="col-card">
+          <div class="ct">Proba m[periode]</div><div class="cd">Probability — Probabilitas saham naik di bulan tersebut secara historis</div>
+        </div>
+        <div class="col-card">
+          <div class="ct">Exp m[periode]</div><div class="cd">Expectancy — Persen kenaikan saham di bulan tersebut secara historis</div>
+        </div>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Periode</strong></p>
+      <div class="nom-grid">
+        <div class="nom-card"><div class="token text-lg">m0</div><div class="def">Bulan ini</div></div>
+        <div class="nom-card"><div class="token text-lg">m1</div><div class="def">Bulan depan</div></div>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Contoh</strong></p>
+      <div class="ex-table-wrap mb-1.5">
+        <table class="ex-table">
+          <thead><tr><th>Kolom</th><th>Arti</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag">Proba m0</span></td><td>Probabilitas saham hijau secara historis di <strong>bulan ini</strong></td></tr>
+            <tr><td><span class="tag">Exp m1</span></td><td>Persen Kenaikan saham secara historis di <strong>bulan depan</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════
+         MEMBER REQUEST
+    ═══════════════════════════════ -->
+    <section class="docs-section" id="s-request" data-section data-search="smacd">
+      <div class="section-header">
+        <h1>MEMBER REQUEST</h1>
+      </div>
+
+      <p class="docs-prose mb-2"><strong>Kolom</strong></p>
+      <div class="col-grid">
+        <div class="col-card">
+          <div class="ct">SMACD GC</div>
+          <div class="cd">Golden cross menggunakan MACD(2, 10, 2) untuk scalping</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Footer -->
+    <footer class="main-footer text-sm py-2">
+      <!-- To the right -->
+      <div class="float-right d-none d-sm-inline">
+        <strong>#TradeResponsibly</strong>
+      </div>
+      <!-- Default to the left -->
+      <strong>NeoBDM &copy; 2017-2026. All rights reserved.</strong>
+    </footer>
+  </div>
+
+  <!-- REQUIRED SCRIPTS -->
+  
+
+  <script src="/static/js/bootstrap5/bootstrap.bundle.min.860de2c9cbe1.js"></script>
+  <script src="/static/js/adminlte/adminlte.min.f3266ba33fca.js"></script>
+  <script src="/static/js/toastr/toastr.min.293ca00291cb.js"></script>
+  <script src="/static/js/toastr/toastr-option.7b1d116bb72d.js"></script>
+  <script src="/static/js/utils/darkmode.f97ab82f3365.js"></script>
+  <script src="/static/js/utils/tooltip.1fb26f679f64.js"></script>
+  <script src="/static/js/utils/sidebar.7d13f33f8f7e.js"></script>
+  <script src="/static/js/utils/copy.9abde5f4b58b.js"></script>
+  
+<script>
+  function filterAll(q) {
+    const needle = q.toLowerCase().trim();
+    let anyVisible = false;
+
+    document.querySelectorAll('[data-section]').forEach(sec => {
+      let childMatch = false;
+      sec.querySelectorAll('[data-search]').forEach(el => {
+        const hit = !needle || el.dataset.search.toLowerCase().includes(needle);
+        el.style.display = hit ? '' : 'none';
+        if (hit) childMatch = true;
+      });
+
+      const show = !needle || childMatch;
+      sec.style.display = show ? '' : 'none';
+      if (show) anyVisible = true;
+    });
+
+    document.getElementById('no-results').style.display = anyVisible ? 'none' : 'block';
+  }
+
+  function slugify(str) {
+    return str.toLowerCase().trim()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+  }
+
+  function closeMobileSidebar() {
+    document.getElementById('docsSidebar').classList.remove('open');
+    document.getElementById('sidebarBackdrop').classList.remove('show');
+    document.getElementById('sidebarToggle').setAttribute('aria-expanded', 'false');
+  }
+
+  function setActiveNav(id) {
+    document.querySelectorAll('.sidebar-link, .sidebar-sublink').forEach(l => {
+      l.classList.toggle('active', l.getAttribute('onclick')?.includes(`'${id}'`) ?? false);
+    });
+    // expand only the sublist that owns (or contains) the active item; collapse the rest
+    document.querySelectorAll('.sidebar-sublist').forEach(list => {
+      const ownsActiveChild = !!list.querySelector('.sidebar-sublink.active');
+      const isOwnParent = list.dataset.parent === id;
+      list.classList.toggle('open', ownsActiveChild || isOwnParent);
+    });
+  }
+
+  function goTo(id, e) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (e?.currentTarget) setActiveNav(id);
+    closeMobileSidebar();
+  }
+
+  async function copyLink(id, btn) {
+    const url = `${location.origin}${location.pathname}#${id}`;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch (err) {
+      // clipboard API unavailable — fall back to a temporary text field
+      const tmp = document.createElement('textarea');
+      tmp.value = url; document.body.appendChild(tmp); tmp.select();
+      document.execCommand('copy'); tmp.remove();
+    }
+    btn.classList.add('copied');
+    const toast = btn.nextElementSibling;
+    if (toast?.classList.contains('copy-link-toast')) {
+      toast.textContent = 'Copied';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1600);
+    }
+    setTimeout(() => btn.classList.remove('copied'), 1600);
+  }
+
+  // ── Build stable IDs for every subsection + inject copy-link buttons ──
+  function initSectionsAndCopyLinks() {
+    document.querySelectorAll('.docs-section[data-section]').forEach(section => {
+      const parentId = section.id;
+
+      section.querySelectorAll(':scope > .docs-subsection').forEach(sub => {
+        if (!sub.id) {
+          const h2 = sub.querySelector('.section-header h2');
+          sub.id = `${parentId}--${slugify(h2 ? h2.textContent : 'bagian')}`;
+        }
+      });
+
+      // copy-link buttons for both the section itself and every subsection
+      const targets = [section, ...section.querySelectorAll(':scope > .docs-subsection')];
+      targets.forEach(target => {
+        const header = target.querySelector(':scope > .section-header');
+        if (!header || header.querySelector('.copy-link-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-link-btn';
+        btn.type = 'button';
+        btn.innerHTML = '<i class="fas fa-link"></i>';
+        btn.setAttribute('aria-label', 'Copy link');
+        btn.onclick = () => copyLink(target.id, btn);
+        const toast = document.createElement('span');
+        toast.className = 'copy-link-toast';
+        header.appendChild(btn);
+        header.appendChild(toast);
+      });
+    });
+  }
+
+  // ── Populate sidebar with subsection links, mirroring actual DOM structure ──
+  function buildSidebarSublists() {
+    document.querySelectorAll('.sidebar-sublist').forEach(list => {
+      const parentId = list.dataset.parent;
+      const section = document.getElementById(parentId);
+      if (!section) return;
+      const subs = section.querySelectorAll(':scope > .docs-subsection');
+      subs.forEach(sub => {
+        const h2 = sub.querySelector('.section-header h2');
+        if (!h2) return;
+        const link = document.createElement('button');
+        link.className = 'sidebar-sublink';
+        link.textContent = h2.textContent;
+        link.setAttribute('onclick', `goTo('${sub.id}', event)`);
+        link.onclick = (e) => goTo(sub.id, e);
+        list.appendChild(link);
+      });
+    });
+  }
+
+  function initSidebarToggle() {
+    const sidebar = document.getElementById('docsSidebar');
+    const toggle = document.getElementById('sidebarToggle');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    toggle.addEventListener('click', () => {
+      const open = sidebar.classList.toggle('open');
+      backdrop.classList.toggle('show', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    backdrop.addEventListener('click', closeMobileSidebar);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileSidebar(); });
+  }
+
+  initSectionsAndCopyLinks();
+  buildSidebarSublists();
+  initSidebarToggle();
+  setActiveNav('s-scale'); // matches the .active state set server-side in the sidebar markup
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      setActiveNav(entry.target.id);
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+
+  document.querySelectorAll('[data-section], .docs-subsection').forEach(el => observer.observe(el));
+</script>
+
+
+  <!-- Modals -->
+     
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"30996439ec3a4bc7bfbf41bdab6d8ce1","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>

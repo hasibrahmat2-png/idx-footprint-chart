@@ -1,0 +1,750 @@
+{
+  "total_count": 88,
+  "brokers": [
+    {
+      "no": 1,
+      "code": "AD",
+      "name": "Sukadana Prima Sekuritas"
+    },
+    {
+      "no": 2,
+      "code": "AF",
+      "name": "Harita Kencana Sekuritas"
+    },
+    {
+      "no": 3,
+      "code": "AG",
+      "name": "Kiwoom Sekuritas Indonesia"
+    },
+    {
+      "no": 4,
+      "code": "AH",
+      "name": "Shinhan Sekuritas Indonesia"
+    },
+    {
+      "no": 5,
+      "code": "AI",
+      "name": "Kay Hian Sekuritas"
+    },
+    {
+      "no": 6,
+      "code": "AK",
+      "name": "UBS Sekuritas Indonesia"
+    },
+    {
+      "no": 7,
+      "code": "AO",
+      "name": "ERDIKHA ELIT SEKURITAS"
+    },
+    {
+      "no": 8,
+      "code": "AP",
+      "name": "Pacific Sekuritas Indonesia"
+    },
+    {
+      "no": 9,
+      "code": "AR",
+      "name": "Binaartha Sekuritas"
+    },
+    {
+      "no": 10,
+      "code": "AT",
+      "name": "Phintraco Sekuritas"
+    },
+    {
+      "no": 11,
+      "code": "AZ",
+      "name": "Sucor Sekuritas"
+    },
+    {
+      "no": 12,
+      "code": "BB",
+      "name": "Verdhana Sekuritas Indonesia"
+    },
+    {
+      "no": 13,
+      "code": "BF",
+      "name": "Inti Fikasa Sekuritas"
+    },
+    {
+      "no": 14,
+      "code": "BK",
+      "name": "J.P. Morgan Sekuritas Indonesia"
+    },
+    {
+      "no": 15,
+      "code": "BQ",
+      "name": "Korea Investment and Sekuritas Indonesia"
+    },
+    {
+      "no": 16,
+      "code": "BR",
+      "name": "Trust Sekuritas"
+    },
+    {
+      "no": 17,
+      "code": "BS",
+      "name": "Equity Sekuritas Indonesia"
+    },
+    {
+      "no": 18,
+      "code": "CC",
+      "name": "MANDIRI SEKURITAS"
+    },
+    {
+      "no": 19,
+      "code": "CD",
+      "name": "Mega Capital Sekuritas"
+    },
+    {
+      "no": 20,
+      "code": "CP",
+      "name": "KB Valbury Sekuritas"
+    },
+    {
+      "no": 21,
+      "code": "DD",
+      "name": "Makindo Sekuritas"
+    },
+    {
+      "no": 22,
+      "code": "DH",
+      "name": "SINARMAS SEKURITAS"
+    },
+    {
+      "no": 23,
+      "code": "DP",
+      "name": "DBS Vickers Sekuritas Indonesia"
+    },
+    {
+      "no": 24,
+      "code": "DR",
+      "name": "RHB Sekuritas Indonesia"
+    },
+    {
+      "no": 25,
+      "code": "DU",
+      "name": "KAF Sekuritas Indonesia"
+    },
+    {
+      "no": 26,
+      "code": "DX",
+      "name": "Bahana Sekuritas"
+    },
+    {
+      "no": 27,
+      "code": "EL",
+      "name": "Evergreen Sekuritas Indonesia"
+    },
+    {
+      "no": 28,
+      "code": "EP",
+      "name": "MNC Sekuritas"
+    },
+    {
+      "no": 29,
+      "code": "ES",
+      "name": "EKOKAPITAL SEKURITAS"
+    },
+    {
+      "no": 30,
+      "code": "FO",
+      "name": "Forte Global Sekuritas"
+    },
+    {
+      "no": 31,
+      "code": "FS",
+      "name": "Yuanta Sekuritas Indonesia"
+    },
+    {
+      "no": 32,
+      "code": "FZ",
+      "name": "Waterfront Sekuritas Indonesia"
+    },
+    {
+      "no": 33,
+      "code": "GA",
+      "name": "BNC Sekuritas Indonesia"
+    },
+    {
+      "no": 34,
+      "code": "GI",
+      "name": "Webull Sekuritas Indonesia"
+    },
+    {
+      "no": 35,
+      "code": "GR",
+      "name": "PANIN SEKURITAS Tbk."
+    },
+    {
+      "no": 36,
+      "code": "HD",
+      "name": "KGI Sekuritas Indonesia"
+    },
+    {
+      "no": 37,
+      "code": "HP",
+      "name": "Henan Putihrai Sekuritas"
+    },
+    {
+      "no": 38,
+      "code": "IC",
+      "name": "Integrity Capital Sekuritas"
+    },
+    {
+      "no": 39,
+      "code": "ID",
+      "name": "Anugerah Sekuritas Indonesia"
+    },
+    {
+      "no": 40,
+      "code": "IF",
+      "name": "SAMUEL SEKURITAS INDONESIA"
+    },
+    {
+      "no": 41,
+      "code": "IH",
+      "name": "Indo Harvest Sekuritas"
+    },
+    {
+      "no": 42,
+      "code": "II",
+      "name": "Danatama Makmur Sekuritas"
+    },
+    {
+      "no": 43,
+      "code": "IN",
+      "name": "INVESTINDO NUSANTARA SEKURITA"
+    },
+    {
+      "no": 44,
+      "code": "IT",
+      "name": "INTI TELADAN SEKURITAS"
+    },
+    {
+      "no": 45,
+      "code": "IU",
+      "name": "Indo Capital Sekuritas"
+    },
+    {
+      "no": 46,
+      "code": "KI",
+      "name": "Ciptadana Sekuritas Asia"
+    },
+    {
+      "no": 47,
+      "code": "KK",
+      "name": "Phillip Sekuritas Indonesia"
+    },
+    {
+      "no": 48,
+      "code": "KZ",
+      "name": "CLSA Sekuritas Indonesia"
+    },
+    {
+      "no": 49,
+      "code": "LG",
+      "name": "Trimegah Sekuritas Indonesia Tbk."
+    },
+    {
+      "no": 50,
+      "code": "LS",
+      "name": "Reliance Sekuritas Indonesia Tbk."
+    },
+    {
+      "no": 51,
+      "code": "MG",
+      "name": "Semesta Indovest Sekuritas"
+    },
+    {
+      "no": 52,
+      "code": "MI",
+      "name": "Victoria Sekuritas Indonesia"
+    },
+    {
+      "no": 53,
+      "code": "MU",
+      "name": "Minna Padi Investama Sekuritas"
+    },
+    {
+      "no": 54,
+      "code": "NI",
+      "name": "BNI Sekuritas"
+    },
+    {
+      "no": 55,
+      "code": "OD",
+      "name": "BRI Danareksa Sekuritas"
+    },
+    {
+      "no": 56,
+      "code": "OK",
+      "name": "NET SEKURITAS"
+    },
+    {
+      "no": 57,
+      "code": "PC",
+      "name": "FAC Sekuritas Indonesia"
+    },
+    {
+      "no": 58,
+      "code": "PD",
+      "name": "Indo Premier Sekuritas"
+    },
+    {
+      "no": 59,
+      "code": "PF",
+      "name": "Danasakti Sekuritas Indonesia"
+    },
+    {
+      "no": 60,
+      "code": "PG",
+      "name": "Panca Global Sekuritas"
+    },
+    {
+      "no": 61,
+      "code": "PI",
+      "name": "Magenta Kapital Sekuritas Indonesia"
+    },
+    {
+      "no": 62,
+      "code": "PO",
+      "name": "Pilarmas Investindo Sekuritas"
+    },
+    {
+      "no": 63,
+      "code": "PP",
+      "name": "Aldiracita Sekuritas Indonesia"
+    },
+    {
+      "no": 64,
+      "code": "QA",
+      "name": "Tuntun Sekuritas Indonesia"
+    },
+    {
+      "no": 65,
+      "code": "RB",
+      "name": "Ina Sekuritas Indonesia"
+    },
+    {
+      "no": 66,
+      "code": "RF",
+      "name": "Buana Capital Sekuritas"
+    },
+    {
+      "no": 67,
+      "code": "RG",
+      "name": "Profindo Sekuritas Indonesia"
+    },
+    {
+      "no": 68,
+      "code": "RO",
+      "name": "Pluang Maju Sekuritas"
+    },
+    {
+      "no": 69,
+      "code": "RS",
+      "name": "Yulie Sekuritas Indonesia Tbk."
+    },
+    {
+      "no": 70,
+      "code": "RX",
+      "name": "Macquarie Sekuritas Indonesia"
+    },
+    {
+      "no": 71,
+      "code": "SA",
+      "name": "Elit Sukses Sekuritas"
+    },
+    {
+      "no": 72,
+      "code": "SF",
+      "name": "Surya Fajar Sekuritas"
+    },
+    {
+      "no": 73,
+      "code": "SH",
+      "name": "Artha Sekuritas Indonesia"
+    },
+    {
+      "no": 74,
+      "code": "SQ",
+      "name": "BCA Sekuritas"
+    },
+    {
+      "no": 75,
+      "code": "SS",
+      "name": "Supra Sekuritas Indonesia"
+    },
+    {
+      "no": 76,
+      "code": "TF",
+      "name": "Laba Sekuritas Indonesia"
+    },
+    {
+      "no": 77,
+      "code": "TP",
+      "name": "OCBC Sekuritas Indonesia"
+    },
+    {
+      "no": 78,
+      "code": "TS",
+      "name": "Dwidana Sakti Sekuritas"
+    },
+    {
+      "no": 79,
+      "code": "XA",
+      "name": "NH Korindo Sekuritas Indonesia"
+    },
+    {
+      "no": 80,
+      "code": "XC",
+      "name": "Ajaib Sekuritas Asia"
+    },
+    {
+      "no": 81,
+      "code": "XL",
+      "name": "Stockbit Sekuritas Digital"
+    },
+    {
+      "no": 82,
+      "code": "YB",
+      "name": "Yakin Bertumbuh Sekuritas"
+    },
+    {
+      "no": 83,
+      "code": "YJ",
+      "name": "Lotus Andalan Sekuritas"
+    },
+    {
+      "no": 84,
+      "code": "YO",
+      "name": "Amantara Sekuritas Indonesia"
+    },
+    {
+      "no": 85,
+      "code": "YP",
+      "name": "Mirae Asset Sekuritas Indonesia"
+    },
+    {
+      "no": 86,
+      "code": "YU",
+      "name": "CGS International Sekuritas Indonesia"
+    },
+    {
+      "no": 87,
+      "code": "ZP",
+      "name": "Maybank Sekuritas Indonesia"
+    },
+    {
+      "no": 88,
+      "code": "ZR",
+      "name": "Bumiputera Sekuritas"
+    }
+  ],
+  "code_to_name": {
+    "AD": "Sukadana Prima Sekuritas",
+    "AF": "Harita Kencana Sekuritas",
+    "AG": "Kiwoom Sekuritas Indonesia",
+    "AH": "Shinhan Sekuritas Indonesia",
+    "AI": "Kay Hian Sekuritas",
+    "AK": "UBS Sekuritas Indonesia",
+    "AO": "ERDIKHA ELIT SEKURITAS",
+    "AP": "Pacific Sekuritas Indonesia",
+    "AR": "Binaartha Sekuritas",
+    "AT": "Phintraco Sekuritas",
+    "AZ": "Sucor Sekuritas",
+    "BB": "Verdhana Sekuritas Indonesia",
+    "BF": "Inti Fikasa Sekuritas",
+    "BK": "J.P. Morgan Sekuritas Indonesia",
+    "BQ": "Korea Investment and Sekuritas Indonesia",
+    "BR": "Trust Sekuritas",
+    "BS": "Equity Sekuritas Indonesia",
+    "CC": "MANDIRI SEKURITAS",
+    "CD": "Mega Capital Sekuritas",
+    "CP": "KB Valbury Sekuritas",
+    "DD": "Makindo Sekuritas",
+    "DH": "SINARMAS SEKURITAS",
+    "DP": "DBS Vickers Sekuritas Indonesia",
+    "DR": "RHB Sekuritas Indonesia",
+    "DU": "KAF Sekuritas Indonesia",
+    "DX": "Bahana Sekuritas",
+    "EL": "Evergreen Sekuritas Indonesia",
+    "EP": "MNC Sekuritas",
+    "ES": "EKOKAPITAL SEKURITAS",
+    "FO": "Forte Global Sekuritas",
+    "FS": "Yuanta Sekuritas Indonesia",
+    "FZ": "Waterfront Sekuritas Indonesia",
+    "GA": "BNC Sekuritas Indonesia",
+    "GI": "Webull Sekuritas Indonesia",
+    "GR": "PANIN SEKURITAS Tbk.",
+    "HD": "KGI Sekuritas Indonesia",
+    "HP": "Henan Putihrai Sekuritas",
+    "IC": "Integrity Capital Sekuritas",
+    "ID": "Anugerah Sekuritas Indonesia",
+    "IF": "SAMUEL SEKURITAS INDONESIA",
+    "IH": "Indo Harvest Sekuritas",
+    "II": "Danatama Makmur Sekuritas",
+    "IN": "INVESTINDO NUSANTARA SEKURITA",
+    "IT": "INTI TELADAN SEKURITAS",
+    "IU": "Indo Capital Sekuritas",
+    "KI": "Ciptadana Sekuritas Asia",
+    "KK": "Phillip Sekuritas Indonesia",
+    "KZ": "CLSA Sekuritas Indonesia",
+    "LG": "Trimegah Sekuritas Indonesia Tbk.",
+    "LS": "Reliance Sekuritas Indonesia Tbk.",
+    "MG": "Semesta Indovest Sekuritas",
+    "MI": "Victoria Sekuritas Indonesia",
+    "MU": "Minna Padi Investama Sekuritas",
+    "NI": "BNI Sekuritas",
+    "OD": "BRI Danareksa Sekuritas",
+    "OK": "NET SEKURITAS",
+    "PC": "FAC Sekuritas Indonesia",
+    "PD": "Indo Premier Sekuritas",
+    "PF": "Danasakti Sekuritas Indonesia",
+    "PG": "Panca Global Sekuritas",
+    "PI": "Magenta Kapital Sekuritas Indonesia",
+    "PO": "Pilarmas Investindo Sekuritas",
+    "PP": "Aldiracita Sekuritas Indonesia",
+    "QA": "Tuntun Sekuritas Indonesia",
+    "RB": "Ina Sekuritas Indonesia",
+    "RF": "Buana Capital Sekuritas",
+    "RG": "Profindo Sekuritas Indonesia",
+    "RO": "Pluang Maju Sekuritas",
+    "RS": "Yulie Sekuritas Indonesia Tbk.",
+    "RX": "Macquarie Sekuritas Indonesia",
+    "SA": "Elit Sukses Sekuritas",
+    "SF": "Surya Fajar Sekuritas",
+    "SH": "Artha Sekuritas Indonesia",
+    "SQ": "BCA Sekuritas",
+    "SS": "Supra Sekuritas Indonesia",
+    "TF": "Laba Sekuritas Indonesia",
+    "TP": "OCBC Sekuritas Indonesia",
+    "TS": "Dwidana Sakti Sekuritas",
+    "XA": "NH Korindo Sekuritas Indonesia",
+    "XC": "Ajaib Sekuritas Asia",
+    "XL": "Stockbit Sekuritas Digital",
+    "YB": "Yakin Bertumbuh Sekuritas",
+    "YJ": "Lotus Andalan Sekuritas",
+    "YO": "Amantara Sekuritas Indonesia",
+    "YP": "Mirae Asset Sekuritas Indonesia",
+    "YU": "CGS International Sekuritas Indonesia",
+    "ZP": "Maybank Sekuritas Indonesia",
+    "ZR": "Bumiputera Sekuritas"
+  },
+  "name_to_code": {
+    "Sukadana Prima Sekuritas": "AD",
+    "Harita Kencana Sekuritas": "AF",
+    "Kiwoom Sekuritas Indonesia": "AG",
+    "Shinhan Sekuritas Indonesia": "AH",
+    "Kay Hian Sekuritas": "AI",
+    "UBS Sekuritas Indonesia": "AK",
+    "ERDIKHA ELIT SEKURITAS": "AO",
+    "Pacific Sekuritas Indonesia": "AP",
+    "Binaartha Sekuritas": "AR",
+    "Phintraco Sekuritas": "AT",
+    "Sucor Sekuritas": "AZ",
+    "Verdhana Sekuritas Indonesia": "BB",
+    "Inti Fikasa Sekuritas": "BF",
+    "J.P. Morgan Sekuritas Indonesia": "BK",
+    "Korea Investment and Sekuritas Indonesia": "BQ",
+    "Trust Sekuritas": "BR",
+    "Equity Sekuritas Indonesia": "BS",
+    "MANDIRI SEKURITAS": "CC",
+    "Mega Capital Sekuritas": "CD",
+    "KB Valbury Sekuritas": "CP",
+    "Makindo Sekuritas": "DD",
+    "SINARMAS SEKURITAS": "DH",
+    "DBS Vickers Sekuritas Indonesia": "DP",
+    "RHB Sekuritas Indonesia": "DR",
+    "KAF Sekuritas Indonesia": "DU",
+    "Bahana Sekuritas": "DX",
+    "Evergreen Sekuritas Indonesia": "EL",
+    "MNC Sekuritas": "EP",
+    "EKOKAPITAL SEKURITAS": "ES",
+    "Forte Global Sekuritas": "FO",
+    "Yuanta Sekuritas Indonesia": "FS",
+    "Waterfront Sekuritas Indonesia": "FZ",
+    "BNC Sekuritas Indonesia": "GA",
+    "Webull Sekuritas Indonesia": "GI",
+    "PANIN SEKURITAS Tbk.": "GR",
+    "KGI Sekuritas Indonesia": "HD",
+    "Henan Putihrai Sekuritas": "HP",
+    "Integrity Capital Sekuritas": "IC",
+    "Anugerah Sekuritas Indonesia": "ID",
+    "SAMUEL SEKURITAS INDONESIA": "IF",
+    "Indo Harvest Sekuritas": "IH",
+    "Danatama Makmur Sekuritas": "II",
+    "INVESTINDO NUSANTARA SEKURITA": "IN",
+    "INTI TELADAN SEKURITAS": "IT",
+    "Indo Capital Sekuritas": "IU",
+    "Ciptadana Sekuritas Asia": "KI",
+    "Phillip Sekuritas Indonesia": "KK",
+    "CLSA Sekuritas Indonesia": "KZ",
+    "Trimegah Sekuritas Indonesia Tbk.": "LG",
+    "Reliance Sekuritas Indonesia Tbk.": "LS",
+    "Semesta Indovest Sekuritas": "MG",
+    "Victoria Sekuritas Indonesia": "MI",
+    "Minna Padi Investama Sekuritas": "MU",
+    "BNI Sekuritas": "NI",
+    "BRI Danareksa Sekuritas": "OD",
+    "NET SEKURITAS": "OK",
+    "FAC Sekuritas Indonesia": "PC",
+    "Indo Premier Sekuritas": "PD",
+    "Danasakti Sekuritas Indonesia": "PF",
+    "Panca Global Sekuritas": "PG",
+    "Magenta Kapital Sekuritas Indonesia": "PI",
+    "Pilarmas Investindo Sekuritas": "PO",
+    "Aldiracita Sekuritas Indonesia": "PP",
+    "Tuntun Sekuritas Indonesia": "QA",
+    "Ina Sekuritas Indonesia": "RB",
+    "Buana Capital Sekuritas": "RF",
+    "Profindo Sekuritas Indonesia": "RG",
+    "Pluang Maju Sekuritas": "RO",
+    "Yulie Sekuritas Indonesia Tbk.": "RS",
+    "Macquarie Sekuritas Indonesia": "RX",
+    "Elit Sukses Sekuritas": "SA",
+    "Surya Fajar Sekuritas": "SF",
+    "Artha Sekuritas Indonesia": "SH",
+    "BCA Sekuritas": "SQ",
+    "Supra Sekuritas Indonesia": "SS",
+    "Laba Sekuritas Indonesia": "TF",
+    "OCBC Sekuritas Indonesia": "TP",
+    "Dwidana Sakti Sekuritas": "TS",
+    "NH Korindo Sekuritas Indonesia": "XA",
+    "Ajaib Sekuritas Asia": "XC",
+    "Stockbit Sekuritas Digital": "XL",
+    "Yakin Bertumbuh Sekuritas": "YB",
+    "Lotus Andalan Sekuritas": "YJ",
+    "Amantara Sekuritas Indonesia": "YO",
+    "Mirae Asset Sekuritas Indonesia": "YP",
+    "CGS International Sekuritas Indonesia": "YU",
+    "Maybank Sekuritas Indonesia": "ZP",
+    "Bumiputera Sekuritas": "ZR"
+  },
+  "spoken_aliases": {
+    "YP": [
+      "mirae",
+      "mirae asset",
+      "ye pe"
+    ],
+    "PD": [
+      "indo premier",
+      "ipot",
+      "pe de"
+    ],
+    "CC": [
+      "mandiri sekuritas",
+      "mansek",
+      "ce ce"
+    ],
+    "NI": [
+      "bni sekuritas",
+      "en i"
+    ],
+    "OD": [
+      "bri danareksa",
+      "danareksa",
+      "o de"
+    ],
+    "XC": [
+      "ajaib",
+      "ajaib sekuritas",
+      "eks ce"
+    ],
+    "XL": [
+      "stockbit",
+      "stockbit sekuritas",
+      "eks el"
+    ],
+    "SQ": [
+      "bca sekuritas",
+      "es kyu",
+      "es ki"
+    ],
+    "MG": [
+      "semesta indovest",
+      "em ge",
+      "broker mg"
+    ],
+    "BK": [
+      "jp morgan",
+      "j.p. morgan",
+      "be ka"
+    ],
+    "AK": [
+      "ubs",
+      "ubs sekuritas",
+      "a ka"
+    ],
+    "KZ": [
+      "clsa",
+      "ka zet"
+    ],
+    "RX": [
+      "macquarie",
+      "er eks"
+    ],
+    "AZ": [
+      "sucor",
+      "sucor sekuritas",
+      "a zet"
+    ],
+    "CP": [
+      "valbury",
+      "kb valbury",
+      "ce pe"
+    ],
+    "KK": [
+      "phillip",
+      "phillip sekuritas",
+      "poems",
+      "ka ka"
+    ],
+    "GR": [
+      "panin",
+      "panin sekuritas",
+      "ge er"
+    ],
+    "DR": [
+      "rhb",
+      "rhb sekuritas",
+      "de er"
+    ],
+    "LG": [
+      "trimegah",
+      "trimegah sekuritas",
+      "el ge"
+    ],
+    "DX": [
+      "bahana",
+      "bahana sekuritas",
+      "de eks"
+    ],
+    "EP": [
+      "mnc sekuritas",
+      "motion trade",
+      "e pe"
+    ],
+    "HP": [
+      "henan",
+      "henan putihrai",
+      "ha pe"
+    ],
+    "KI": [
+      "ciptadana",
+      "ka i"
+    ],
+    "YU": [
+      "cgs",
+      "cgs cimb",
+      "cgs international",
+      "ye u"
+    ],
+    "ZP": [
+      "maybank",
+      "maybank sekuritas",
+      "zet pe"
+    ]
+  }
+}
