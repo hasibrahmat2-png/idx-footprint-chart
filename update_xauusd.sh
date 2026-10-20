@@ -19,7 +19,7 @@ python3 "$SCRIPT_DIR/exness_daily_historical_scraper.py" --symbol XAUUSDc "$@"
 # 2. Update Intraday 1M Candles (WIB UTC+7)
 echo ""
 echo "=== Step 2: Update Intraday 1M Candles (data_intraday/XAUUSDc_intraday.csv) ==="
-python3 "$SCRIPT_DIR/exness_intraday_scraper.py" --symbol XAUUSDc --start-date 2026-03-01 --allowed-months 3,4,9,10 --tz WIB "$@"
+python3 "$SCRIPT_DIR/exness_intraday_scraper.py" --symbol XAUUSDc --start-date 2026-03-01 --allowed-months 3,4,9,10 --tz WIB "$@" || echo "[Peringatan] Step 2 Intraday dilewati (SD Card terputus / unmounted)."
 
 # 3. Generate Unified Chart JSONs for Web Client
 echo ""

@@ -669,14 +669,25 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         raw_token = ""
         validate_token(token)
 
-        output_dir = Path(args.output_dir).expanduser()
-        if (
-            not output_dir.is_absolute()
-            and not output_dir.exists()
-            and (script_dir / args.output_dir).exists()
-        ):
-            output_dir = script_dir / args.output_dir
-        output_dir = output_dir.resolve()
+        try:
+            output_dir = Path(args.output_dir).expanduser()
+            if (
+                not output_dir.is_absolute()
+                and not output_dir.exists()
+                and (script_dir / args.output_dir).exists()
+            ):
+                output_dir = script_dir / args.output_dir
+            output_dir = output_dir.resolve()
+            # Test accessibility of output_dir
+            output_dir.stat()
+        except OSError as e:
+            if getattr(e, 'errno', None) == 107 or 'Transport endpoint' in str(e):
+                print(f"\n⚠️  PERINGATAN: Folder penyimpanan '{args.output_dir}' terputus (Transport endpoint not connected)!")
+                print("    SD Card di ChromeOS kemungkinan sleep atau terlepas.")
+                print("    Solusi: Buka aplikasi Files ChromeOS, klik kanan 'SD Card' -> 'Share with Linux'.")
+                print("    Melewati scraping intraday saat ini agar pipeline tidak terputus.\n")
+                return 0
+            raise
         print(f"Folder penyimpanan: {output_dir}/")
 
         allowed_months = None

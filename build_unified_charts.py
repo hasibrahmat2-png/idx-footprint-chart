@@ -27,22 +27,25 @@ def round_time_ts(ts, delta_sec):
     return (ts // delta_sec) * delta_sec
 
 def find_data_file(directory, filename):
-    exact = os.path.join(directory, filename)
-    if os.path.exists(exact):
-        return exact
-    if os.path.exists(directory):
-        low = filename.lower()
-        for entry in os.listdir(directory):
-            if entry.lower() == low:
-                return os.path.join(directory, entry)
-        if filename.endswith('_intraday.csv'):
-            sym = filename[:-len('_intraday.csv')].lower().rstrip('mc')
+    try:
+        exact = os.path.join(directory, filename)
+        if os.path.exists(exact):
+            return exact
+        if os.path.exists(directory):
+            low = filename.lower()
             for entry in os.listdir(directory):
-                if entry.lower().endswith('_intraday.csv'):
-                    entry_sym = entry[:-len('_intraday.csv')].lower().rstrip('mc')
-                    if entry_sym == sym:
-                        return os.path.join(directory, entry)
-    return exact
+                if entry.lower() == low:
+                    return os.path.join(directory, entry)
+            if filename.endswith('_intraday.csv'):
+                sym = filename[:-len('_intraday.csv')].lower().rstrip('mc')
+                for entry in os.listdir(directory):
+                    if entry.lower().endswith('_intraday.csv'):
+                        entry_sym = entry[:-len('_intraday.csv')].lower().rstrip('mc')
+                        if entry_sym == sym:
+                            return os.path.join(directory, entry)
+        return exact
+    except OSError:
+        return None
 
 def build_unified(symbol):
     print(f"\nMemproses {symbol}...")
@@ -81,32 +84,40 @@ def build_unified(symbol):
     # 2. Load 1m Intraday Data
     intraday_file = find_data_file(DATA_INTRADAY_DIR, f"{symbol}_intraday.csv")
     intraday_1m = {}
-    if os.path.exists(intraday_file):
-        with open(intraday_file, 'r', encoding='utf-8-sig') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                try:
-                    ts = fast_parse_time(row['datetime'])
-                    intraday_1m[ts] = {
-                        "time": ts,
-                        "open": float(row['open']),
-                        "high": float(row['high']),
-                        "low": float(row['low']),
-                        "close": float(row['close']),
-                        "volume": float(row["lot"]) if "lot" in row and row["lot"] else float(row.get("volume", 0)) / 100,
-                        "levels": []
-                    }
-                except (ValueError, KeyError):
-                    continue
+    if intraday_file:
+        try:
+            if os.path.exists(intraday_file):
+                with open(intraday_file, 'r', encoding='utf-8-sig') as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        try:
+                            ts = fast_parse_time(row['datetime'])
+                            intraday_1m[ts] = {
+                                "time": ts,
+                                "open": float(row['open']),
+                                "high": float(row['high']),
+                                "low": float(row['low']),
+                                "close": float(row['close']),
+                                "volume": float(row["lot"]) if "lot" in row and row["lot"] else float(row.get("volume", 0)) / 100,
+                                "levels": []
+                            }
+                        except (ValueError, KeyError):
+                            continue
+        except OSError:
+            pass
     print(f"  -> {len(intraday_1m)} 1-minute candles loaded.")
 
     # 3. Process Running Trades and Inject Footprint Profiles (1m and 1d)
-    sd_rt_dir = os.path.join(SD_CARD_RT_DIR, f"{symbol}_running_trades")
-    if os.path.exists(sd_rt_dir):
-        rt_dir = sd_rt_dir
-    else:
-        rt_dir = find_data_file(BASE_DIR, f"{symbol}_running_trades")
-    rt_files = glob.glob(os.path.join(rt_dir, "*.csv"))
+    rt_dir = None
+    try:
+        sd_rt_dir = os.path.join(SD_CARD_RT_DIR, f"{symbol}_running_trades")
+        if os.path.exists(sd_rt_dir):
+            rt_dir = sd_rt_dir
+        else:
+            rt_dir = find_data_file(BASE_DIR, f"{symbol}_running_trades")
+    except OSError:
+        pass
+    rt_files = glob.glob(os.path.join(rt_dir, "*.csv")) if rt_dir else []
     if rt_files:
         print(f"  -> Ditemukan {len(rt_files)} file running trade di {symbol}_running_trades/...")
         profiles_1m = defaultdict(lambda: defaultdict(lambda: {'bid': 0, 'ask': 0}))
@@ -377,8 +388,11 @@ if __name__ == "__main__":
         symbols = set()
         for f in glob.glob(os.path.join(DATA_DIR, "*.csv")):
             symbols.add(os.path.basename(f).replace('.csv', ''))
-        for f in glob.glob(os.path.join(DATA_INTRADAY_DIR, "*_intraday.csv")):
-            symbols.add(os.path.basename(f).replace('_intraday.csv', ''))
+        try:
+            for f in glob.glob(os.path.join(DATA_INTRADAY_DIR, "*_intraday.csv")):
+                symbols.add(os.path.basename(f).replace('_intraday.csv', ''))
+        except OSError:
+            pass
             
         for sym in sorted(symbols):
             build_unified(sym)
