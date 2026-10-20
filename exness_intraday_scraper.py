@@ -103,18 +103,20 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         default="data_intraday",
         help="Folder hasil CSV (default: folder 'data_intraday').",
     )
-    now_utc = datetime.now(tz=timezone.utc)
-    today_str = now_utc.strftime("%Y-%m-%d")
-    default_start_str = (now_utc - timedelta(days=93)).strftime("%Y-%m-%d")
     parser.add_argument(
         "--start-date",
-        default=default_start_str,
-        help=f"Tanggal mulai (format YYYY-MM-DD), default: ~3 bulan lalu ({default_start_str}).",
+        default=None,
+        help="Tanggal mulai (format YYYY-MM-DD), default: ~3 bulan lalu.",
     )
     parser.add_argument(
         "--end-date",
-        default=today_str,
-        help=f"Tanggal akhir (format YYYY-MM-DD), default: hari ini ({today_str}).",
+        default=None,
+        help="Tanggal akhir (format YYYY-MM-DD), default: sekarang (waktu saat ini).",
+    )
+    parser.add_argument(
+        "--no-backfill",
+        action="store_true",
+        help="Lewati pengecekan data masa lalu (hanya forward update data terbaru).",
     )
     parser.add_argument(
         "--timeframe",
@@ -501,6 +503,7 @@ def process_symbol(
     tz_info: timezone,
     delay: float,
     allowed_months: Optional[Set[int]] = None,
+    no_backfill: bool = False,
 ) -> None:
     print(f"\n=== Memproses instrumen: {symbol} ===")
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -523,8 +526,8 @@ def process_symbol(
                 f"  Data tersimpan: {first_dt_str} s/d {last_dt_str} ({len(sorted_existing)} baris)"
             )
 
-            # 1. Backfill masa lalu (jika start_ts < first_ts)
-            if start_ts < first_ts:
+            # 1. Backfill masa lalu (jika start_ts < first_ts dan no_backfill=False)
+            if not no_backfill and start_ts < first_ts:
                 print(
                     f"  [Backfill] Mengambil data mundur dari {datetime.fromtimestamp(start_ts, tz=tz_info).strftime('%Y-%m-%d')} s/d {first_dt_str}..."
                 )
@@ -540,14 +543,15 @@ def process_symbol(
                     allowed_months=allowed_months,
                 )
 
-            # 2. Forward sync masa depan (jika end_ts > last_ts)
-            if end_ts > last_ts:
+            # 2. Forward sync masa depan (jika end_ts >= last_ts + step_sec)
+            step_sec = int(config.get("timeframe", 1)) * 60
+            if end_ts >= last_ts + step_sec:
                 print(
-                    f"  [Update] Mengambil data terbaru dari {last_dt_str} s/d {datetime.fromtimestamp(end_ts, tz=tz_info).strftime('%Y-%m-%d')}..."
+                    f"  [Update] Mengambil data terbaru dari {last_dt_str} s/d {datetime.fromtimestamp(end_ts, tz=tz_info).strftime('%Y-%m-%d %H:%M')}..."
                 )
                 fetch_chunks(
                     symbol,
-                    last_ts + 60,
+                    last_ts + step_sec,
                     end_ts,
                     token,
                     all_data,
@@ -556,8 +560,10 @@ def process_symbol(
                     delay,
                     allowed_months=allowed_months,
                 )
+            else:
+                print(f"  -> Data intraday sudah up-to-date sampai {last_dt_str}.")
 
-            if start_ts >= first_ts and end_ts <= last_ts:
+            if (no_backfill or start_ts >= first_ts) and end_ts < last_ts + step_sec:
                 print("  -> Seluruh rentang waktu yang diminta sudah ada dalam cache.")
         else:
             fetch_chunks(
@@ -645,12 +651,26 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         else:
             tz_info = timezone.utc
 
-        start_ts = get_unix_timestamp(args.start_date, tz_info, is_end=False)
-        now_ts = int(datetime.now(tz=tz_info).timestamp())
-        end_ts = min(get_unix_timestamp(args.end_date, tz_info, is_end=True), now_ts)
+        now_dt = datetime.now(tz=tz_info)
+        now_ts = int(now_dt.timestamp())
+
+        if args.start_date:
+            start_ts = get_unix_timestamp(args.start_date, tz_info, is_end=False)
+            start_label = args.start_date
+        else:
+            default_start_dt = now_dt - timedelta(days=93)
+            start_ts = int(default_start_dt.replace(hour=0, minute=0, second=0).timestamp())
+            start_label = default_start_dt.strftime("%Y-%m-%d")
+
+        if args.end_date:
+            end_ts = min(get_unix_timestamp(args.end_date, tz_info, is_end=True), now_ts)
+            end_label = args.end_date
+        else:
+            end_ts = now_ts
+            end_label = now_dt.strftime("%Y-%m-%d %H:%M")
 
         print(
-            f"Rentang waktu ({args.tz}): {args.start_date} ({start_ts}) s/d {args.end_date} ({end_ts})"
+            f"Rentang waktu ({args.tz}): {start_label} ({start_ts}) s/d {end_label} ({end_ts})"
         )
 
         raw_token = args.token or os.environ.get("EXNESS_TOKEN")
@@ -718,6 +738,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 tz_info,
                 args.delay,
                 allowed_months=allowed_months,
+                no_backfill=args.no_backfill,
             )
             time.sleep(args.delay)
 

@@ -23,7 +23,7 @@ python3 "$SCRIPT_DIR/exness_daily_historical_scraper.py" --symbols-file "$SYMBOL
 # 2. Update Intraday 1M Candles (WIB UTC+7)
 echo ""
 echo "=== Step 2: Update Intraday 1M Candles ==="
-python3 "$SCRIPT_DIR/exness_intraday_scraper.py" --symbols-file "$SYMBOLS_FILE" --start-date 2026-03-01 --allowed-months 3,4,9,10 --tz WIB "$@"
+python3 "$SCRIPT_DIR/exness_intraday_scraper.py" --symbols-file "$SYMBOLS_FILE" --start-date 2026-03-01 --allowed-months 3,4,9,10 --tz WIB --no-backfill "$@"
 
 # 3. Generate Unified Chart JSONs for Web Client
 echo ""
