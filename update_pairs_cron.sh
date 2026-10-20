@@ -18,7 +18,22 @@ fi
 echo "$$" > "$PIDFILE"
 trap 'rm -f "$PIDFILE"' EXIT
 
-export EXNESS_TOKEN="Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6InVzZXIiLCJ0eXAiOiJKV1QifQ.eyJhZGRpdGlvbmFsX3BhcmFtcyI6eyJ3bF9pZCI6Ijg3MTFiOGFhLWNjNjgtNDEzYS04MDM0LWMyNzE2YTJjZTE0YSJ9LCJhdWQiOlsid2ViIl0sImV4cCI6MTc5MjQxNzA3MCwiaWF0IjoxNzkyMzk1NDcwLCJpc3MiOiJBdXRoZW50aWNhdGlvbiIsImp0aSI6IjgwYTRlMDVkMzE0MTQ1Y2ZiZmU2YmNhY2ZlYTc5NTJmIiwic3ViIjoiZTM0YzI0MDM0YTg1NDEyZjhkODdjMTkxZjk5Yjk5N2UifQ.szJSdN0GSxo2s8t_hNcER752afjWkAKyqN-dl4Z4dRx9T3wFeMH2aOWH3wrSc_OHX-BTCdgCP4jxgQf70FBzUwPwRdQ-xRlr2y8VhQA-aImTBR5srs2d434mYDW9UrfMkqTlFA4L-lxluRPKtQ_ZQ609wBW7kqUFspRsf33bjrt3DSybYpdma-Ig8shSPmH71Sj60YNJEKoxKBX2D57Xmx4iIzLdaKQmRqydg12G8Ziu5B_V3SI8-J7HaKqrZAf1xBqzlN52P2zaLHw70SFVUL2ZNyOFGQMEuiXVHEO_8e_o3R_05R1u4yw8YQFe_xgn1d1yCciv--rEKSFy3pNe1W1bmOOOl7o1_V-wZ-qwnCwfei_6do1fUe9lU---g9pGyX7kTanlxe654Kk2k20viB8-AuBthZGSBoEJApkhbpklkFq6A7TyTY5XuPLugmwwM7DbUQcFlUCugoAcndOQmmQlfvXUf_EBKUt2SR9BCr6DV3Gg7UQnpRP6QHT_quxRja7iZB9bw6TLuIieFoRV88gYXLawm8ekLvCfJpdPRg8lBFpUr7IZZy36W20egAjNRrKlbk1yu5wgRlZjrpKk-GGiNPvmHbP4kW7Cy_t92xxRUfHarf-fn84k8dU7WjlXbo1Jr58cmbSfJtp-cyxCsukGrRdW9D8mznsxnIcgUAk"
+# Prioritas token:
+# 1. Gunakan EXNESS_TOKEN yang sudah di-export di terminal/environment (jika ada)
+# 2. Ambil dari file .env
+# 3. Fallback token
+if [ -z "$EXNESS_TOKEN" ]; then
+    if [ -f "$SCRIPT_DIR/.env" ]; then
+        ENV_TOKEN=$(grep -E "^EXNESS_TOKEN=" "$SCRIPT_DIR/.env" | head -n 1 | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d '\r')
+        if [ -n "$ENV_TOKEN" ]; then
+            export EXNESS_TOKEN="$ENV_TOKEN"
+        fi
+    fi
+fi
+
+if [ -z "$EXNESS_TOKEN" ]; then
+    export EXNESS_TOKEN="Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6InVzZXIiLCJ0eXAiOiJKV1QifQ.eyJhZGRpdGlvbmFsX3BhcmFtcyI6eyJ3bF9pZCI6Ijg3MTFiOGFhLWNjNjgtNDEzYS04MDM0LWMyNzE2YTJjZTE0YSJ9LCJhdWQiOlsid2ViIl0sImV4cCI6MTc5MjUwNzM0OSwiaWF0IjoxNzkyNDg1NzQ5LCJpc3MiOiJBdXRoZW50aWNhdGlvbiIsImp0aSI6IjUyNWFmOTIxMzNmNjQ0NjM4NmFlNDU4ZjcyOGRiMjdjIiwic3ViIjoiZTM0YzI0MDM0YTg1NDEyZjhkODdjMTkxZjk5Yjk5N2UifQ.Z4Z-LzdTjd6mDwsKoX6L-bLiiV2Y0_uJAl_Y5i28UWUsluses37khA_1_cScJsE7qXKf0y_TVit8TdSnuPoGi3ZN1_peS5N4folSnm5l2FDzGyS2_dwN9qvQsiIrs_G9B7NiYoYjSCmDg8BbFFrpZO21JJEpF-itcic0sdSoXpsl0WIHxgmoKPJQHWsMM8xdIElNkNoi7elHDNAceF7uE1PsZjtxamA-WGJTy78C-JZkL9Y5P_5QkuE4hJj9MSkQMqeUvHR3xxgs8jpnLo4NGouZpK3tF4o8jRv9ZOo6llsoT4_oOCJ5OxIdA8WmKfzG6G18Sp4BL9vcbnJsae_RdmG8OSyUgEbDEyoPEdk3MYrbxoYZeeI616d9XiMG_zNMayU5vdrv3CAKhEzJuKnEIEmPcbV3U6AgLgcM_6jyYdwQBOeNymZ_G8vuxw4fe0wiBSsat5gPQ0pAiZzCIbprtyq0s_UvNiUvTl1W7Av2ZwKQafeFt0idz4ZGOig-x45JWVehxbKAnqan7k2Leu06chD-ZqBlP8hwLOgtpOur6DWq0XxHXKlipxHCvP1crjbh1Rv1M9YGdfooVGzFXtE2a8Wo00A_ck8K1OEcHTqrn3sLKSWHxI8hTWUxigINczeVZYAZB6n1hJfkvlalqBtX7dJAVXSog7xFOZ605HtNGWA"
+fi
 
 echo ""
 echo "=========================================================="

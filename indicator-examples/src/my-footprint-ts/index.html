@@ -1100,6 +1100,7 @@
         #tv-bottom-bar .bottom-icon-btn,
         #tv-bottom-bar .horizon-pill-btn,
         #tv-bottom-bar .horizon-title,
+        #tv-bottom-bar .horizon-pct,
         #tv-bottom-bar .horizon-tag,
         #tv-bottom-bar .bottom-clock,
         #tv-bottom-bar .scale-btn {
@@ -1264,6 +1265,28 @@
             max-width: 15px;
             max-height: 15px;
             display: block;
+        }
+
+        /* Bab 19 Multi-Timeframe Trend Percentage (Matches Top Bar Bull/Bear Capsule Palette & Font) */
+        .horizon-pct {
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: inherit;
+            line-height: 1;
+            letter-spacing: -0.2px;
+            transition: color 0.15s ease;
+        }
+        .horizon-pct:empty {
+            display: none;
+        }
+        .trend-bullish .horizon-pct {
+            color: #26a69a !important;
+        }
+        .trend-bearish .horizon-pct {
+            color: #ef5350 !important;
+        }
+        .trend-sideways .horizon-pct {
+            color: #fbc02d !important;
         }
 
         /* Scale Mode Toggle Group (%, log, auto) */
@@ -5921,6 +5944,22 @@
                                 <span class="tv-dropdown-fav-icon fav-btn" title="Add to favorites"><svg viewBox="0 0 16 16"><path d="M8 2l1.8 3.8 4.2.6-3 3 .7 4.1L8 11.5l-3.7 2 .7-4.1-3-3 4.2-.6z"/></svg></span>
                             </div>
                         </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item" id="menu-gaps-btn">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Gaps &amp; Island Reversal (Bab 20)</span>
+                            </div>
+                            <div class="tv-dropdown-item-right item-right">
+                                <span class="tv-dropdown-fav-icon fav-btn" title="Add to favorites"><svg viewBox="0 0 16 16"><path d="M8 2l1.8 3.8 4.2.6-3 3 .7 4.1L8 11.5l-3.7 2 .7-4.1-3-3 4.2-.6z"/></svg></span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item" id="menu-chart-pattern-btn">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Chart Patterns: Reversal &amp; Continuation (Bab 21)</span>
+                            </div>
+                            <div class="tv-dropdown-item-right item-right">
+                                <span class="tv-dropdown-fav-icon fav-btn" title="Add to favorites"><svg viewBox="0 0 16 16"><path d="M8 2l1.8 3.8 4.2.6-3 3 .7 4.1L8 11.5l-3.7 2 .7-4.1-3-3 4.2-.6z"/></svg></span>
+                            </div>
+                        </div>
 
                         <div class="tv-dropdown-divider"></div>
 
@@ -6149,6 +6188,173 @@
                     </svg>
                 </button>
 
+                <!-- Gaps & Island Reversal Tool (Bab 20 — Edianto Ong) -->
+                <button id="gap-detector-btn" class="tv-left-tool-btn" title="Gaps &amp; Island Reversal (Bab 20 — Edianto Ong) [1-Click: Siklus ALL / OPEN ONLY / OFF | 2-Click: OPEN ONLY]">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Left candle (lower body) -->
+                        <line x1="6" y1="13" x2="6" y2="21"></line>
+                        <rect x="4.5" y="15" width="3" height="4" rx="0.5" fill="currentColor"></rect>
+                        <!-- Gap zone (vertical dashed line with bracket ticks) -->
+                        <line x1="12" y1="9" x2="12" y2="15" stroke-dasharray="2 2"></line>
+                        <line x1="10" y1="9" x2="14" y2="9"></line>
+                        <line x1="10" y1="15" x2="14" y2="15"></line>
+                        <!-- Right candle (upper body, breakaway gap) -->
+                        <line x1="18" y1="3" x2="18" y2="11"></line>
+                        <rect x="16.5" y="5" width="3" height="4" rx="0.5" fill="currentColor"></rect>
+                    </svg>
+                </button>
+
+                <!-- Chart Patterns Tool (Bab 21 — Edianto Ong: Reversal & Continuation) -->
+                <button id="chart-pattern-btn" class="tv-left-tool-btn" title="Chart Patterns (Bab 21 — Edianto Ong) [Pilih Pola dari Menu Dropdown]">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 17l4-8 5 6 4-10 5 12"></path>
+                        <circle cx="3" cy="17" r="1.5" fill="currentColor"></circle>
+                        <circle cx="7" cy="9" r="1.5" fill="currentColor"></circle>
+                        <circle cx="12" cy="15" r="1.5" fill="currentColor"></circle>
+                        <circle cx="16" cy="5" r="1.5" fill="currentColor"></circle>
+                        <circle cx="21" cy="17" r="1.5" fill="currentColor"></circle>
+                    </svg>
+                </button>
+
+                <!-- Chart Patterns Floating Dropdown Menu (TradingView 1:1 Parity) -->
+                <div class="tv-dropdown-menu dropdown-menu" id="chart-pattern-dropdown" style="display: none; position: fixed; width: 250px; z-index: 1000; box-shadow: 0 4px 16px rgba(0,0,0,0.15);">
+                    <div style="padding: 8px 12px 6px 12px; border-bottom: 1px solid #f0f3fa;">
+                        <div class="tv-symbol-search tv-symbol-pill" style="width: 100%; box-sizing: border-box; display: flex; align-items: center; padding: 4px 12px; background-color: #e7e7e9; border-radius: 9999px; height: 30px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787b86" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; flex-shrink: 0;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="pattern-search-input" placeholder="SEARCH PATTERN..." autocomplete="off" spellcheck="false" style="width: 100%; font-size: 13px; font-weight: 700; color: #131722; border: none; background: transparent; outline: none; text-transform: uppercase; font-family: inherit;">
+                        </div>
+                    </div>
+                    <div id="pattern-items-scroll" style="max-height: 360px; overflow-y: auto;">
+                        <div class="tv-dropdown-section-title">GLOBAL MODE</div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="all">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">All Patterns (Semua Pola)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="off">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label" style="color: #787b86;">Turn Off (Nonaktifkan)</span>
+                            </div>
+                        </div>
+
+                        <div class="tv-dropdown-divider"></div>
+                        <div class="tv-dropdown-section-title" style="color: #EF5350; font-weight: 700;">1. REVERSAL (PEMBALIKAN)</div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="reversal">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label" style="font-weight: 600;">Semua Pola Reversal</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="head_and_shoulders">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Head & Shoulders (Bearish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="inverted_head_and_shoulders">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Inverted Head & Shoulders (Bullish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="double_top">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Double Top (Bearish M)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="double_bottom">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Double Bottom (Bullish W)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="triple_top">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Triple Top (Bearish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="triple_bottom">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Triple Bottom (Bullish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="horn_top">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Horn Top (Bearish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="horn_bottom">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Horn Bottom (Bullish)</span>
+                            </div>
+                        </div>
+
+                        <div class="tv-dropdown-divider"></div>
+                        <div class="tv-dropdown-section-title" style="color: #26A69A; font-weight: 700;">2. CONTINUATION (PENERUSAN)</div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="continuation">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label" style="font-weight: 600;">Semua Pola Continuation</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="symmetrical_triangle">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Symmetrical Triangle</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="ascending_triangle">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Ascending Triangle (Bullish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="descending_triangle">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Descending Triangle (Bearish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="bullish_flag">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bullish Flag (Bendera Naik)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="bearish_flag">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bearish Flag (Bendera Turun)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="bullish_pennant">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bullish Pennant</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="bearish_pennant">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bearish Pennant</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="rising_wedge">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Rising Wedge (Bearish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="falling_wedge">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Falling Wedge (Bullish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="bullish_rectangle">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bullish Rectangle</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="bearish_rectangle">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bearish Rectangle</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item pattern-option-item" data-pattern="cup_and_handle">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Cup and Handle (Cangkir & Gagang)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="tv-left-divider" style="width: 24px; height: 1px; background: #e0e3eb; margin: 4px auto;"></div>
 
                 <!-- Broker Order Flow Profile (4-Shade) -->
@@ -6360,6 +6566,7 @@
                                     <path d="M9 1L3 9h5l-1 6 6-8H8l1-6z"/>
                                 </svg>
                                 <span class="horizon-title">Short-Term</span>
+                                <span class="horizon-pct" id="horizon-short-pct"></span>
                             </button>
                             <button class="horizon-pill-btn" id="horizon-medium-btn" data-horizon="medium" title="Medium-Term Trader (3 weeks – several months): 3Y Weekly Macro + 1Y Daily Timing">
                                 <svg class="horizon-icon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -6367,6 +6574,7 @@
                                     <path d="M11 4h3v3"/>
                                 </svg>
                                 <span class="horizon-title">Medium-Term</span>
+                                <span class="horizon-pct" id="horizon-medium-pct"></span>
                             </button>
                             <button class="horizon-pill-btn" id="horizon-long-btn" data-horizon="long" title="Long-Term Investor (> 1 year): 5Y Monthly Macro + 3Y Weekly Confirmation">
                                 <svg class="horizon-icon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -6375,6 +6583,7 @@
                                     <path d="M1 14h14"/>
                                 </svg>
                                 <span class="horizon-title">Long-Term</span>
+                                <span class="horizon-pct" id="horizon-long-pct"></span>
                             </button>
                         </div>
                     </div>

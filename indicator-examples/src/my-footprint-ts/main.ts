@@ -42,6 +42,9 @@ import { FootprintHistogramPrimitive } from './footprint-histogram-primitive';
 import { BrokerProfilePrimitive } from './broker-profile-primitive';
 import { TradePositionPrimitive, TradePosition } from './trade-position-primitive';
 import { MarketStructurePrimitive, detectMarketStructure } from './market-structure-primitive';
+import { GapPrimitive, computeGaps } from './gap-primitive';
+import { ChartPatternPrimitive } from './chart-pattern-primitive';
+import { detectChartPatterns, DetectedChartPattern, ChartPatternMode } from './chart-pattern-detector';
 
 declare global {
     interface Window {
@@ -11723,6 +11726,34 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 console.warn("Could not attach market structure primitive to footprint series:", e);
             }
 
+            // Attach Bab 20: Gaps & Island Reversal Primitive
+            const nativeGapPrimitive = new GapPrimitive();
+            nativeCandles.attachPrimitive(nativeGapPrimitive);
+
+            let footprintGapPrimitive: GapPrimitive | null = null;
+            try {
+                if (typeof (footprintSeries as any).attachPrimitive === 'function') {
+                    footprintGapPrimitive = new GapPrimitive();
+                    (footprintSeries as any).attachPrimitive(footprintGapPrimitive);
+                }
+            } catch (e) {
+                console.warn("Could not attach gap primitive to footprint series:", e);
+            }
+
+            // Attach Bab 21: Chart Patterns Primitive (Reversal & Continuation)
+            const nativeChartPatternPrimitive = new ChartPatternPrimitive();
+            nativeCandles.attachPrimitive(nativeChartPatternPrimitive);
+
+            let footprintChartPatternPrimitive: ChartPatternPrimitive | null = null;
+            try {
+                if (typeof (footprintSeries as any).attachPrimitive === 'function') {
+                    footprintChartPatternPrimitive = new ChartPatternPrimitive();
+                    (footprintSeries as any).attachPrimitive(footprintChartPatternPrimitive);
+                }
+            } catch (e) {
+                console.warn("Could not attach chart pattern primitive to footprint series:", e);
+            }
+
             // Right Price Scale Mode (Linear vs Logarithmic)
             let isLogScale = localStorage.getItem('user_chart_scale_mode') === 'log';
             chart.priceScale('right').applyOptions({
@@ -11761,6 +11792,8 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 document.getElementById('indicators-menu')?.classList.remove('show');
                 const bpDd = document.getElementById('broker-profile-dropdown');
                 if (bpDd) bpDd.style.display = 'none';
+                const patDd = document.getElementById('chart-pattern-dropdown');
+                if (patDd) patDd.style.display = 'none';
                 closeAutocomplete();
             };
 
@@ -12608,6 +12641,52 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
             const dismissedTrendlineIds = new Set<string>();
             let ghostCandleVisible = localStorage.getItem('user_ghost_candle_visible') !== 'false';
             let currentGhostCandle: GhostCandleData | null = null;
+
+            // Bab 20: Gaps & Island Reversal (Edianto Ong) State
+            type GapDisplayMode = 'all' | 'open_only' | 'off';
+            const savedGapMode = localStorage.getItem('user_gaps_mode');
+            let gapMode: GapDisplayMode = (savedGapMode === 'all' || savedGapMode === 'open_only' || savedGapMode === 'off')
+                ? (savedGapMode as GapDisplayMode)
+                : (localStorage.getItem('user_gaps_visible') === 'false' ? 'off' : 'all');
+            let setGapModeGlobal: ((mode: GapDisplayMode, showToastMsg?: boolean) => void) | null = null;
+
+            // Bab 21: Chart Patterns (Edianto Ong: Reversal & Continuation) State
+            const savedPatternMode = (localStorage.getItem('user_chart_patterns_mode') as ChartPatternMode) || 'off';
+            let chartPatternMode: ChartPatternMode = savedPatternMode;
+            let currentDetectedPatterns: DetectedChartPattern[] = [];
+            const hiddenPatternIds = new Set<string>();
+            const dismissedPatternIds = new Set<string>();
+            let setChartPatternModeGlobal: ((mode: ChartPatternMode, showToastMsg?: boolean) => void) | null = null;
+
+            function getPatternDisplayName(mode: ChartPatternMode): string {
+                switch (mode) {
+                    case 'all': return 'ALL (Semua Pola)';
+                    case 'reversal': return 'Semua Reversal';
+                    case 'continuation': return 'Semua Continuation';
+                    case 'head_and_shoulders': return 'Head & Shoulders';
+                    case 'inverted_head_and_shoulders': return 'Inv. Head & Shoulders';
+                    case 'double_top': return 'Double Top';
+                    case 'double_bottom': return 'Double Bottom';
+                    case 'triple_top': return 'Triple Top';
+                    case 'triple_bottom': return 'Triple Bottom';
+                    case 'horn_top': return 'Horn Top';
+                    case 'horn_bottom': return 'Horn Bottom';
+                    case 'symmetrical_triangle': return 'Symmetrical Triangle';
+                    case 'ascending_triangle': return 'Ascending Triangle';
+                    case 'descending_triangle': return 'Descending Triangle';
+                    case 'bullish_flag': return 'Bullish Flag';
+                    case 'bearish_flag': return 'Bearish Flag';
+                    case 'bullish_pennant': return 'Bullish Pennant';
+                    case 'bearish_pennant': return 'Bearish Pennant';
+                    case 'rising_wedge': return 'Rising Wedge';
+                    case 'falling_wedge': return 'Falling Wedge';
+                    case 'bullish_rectangle': return 'Bullish Rectangle';
+                    case 'bearish_rectangle': return 'Bearish Rectangle';
+                    case 'cup_and_handle': return 'Cup and Handle';
+                    case 'off': return 'Off';
+                    default: return mode;
+                }
+            }
 
             // Normal Volume Indicator State Tracking (TradingView 1:1 Overlay Standard)
             let volumeVisible = localStorage.getItem('user_volume_visible') === 'true'; // false by default!
@@ -13706,6 +13785,69 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     `;
                 }
 
+                // Overlay: Gaps & Island Reversal (Bab 20 — Edianto Ong)
+                if (gapMode !== 'off') {
+                    const modeLabel = gapMode === 'all' ? 'ALL (Open & Closed)' : 'OPEN ONLY';
+                    html += `
+                        <div class="ind-legend-row" data-id="overlay_gaps">
+                            <span class="ind-legend-title" style="color: #2962FF; font-weight: 600;">Gaps & Island <span style="color: #00BFA5;">(Bab 20)</span></span>
+                            <span class="ind-legend-val" id="val-overlay_gaps" style="color: #00BFA5; font-size: 11px;">${modeLabel}</span>
+                            <div class="ind-actions-group">
+                                <button type="button" class="ind-action-btn ind-del-btn" data-id="overlay_gaps" title="Remove Gaps">${legTrash}</button>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Overlay: Chart Patterns (Bab 21 — Edianto Ong: Individual Pattern Items with Hide & Delete)
+                if (chartPatternMode !== 'off') {
+                    if (currentDetectedPatterns.length === 0) {
+                        const modeLabel = getPatternDisplayName(chartPatternMode);
+                        html += `
+                            <div class="ind-legend-row" data-id="overlay_chart_patterns_none">
+                                <span class="ind-legend-title" style="color: #2962FF; font-weight: 600;">Patterns <span style="color: #FFB300;">(${modeLabel})</span></span>
+                                <span class="ind-legend-val" style="color: #787b86;">No Patterns Found</span>
+                                <div class="ind-actions-group">
+                                    <button type="button" class="ind-action-btn ind-del-btn" data-id="overlay_chart_patterns_all" title="Turn Off Chart Patterns">${legTrash}</button>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        const activeSym = getCurrentSymbol();
+                        const isFx = getInstrumentFormatInfo(activeSym, 0, currentChartData).isForex;
+
+                        currentDetectedPatterns.forEach((pat, idx) => {
+                            const isHidden = hiddenPatternIds.has(pat.id);
+                            const isVisible = !isHidden;
+                            const rowId = `overlay_pat_${pat.id}`;
+
+                            const patColor = pat.direction === 'bullish'
+                                ? '#26A69A'
+                                : (pat.direction === 'bearish' ? '#EF5350' : '#2962FF');
+
+                            const targetStr = isFx
+                                ? (pat.targetPrice >= 100 ? pat.targetPrice.toFixed(2) : (pat.targetPrice >= 1 ? pat.targetPrice.toFixed(4) : pat.targetPrice.toFixed(5)))
+                                : `Rp ${Math.round(pat.targetPrice).toLocaleString('id-ID')}`;
+
+                            const signStr = pat.targetPercent >= 0 ? `+${pat.targetPercent.toFixed(1)}%` : `${pat.targetPercent.toFixed(1)}%`;
+                            const rowTitle = `${pat.name} #${idx + 1}`;
+                            const statusStr = pat.status.toUpperCase();
+                            const valStr = isVisible ? `${targetStr} (${signStr})` : 'Hidden';
+
+                            html += `
+                                <div class="ind-legend-row ${isVisible ? '' : 'hidden-state'}" data-id="${rowId}">
+                                    <span class="ind-legend-title" style="color: ${patColor}; font-weight: 600;" title="${rowTitle} [${statusStr} | Vol ${pat.volumeRatio.toFixed(1)}x]">${rowTitle}</span>
+                                    <span class="ind-legend-val" id="val-${rowId}" style="color: ${patColor}; font-size: 11px;">${valStr}</span>
+                                    <div class="ind-actions-group">
+                                        <button type="button" class="ind-action-btn ind-eye-btn" data-id="${rowId}" title="${isVisible ? 'Hide ' + rowTitle : 'Show ' + rowTitle}">${getLegEye(isVisible)}</button>
+                                        <button type="button" class="ind-action-btn ind-del-btn" data-id="${rowId}" title="Remove ${rowTitle}">${legTrash}</button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                }
+
                 // Overlay: Volume (TradingView 1:1 Standard Overlay)
                 if (volumeVisible) {
                     const isVisible = !isVolumeSeriesHidden;
@@ -14165,6 +14307,16 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         renderAutoTrendlines();
                         return;
                     }
+                    if (id.startsWith('overlay_pat_')) {
+                        const patId = id.substring('overlay_pat_'.length);
+                        if (hiddenPatternIds.has(patId)) {
+                            hiddenPatternIds.delete(patId);
+                        } else {
+                            hiddenPatternIds.add(patId);
+                        }
+                        renderChartPatterns();
+                        return;
+                    }
                     if (id === 'overlay_trendline_up') {
                         trendlineUpVisible = !trendlineUpVisible;
                         localStorage.setItem('user_auto_trendline_up_visible', trendlineUpVisible ? 'true' : 'false');
@@ -14341,6 +14493,25 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         clearGhostCandle();
                         renderIndicatorsLegend();
                         showToast('Removed Ghost Candle');
+                        return;
+                    }
+                    if (id === 'overlay_gaps') {
+                        if (setGapModeGlobal) {
+                            setGapModeGlobal('off');
+                        }
+                        return;
+                    }
+                    if (id.startsWith('overlay_pat_')) {
+                        const patId = id.substring('overlay_pat_'.length);
+                        dismissedPatternIds.add(patId);
+                        renderChartPatterns();
+                        showToast('Removed Pattern');
+                        return;
+                    }
+                    if (id === 'overlay_chart_patterns' || id === 'overlay_chart_patterns_all' || id === 'overlay_chart_patterns_none') {
+                        if (setChartPatternModeGlobal) {
+                            setChartPatternModeGlobal('off');
+                        }
                         return;
                     }
                     if (id === 'overlay_volume') {
@@ -14708,6 +14879,8 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 renderAutoTrendlines();
                 renderAutoChannels();
                 renderAutoMs();
+                renderGaps(data);
+                renderChartPatterns(data);
                 try {
                     renderTradePositions();
                 } catch (tpErr) {
@@ -14755,6 +14928,8 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     symbolSearchBox.title = compName ? `${ticker} - ${compName} (Enter to search)` : 'Search Symbol (Enter)';
                 }
                 updateRtActiveSymbolLabel();
+                dismissedPatternIds.clear();
+                hiddenPatternIds.clear();
                 updateFinancialsActiveSymbol();
                 updateBsActiveSymbol();
                 updateAiActiveSymbol();
@@ -14815,6 +14990,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         else if (tf === '1S') data = resampleIntradayToSessionBars(cached1mData);
                         try {
                             setupAndRenderIntraday(data, tf);
+                            updateHorizonTrendStates();
                         } catch (renderErr) {
                             console.error("Error rendering cached intraday dataset:", renderErr);
                         }
@@ -14862,6 +15038,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
 
                             try {
                                 setupAndRenderIntraday(data, tf);
+                                updateHorizonTrendStates();
                             } catch (renderErr) {
                                 console.error("Error rendering intraday chart dataset:", renderErr);
                             }
@@ -14877,6 +15054,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                                     });
                                     try {
                                         setupAndRenderIntraday(data, tf);
+                                        updateHorizonTrendStates();
                                     } catch (renderErr2) {
                                         console.error("Error rendering fallback chart dataset:", renderErr2);
                                     }
@@ -14908,6 +15086,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         }
                         try {
                             renderChartDataset(data, tf);
+                            updateHorizonTrendStates(cached1dData);
                             requestIntradayBackfill(ticker);
                         } catch (renderErr) {
                             console.error("Error rendering cached daily dataset:", renderErr);
@@ -14935,6 +15114,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                             if (todayC && cached1dData.length > 0) {
                                 mergeProvisionalCandleIntoDaily(cached1dData, todayC);
                             }
+                            updateHorizonTrendStates(cached1dData);
 
                             let data = cached1dData;
                             if (isWeekly) {
@@ -15076,6 +15256,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     target.closest('#chart-type-btn') || target.closest('#chart-type-menu') ||
                     target.closest('#indicators-btn') || target.closest('#indicators-menu') ||
                     target.closest('#broker-profile-dropdown') || target.closest('#broker-profile-left-btn') ||
+                    target.closest('#chart-pattern-dropdown') || target.closest('#chart-pattern-btn') ||
                     target.closest('[data-id="overlay_broker_profile"]')
                 ) {
                     return;
@@ -15158,7 +15339,151 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 });
             });
 
-            // Trading Horizon Presets (Bab 4 Trading Style Presets)
+            // =========================================================================
+            // BAB 19: MULTI-TIMEFRAME HORIZON TREND BAROMETER (EDIANTO ONG)
+            // =========================================================================
+            // Metode A: Net Return Titik Awal vs Titik Akhir (Start-to-End % Change)
+            // Short-Term (< 3 weeks): 15 bar bursa  | Net return threshold: ±1.5%
+            // Medium-Term (3w – 3m): 60 bar bursa   | Net return threshold: ±3.0%
+            // Long-Term (> 1 year): 250 bar bursa   | Net return threshold: ±5.0%
+            // =========================================================================
+            function updateHorizonTrendStates(bars?: any[]) {
+                const tickerInput = document.getElementById('ticker-input') as HTMLInputElement | null;
+                const ticker = (activeLoadedTicker || tickerInput?.value || 'KAQI').toUpperCase();
+                const shortBtn = document.getElementById('horizon-short-btn');
+                const medBtn = document.getElementById('horizon-medium-btn');
+                const longBtn = document.getElementById('horizon-long-btn');
+                const shortPctEl = document.getElementById('horizon-short-pct');
+                const medPctEl = document.getElementById('horizon-medium-pct');
+                const longPctEl = document.getElementById('horizon-long-pct');
+
+                if (!shortBtn || !medBtn || !longBtn) return;
+
+                const resetBtnTrend = (el: HTMLElement) => {
+                    el.classList.remove('trend-bullish', 'trend-bearish', 'trend-sideways');
+                };
+
+                let dailyBars = (bars && Array.isArray(bars) && bars.length > 0) ? bars : cached1dData;
+
+                // If daily data is missing or belongs to a different ticker, fetch in background
+                if (!dailyBars || dailyBars.length === 0 || cached1dLoadedTicker !== ticker) {
+                    fetch(`/${ticker}_1d.json?t=${Date.now()}`)
+                        .then(r => r.ok ? r.json() : null)
+                        .then(data => {
+                            if (data && Array.isArray(data) && data.length > 0) {
+                                data.forEach((d: any) => {
+                                    if (typeof d.time === 'string') d.time = Math.floor(new Date(d.time).getTime() / 1000);
+                                });
+                                cached1dData = data;
+                                cached1dLoadedTicker = ticker;
+                                updateHorizonTrendStates(data);
+                            }
+                        })
+                        .catch(() => {});
+                    if (!dailyBars || dailyBars.length === 0) return;
+                }
+
+                const n = dailyBars.length;
+                if (n < 2) {
+                    if (shortPctEl) shortPctEl.textContent = '';
+                    if (medPctEl) medPctEl.textContent = '';
+                    if (longPctEl) longPctEl.textContent = '';
+                    return;
+                }
+
+                const lastBar = dailyBars[n - 1];
+                const lastClose = Number(lastBar.close);
+                if (!lastClose || isNaN(lastClose) || lastClose <= 0) return;
+
+                const isForex = ticker.endsWith('c') || ticker.endsWith('m') || ticker.includes('USD') || ticker.includes('EUR') || ticker.includes('XAU') || ticker.includes('USTEC') || ticker.includes('US500') || ticker.includes('US30');
+                const formatP = (p: number) => isForex ? p.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 }) : 'Rp ' + Math.round(p).toLocaleString('id-ID');
+
+                // 1. Short-Term (< 3 weeks: standard 15 trading days, threshold ±1.5%)
+                resetBtnTrend(shortBtn);
+                const shortDays = Math.min(15, n - 1);
+                const shortStartIdx = n - 1 - shortDays;
+                const shortStartClose = Number(dailyBars[shortStartIdx].close);
+                if (shortStartClose > 0) {
+                    const deltaPct = ((lastClose - shortStartClose) / shortStartClose) * 100;
+                    const sign = deltaPct >= 0 ? '+' : '';
+                    const pctStr = `${sign}${deltaPct.toFixed(1)}%`;
+                    let trend: 'bullish' | 'bearish' | 'sideways' = 'sideways';
+                    let emoji = '🟡';
+                    let label = 'Sideways';
+                    if (deltaPct > 1.5) {
+                        trend = 'bullish';
+                        emoji = '🟢';
+                        label = 'Bullish';
+                    } else if (deltaPct < -1.5) {
+                        trend = 'bearish';
+                        emoji = '🔴';
+                        label = 'Bearish';
+                    }
+                    shortBtn.classList.add(`trend-${trend}`);
+                    if (shortPctEl) shortPctEl.textContent = pctStr;
+                    shortBtn.title = `Short-Term (< 3 weeks): ${emoji} ${label} (${pctStr})\n[${shortDays} hari: ${formatP(shortStartClose)} ➔ ${formatP(lastClose)}]\nKlik untuk melihat Makro 1Y Daily & Timing Intraday 5m`;
+                } else {
+                    if (shortPctEl) shortPctEl.textContent = '';
+                }
+
+                // 2. Medium-Term (3 weeks to several months: standard 60 trading days ~ 3 months, threshold ±3.0%)
+                resetBtnTrend(medBtn);
+                const medDays = Math.min(60, n - 1);
+                const medStartIdx = n - 1 - medDays;
+                const medStartClose = Number(dailyBars[medStartIdx].close);
+                if (medStartClose > 0 && medDays >= 5) {
+                    const deltaPct = ((lastClose - medStartClose) / medStartClose) * 100;
+                    const sign = deltaPct >= 0 ? '+' : '';
+                    const pctStr = `${sign}${deltaPct.toFixed(1)}%`;
+                    let trend: 'bullish' | 'bearish' | 'sideways' = 'sideways';
+                    let emoji = '🟡';
+                    let label = 'Sideways';
+                    if (deltaPct > 3.0) {
+                        trend = 'bullish';
+                        emoji = '🟢';
+                        label = 'Bullish';
+                    } else if (deltaPct < -3.0) {
+                        trend = 'bearish';
+                        emoji = '🔴';
+                        label = 'Bearish';
+                    }
+                    medBtn.classList.add(`trend-${trend}`);
+                    if (medPctEl) medPctEl.textContent = pctStr;
+                    medBtn.title = `Medium-Term (3w – 3m): ${emoji} ${label} (${pctStr})\n[${medDays} hari: ${formatP(medStartClose)} ➔ ${formatP(lastClose)}]\nKlik untuk melihat Makro 3Y Weekly & Swing Timing 1Y Daily`;
+                } else {
+                    if (medPctEl) medPctEl.textContent = '';
+                }
+
+                // 3. Long-Term (> 1 year: standard 250 trading days, threshold ±5.0%)
+                resetBtnTrend(longBtn);
+                const longDays = Math.min(250, n - 1);
+                const longStartIdx = n - 1 - longDays;
+                const longStartClose = Number(dailyBars[longStartIdx].close);
+                if (longStartClose > 0 && longDays >= 15) {
+                    const deltaPct = ((lastClose - longStartClose) / longStartClose) * 100;
+                    const sign = deltaPct >= 0 ? '+' : '';
+                    const pctStr = `${sign}${deltaPct.toFixed(1)}%`;
+                    let trend: 'bullish' | 'bearish' | 'sideways' = 'sideways';
+                    let emoji = '🟡';
+                    let label = 'Sideways';
+                    if (deltaPct > 5.0) {
+                        trend = 'bullish';
+                        emoji = '🟢';
+                        label = 'Bullish';
+                    } else if (deltaPct < -5.0) {
+                        trend = 'bearish';
+                        emoji = '🔴';
+                        label = 'Bearish';
+                    }
+                    longBtn.classList.add(`trend-${trend}`);
+                    if (longPctEl) longPctEl.textContent = pctStr;
+                    longBtn.title = `Long-Term (> 1 year): ${emoji} ${label} (${pctStr})\n[${longDays} hari: ${formatP(longStartClose)} ➔ ${formatP(lastClose)}]\nKlik untuk melihat Makro 5Y Monthly & Konfirmasi 3Y Weekly`;
+                } else {
+                    if (longPctEl) longPctEl.textContent = '';
+                }
+            }
+
+            // Trading Horizon Presets (Bab 4 & Bab 19 Trading Style Presets)
             let currentHorizon: 'short' | 'medium' | 'long' | null = null;
             const hpPopover = document.getElementById('horizon-popover') as HTMLElement | null;
             const hpTitle = document.getElementById('hp-title') as HTMLElement | null;
@@ -15178,7 +15503,10 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 document.querySelectorAll('.horizon-pill-btn').forEach(b => b.classList.remove('active'));
                 document.getElementById('horizon-short-btn')?.classList.add('active');
                 if (hpTitle) hpTitle.textContent = 'Short-Term Trader (< 3 Weeks)';
-                if (hpDesc) hpDesc.textContent = 'Analisis tren 1 tahun (Daily macro) & timing eksekusi intraday (5m).';
+                const isBull = document.getElementById('horizon-short-btn')?.classList.contains('trend-bullish');
+                const isBear = document.getElementById('horizon-short-btn')?.classList.contains('trend-bearish');
+                const trendStr = isBull ? '🟢 Bullish (Uptrend)' : isBear ? '🔴 Bearish (Downtrend)' : '🟡 Sideways (Konsolidasi)';
+                if (hpDesc) hpDesc.textContent = `Analisis tren 1 tahun (Daily macro) & timing intraday (5m) • Status: ${trendStr}`;
                 if (hpMacroSub) hpMacroSub.textContent = '1Y Daily (1D)';
                 if (hpTimingSub) hpTimingSub.textContent = '1D 5-Min (5m)';
                 if (hpMacroBtn) hpMacroBtn.classList.add('active');
@@ -15192,7 +15520,10 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 document.querySelectorAll('.horizon-pill-btn').forEach(b => b.classList.remove('active'));
                 document.getElementById('horizon-medium-btn')?.classList.add('active');
                 if (hpTitle) hpTitle.textContent = 'Medium-Term Trader (3 Weeks – Months)';
-                if (hpDesc) hpDesc.textContent = 'Analisis arah tren & siklus 3 tahun (Weekly macro), timing swing entry (1Y Daily).';
+                const isBull = document.getElementById('horizon-medium-btn')?.classList.contains('trend-bullish');
+                const isBear = document.getElementById('horizon-medium-btn')?.classList.contains('trend-bearish');
+                const trendStr = isBull ? '🟢 Bullish (Uptrend)' : isBear ? '🔴 Bearish (Downtrend)' : '🟡 Sideways (Konsolidasi)';
+                if (hpDesc) hpDesc.textContent = `Analisis arah tren 3 tahun (Weekly macro) & swing timing (1Y Daily) • Status: ${trendStr}`;
                 if (hpMacroSub) hpMacroSub.textContent = '3Y Weekly (1W)';
                 if (hpTimingSub) hpTimingSub.textContent = '1Y Daily (1D)';
                 if (hpMacroBtn) hpMacroBtn.classList.add('active');
@@ -15206,7 +15537,10 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 document.querySelectorAll('.horizon-pill-btn').forEach(b => b.classList.remove('active'));
                 document.getElementById('horizon-long-btn')?.classList.add('active');
                 if (hpTitle) hpTitle.textContent = 'Long-Term Investor (> 1 Year)';
-                if (hpDesc) hpDesc.textContent = 'Analisis tren sekuler multi-tahun (Monthly macro), konfirmasi breakout (3Y Weekly).';
+                const isBull = document.getElementById('horizon-long-btn')?.classList.contains('trend-bullish');
+                const isBear = document.getElementById('horizon-long-btn')?.classList.contains('trend-bearish');
+                const trendStr = isBull ? '🟢 Bullish (Uptrend)' : isBear ? '🔴 Bearish (Downtrend)' : '🟡 Sideways (Konsolidasi)';
+                if (hpDesc) hpDesc.textContent = `Analisis tren sekuler 5 tahun (Monthly macro) & konfirmasi (3Y Weekly) • Status: ${trendStr}`;
                 if (hpMacroSub) hpMacroSub.textContent = '5Y Monthly (1M)';
                 if (hpTimingSub) hpTimingSub.textContent = '3Y Weekly (1W)';
                 if (hpMacroBtn) hpMacroBtn.classList.add('active');
@@ -16929,6 +17263,320 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     showToast('Market Structure Disabled');
                 }
             });
+
+            // =========================================================================
+            // Bab 20: Gaps & Island Reversal Controller (Edianto Ong)
+            // Tri-State Mode: 'all' (Open & Closed) | 'open_only' (Unfilled) | 'off'
+            // Single-click: cycles 'off' -> 'all' -> 'open_only' -> 'off'
+            // Double-click: directly jumps to 'open_only' (matching left toolbar standard)
+            // =========================================================================
+            const gapBtn = document.getElementById('gap-detector-btn') as HTMLElement | null;
+            const menuGapsBtn = document.getElementById('menu-gaps-btn') as HTMLElement | null;
+
+            function updateGapBtnUI() {
+                if (gapBtn) {
+                    gapBtn.classList.remove('active', 'active-intact');
+                    if (gapMode === 'all') {
+                        gapBtn.classList.add('active');
+                        gapBtn.title = 'Gaps & Island Reversal (Bab 20 — Edianto Ong): ALL [Open & Closed] (1-Click: Open Only, 2-Click: Open Only)';
+                    } else if (gapMode === 'open_only') {
+                        gapBtn.classList.add('active-intact');
+                        gapBtn.title = 'Gaps & Island Reversal (Bab 20 — Edianto Ong): OPEN ONLY [Unfilled Gaps] (1-Click: Nonaktifkan)';
+                    } else {
+                        gapBtn.title = 'Gaps & Island Reversal (Bab 20 — Edianto Ong): OFF [1-Click: ALL, 2-Click: OPEN ONLY]';
+                    }
+                }
+                if (menuGapsBtn) {
+                    menuGapsBtn.classList.remove('active', 'active-intact');
+                    if (gapMode === 'all') {
+                        menuGapsBtn.classList.add('active');
+                    } else if (gapMode === 'open_only') {
+                        menuGapsBtn.classList.add('active-intact');
+                    }
+                }
+            }
+
+            function clearGaps() {
+                nativeGapPrimitive.clearData();
+                if (footprintGapPrimitive) footprintGapPrimitive.clearData();
+            }
+
+            function renderGaps(bars?: any[]) {
+                clearGaps();
+                if (gapMode === 'off') return;
+
+                const dataToScan = (bars && Array.isArray(bars) && bars.length > 0)
+                    ? bars
+                    : (currentChartData && currentChartData.length > 0 ? currentChartData : cached1dData);
+                if (!dataToScan || dataToScan.length < 2) return;
+
+                const tickerInput = document.getElementById('ticker-input') as HTMLInputElement | null;
+                const currentSym = (activeLoadedTicker || tickerInput?.value || 'KAQI').toUpperCase();
+                const isFx = currentSym.endsWith('c') || currentSym.endsWith('m') || currentSym.includes('USD') || currentSym.includes('EUR') || currentSym.includes('XAU') || currentSym.includes('USTEC') || currentSym.includes('US500') || currentSym.includes('US30');
+
+                let detectedGaps = computeGaps(dataToScan, isFx);
+                if (gapMode === 'open_only') {
+                    detectedGaps = detectedGaps.filter(g => g.status === 'Open');
+                }
+
+                const gapData = {
+                    gaps: detectedGaps,
+                    visible: true,
+                    isForex: isFx,
+                };
+
+                nativeGapPrimitive.setData(gapData);
+                if (footprintGapPrimitive) footprintGapPrimitive.setData(gapData);
+            }
+
+            function setGapMode(newMode: GapDisplayMode, showNotification: boolean = true) {
+                gapMode = newMode;
+                localStorage.setItem('user_gaps_mode', gapMode);
+                localStorage.setItem('user_gaps_visible', gapMode !== 'off' ? 'true' : 'false');
+                updateGapBtnUI();
+                if (gapMode !== 'off') {
+                    renderGaps();
+                    if (showNotification) {
+                        showToast(gapMode === 'all'
+                            ? 'Gaps & Island Reversal (Bab 20): ALL (Open & Closed)'
+                            : 'Gaps: OPEN ONLY (Unfilled Gaps)');
+                    }
+                } else {
+                    clearGaps();
+                    if (showNotification) {
+                        showToast('Gaps & Island Reversal: Disabled');
+                    }
+                }
+                renderIndicatorsLegend();
+            }
+            setGapModeGlobal = setGapMode;
+
+            updateGapBtnUI();
+
+            let gapClickTimer: any = null;
+
+            gapBtn?.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (gapClickTimer) {
+                    clearTimeout(gapClickTimer);
+                    gapClickTimer = null;
+                    return; // Handled by dblclick
+                }
+                gapClickTimer = setTimeout(() => {
+                    gapClickTimer = null;
+                    if (gapMode === 'off') {
+                        setGapMode('all');
+                    } else if (gapMode === 'all') {
+                        setGapMode('open_only');
+                    } else {
+                        setGapMode('off');
+                    }
+                }, 220);
+            });
+
+            gapBtn?.addEventListener('dblclick', (e) => {
+                e.preventDefault();
+                if (gapClickTimer) {
+                    clearTimeout(gapClickTimer);
+                    gapClickTimer = null;
+                }
+                // Double click directly jumps to OPEN ONLY mode (or toggles to ALL if already OPEN ONLY)
+                if (gapMode === 'open_only') {
+                    setGapMode('all');
+                } else {
+                    setGapMode('open_only');
+                }
+            });
+
+            menuGapsBtn?.addEventListener('click', () => {
+                if (gapMode === 'off') {
+                    setGapMode('all');
+                } else if (gapMode === 'all') {
+                    setGapMode('open_only');
+                } else {
+                    setGapMode('off');
+                }
+            });
+
+            // =========================================================================
+            // Bab 21: Chart Patterns Controller (Edianto Ong: Reversal & Continuation)
+            // Floating Dropdown Menu (TradingView 1:1 Parity) with Individual Pattern Selection
+            // Individual Multi-Pattern Legend Info with Hide (Eye) & Delete (Trash)
+            // =========================================================================
+            const chartPatternBtn = document.getElementById('chart-pattern-btn') as HTMLElement | null;
+            const menuChartPatternBtn = document.getElementById('menu-chart-pattern-btn') as HTMLElement | null;
+            const patternDropdown = document.getElementById('chart-pattern-dropdown') as HTMLElement | null;
+            const patternSearchInput = document.getElementById('pattern-search-input') as HTMLInputElement | null;
+
+            function updateChartPatternBtnUI() {
+                const displayName = getPatternDisplayName(chartPatternMode);
+                if (chartPatternBtn) {
+                    chartPatternBtn.classList.remove('active', 'active-intact', 'active-major');
+                    if (chartPatternMode !== 'off') {
+                        chartPatternBtn.classList.add('active');
+                        chartPatternBtn.title = `Chart Patterns (Bab 21 — Edianto Ong): ${displayName} [Klik untuk ganti pola]`;
+                    } else {
+                        chartPatternBtn.title = `Chart Patterns (Bab 21 — Edianto Ong) [Pilih Pola dari Dropdown]`;
+                    }
+                }
+                if (menuChartPatternBtn) {
+                    menuChartPatternBtn.classList.remove('active', 'active-intact', 'active-major');
+                    if (chartPatternMode !== 'off') {
+                        menuChartPatternBtn.classList.add('active');
+                    }
+                }
+            }
+
+            function updatePatternDropdownSelection() {
+                if (!patternDropdown) return;
+                patternDropdown.querySelectorAll('.pattern-option-item').forEach((el: Element) => {
+                    const p = (el as HTMLElement).dataset.pattern;
+                    if (p === chartPatternMode) {
+                        el.classList.add('is-selected');
+                    } else {
+                        el.classList.remove('is-selected');
+                    }
+                });
+            }
+
+            function openChartPatternDropdown(triggerEl?: HTMLElement | null) {
+                if (!patternDropdown) return;
+                const isShowing = patternDropdown.style.display === 'block';
+                closeAllTopDropdowns();
+
+                if (!isShowing) {
+                    const anchor = triggerEl || chartPatternBtn;
+                    if (anchor) {
+                        const rect = anchor.getBoundingClientRect();
+                        if (anchor === chartPatternBtn) {
+                            patternDropdown.style.top = `${Math.min(window.innerHeight - 380, Math.max(10, rect.top))}px`;
+                            patternDropdown.style.left = `${rect.right + 6}px`;
+                        } else {
+                            patternDropdown.style.top = `${Math.min(window.innerHeight - 380, rect.bottom + 6)}px`;
+                            patternDropdown.style.left = `${Math.min(window.innerWidth - 260, Math.max(10, rect.left))}px`;
+                        }
+                    }
+                    patternDropdown.style.display = 'block';
+                    updatePatternDropdownSelection();
+
+                    setTimeout(() => {
+                        if (patternSearchInput) {
+                            patternSearchInput.value = '';
+                            patternSearchInput.focus();
+                            patternDropdown.querySelectorAll('.pattern-option-item').forEach((item: Element) => {
+                                (item as HTMLElement).style.display = 'flex';
+                            });
+                        }
+                    }, 50);
+                } else {
+                    patternDropdown.style.display = 'none';
+                }
+            }
+
+            patternDropdown?.querySelectorAll('.pattern-option-item').forEach((item: Element) => {
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const p = (item as HTMLElement).dataset.pattern as ChartPatternMode;
+                    if (p) {
+                        setChartPatternMode(p);
+                    }
+                    if (patternDropdown) patternDropdown.style.display = 'none';
+                });
+            });
+
+            patternSearchInput?.addEventListener('input', () => {
+                const q = patternSearchInput.value.trim().toUpperCase();
+                patternDropdown?.querySelectorAll('.pattern-option-item').forEach((item: Element) => {
+                    const label = (item.querySelector('.item-label')?.textContent || (item as HTMLElement).dataset.pattern || '').toUpperCase();
+                    (item as HTMLElement).style.display = label.includes(q) ? 'flex' : 'none';
+                });
+            });
+
+            chartPatternBtn?.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openChartPatternDropdown(chartPatternBtn);
+            });
+
+            menuChartPatternBtn?.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openChartPatternDropdown(menuChartPatternBtn);
+            });
+
+            function clearChartPatterns() {
+                nativeChartPatternPrimitive.clearData();
+                if (footprintChartPatternPrimitive) footprintChartPatternPrimitive.clearData();
+            }
+
+            function renderChartPatterns(bars?: any[]) {
+                clearChartPatterns();
+                if (chartPatternMode === 'off') {
+                    currentDetectedPatterns = [];
+                    renderIndicatorsLegend();
+                    return;
+                }
+
+                const dataToScan = (bars && Array.isArray(bars) && bars.length > 0)
+                    ? bars
+                    : (currentChartData && currentChartData.length > 0 ? currentChartData : cached1dData);
+                if (!dataToScan || dataToScan.length < 30) {
+                    currentDetectedPatterns = [];
+                    renderIndicatorsLegend();
+                    return;
+                }
+
+                const tickerInput = document.getElementById('ticker-input') as HTMLInputElement | null;
+                const currentSym = (activeLoadedTicker || tickerInput?.value || 'KAQI').toUpperCase();
+                const isFx = currentSym.endsWith('c') || currentSym.endsWith('m') || currentSym.includes('USD') || currentSym.includes('EUR') || currentSym.includes('XAU') || currentSym.includes('USTEC') || currentSym.includes('US500') || currentSym.includes('US30');
+
+                // Detect patterns with mode
+                const detected = detectChartPatterns(dataToScan, isFx, chartPatternMode);
+
+                // Filter out dismissed patterns
+                currentDetectedPatterns = detected.filter(p => !dismissedPatternIds.has(p.id));
+
+                // Filter out hidden patterns for canvas rendering
+                const patternsToDraw = currentDetectedPatterns.filter(p => !hiddenPatternIds.has(p.id));
+
+                const patternData = {
+                    patterns: patternsToDraw,
+                    visible: true,
+                    isForex: isFx,
+                };
+
+                nativeChartPatternPrimitive.setData(patternData);
+                if (footprintChartPatternPrimitive) footprintChartPatternPrimitive.setData(patternData);
+                renderIndicatorsLegend();
+            }
+
+            function setChartPatternMode(newMode: ChartPatternMode, showNotification: boolean = true) {
+                chartPatternMode = newMode;
+                localStorage.setItem('user_chart_patterns_mode', chartPatternMode);
+                dismissedPatternIds.clear();
+                hiddenPatternIds.clear();
+                updateChartPatternBtnUI();
+                updatePatternDropdownSelection();
+
+                if (chartPatternMode !== 'off') {
+                    renderChartPatterns();
+                    if (showNotification) {
+                        const displayName = getPatternDisplayName(chartPatternMode);
+                        showToast(`Chart Pattern: ${displayName}`);
+                    }
+                } else {
+                    clearChartPatterns();
+                    currentDetectedPatterns = [];
+                    if (showNotification) {
+                        showToast('Chart Patterns: Nonaktif');
+                    }
+                    renderIndicatorsLegend();
+                }
+            }
+            setChartPatternModeGlobal = setChartPatternMode;
+
+            updateChartPatternBtnUI();
+            updatePatternDropdownSelection();
 
 
             // Enable Magnet Mode crosshair (TradingView style snapping)
@@ -19470,7 +20118,10 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     renderAutoTrendlines();
                     renderAutoChannels();
                     renderAutoMs();
+                    renderGaps();
+                    renderChartPatterns();
                     renderTradePositions();
+                    updateHorizonTrendStates(cached1dData);
                 }, 150);
             }
 

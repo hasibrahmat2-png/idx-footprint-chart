@@ -4,10 +4,22 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
+# Simpan token jika sudah di-export oleh user di environment
+EXISTING_STOCKBIT_TOKEN="$STOCKBIT_TOKEN"
+EXISTING_EXNESS_TOKEN="$EXNESS_TOKEN"
+
 if [ -f "$SCRIPT_DIR/.env" ]; then
     set -a
     source "$SCRIPT_DIR/.env"
     set +a
+fi
+
+# Kembalikan token jika user sebelumnya sudah meng-export di terminal
+if [ -n "$EXISTING_STOCKBIT_TOKEN" ]; then
+    export STOCKBIT_TOKEN="$EXISTING_STOCKBIT_TOKEN"
+fi
+if [ -n "$EXISTING_EXNESS_TOKEN" ]; then
+    export EXNESS_TOKEN="$EXISTING_EXNESS_TOKEN"
 fi
 
 echo "=========================================================="
