@@ -247,16 +247,17 @@ function evaluatePatternLifecycle(
             }
         } else {
             // Post-breakout phase: check target reached, throwback pullback, or post-breakout failure
+            const postBreakRef = breakoutPrice > 0 ? breakoutPrice : (breakoutLevel + breakoutSlope * (breakoutIdx - origIdx));
             if (direction === 'bullish') {
                 if (bar.high >= targetPrice) {
                     status = 'target_reached';
                     break;
                 }
-                if (bar.close < curBreakLevel * 0.97) {
+                if (bar.close < postBreakRef * 0.97) {
                     status = 'failed';
                     break;
                 }
-                if (bar.low <= curBreakLevel * 1.015 && bar.close >= curBreakLevel * 0.99) {
+                if (bar.low <= postBreakRef * 1.015 && bar.close >= postBreakRef * 0.99) {
                     status = 'pullback';
                 }
             } else {
@@ -264,11 +265,11 @@ function evaluatePatternLifecycle(
                     status = 'target_reached';
                     break;
                 }
-                if (bar.close > curBreakLevel * 1.03) {
+                if (bar.close > postBreakRef * 1.03) {
                     status = 'failed';
                     break;
                 }
-                if (bar.high >= curBreakLevel * 0.985 && bar.close <= curBreakLevel * 1.01) {
+                if (bar.high >= postBreakRef * 0.985 && bar.close <= postBreakRef * 1.01) {
                     status = 'pullback';
                 }
             }
@@ -447,11 +448,25 @@ export function detectChartPatterns(
             const rs = swings[i + 4];
 
             if (ls.type === 'high' && n1.type === 'low' && head.type === 'high' && n2.type === 'low' && rs.type === 'high') {
-                // Head must be strictly higher than both shoulders
-                if (head.price > ls.price * 1.02 && head.price > rs.price * 1.02) {
-                    // Shoulders should be roughly symmetrical in height (within 8%)
+                // 1. Head must be strictly higher than both shoulders
+                const minHeadProminence = _isForex ? 0.015 : 0.025;
+                if (head.price > ls.price * (1 + minHeadProminence) && head.price > rs.price * (1 + minHeadProminence)) {
+                    // 2. Both shoulders must be strictly above both neckline troughs
+                    if (ls.price <= n1.price || rs.price <= n2.price || rs.price <= n1.price || ls.price <= n2.price) continue;
+
+                    // 3. Shoulders should be roughly symmetrical in height
                     const shoulderDiff = Math.abs(ls.price - rs.price) / Math.max(ls.price, rs.price);
-                    if (shoulderDiff <= 0.08) {
+                    if (shoulderDiff <= (_isForex ? 0.04 : 0.08)) {
+                        // 4. Neckline slope limit (Bulkowski angle clamping - max 3.5% drift on IDX, 1.5% on Forex)
+                        const neckDiff = Math.abs(n1.price - n2.price) / Math.max(n1.price, n2.price);
+                        if (neckDiff > (_isForex ? 0.015 : 0.035)) continue;
+
+                        // 5. Time duration symmetry (left wing vs right wing must not exceed 2.2x ratio)
+                        const leftSpan = head.index - ls.index;
+                        const rightSpan = rs.index - head.index;
+                        const timeRatio = Math.max(leftSpan, rightSpan) / Math.min(leftSpan, rightSpan);
+                        if (timeRatio > 2.2) continue;
+
                         // Neckline slope check (n1 to n2)
                         const neckSlope = (n2.price - n1.price) / (n2.index - n1.index);
                         const headNecklinePrice = n1.price + neckSlope * (head.index - n1.index);
@@ -587,9 +602,25 @@ export function detectChartPatterns(
 
             // --- 1.2 Inverted Head and Shoulders (Bullish Reversal) ---
             if (ls.type === 'low' && n1.type === 'high' && head.type === 'low' && n2.type === 'high' && rs.type === 'low') {
-                if (head.price < ls.price * 0.98 && head.price < rs.price * 0.98) {
+                // 1. Head must be strictly lower than both shoulders
+                const minHeadProminence = _isForex ? 0.015 : 0.025;
+                if (head.price < ls.price * (1 - minHeadProminence) && head.price < rs.price * (1 - minHeadProminence)) {
+                    // 2. Both shoulders must be strictly below both neckline peaks
+                    if (ls.price >= n1.price || rs.price >= n2.price || rs.price >= n1.price || ls.price >= n2.price) continue;
+
+                    // 3. Shoulders should be roughly symmetrical in height
                     const shoulderDiff = Math.abs(ls.price - rs.price) / Math.max(ls.price, rs.price);
-                    if (shoulderDiff <= 0.08) {
+                    if (shoulderDiff <= (_isForex ? 0.04 : 0.08)) {
+                        // 4. Neckline slope limit (Bulkowski angle clamping - max 3.5% drift on IDX, 1.5% on Forex)
+                        const neckDiff = Math.abs(n1.price - n2.price) / Math.max(n1.price, n2.price);
+                        if (neckDiff > (_isForex ? 0.015 : 0.035)) continue;
+
+                        // 5. Time duration symmetry (left wing vs right wing must not exceed 2.2x ratio)
+                        const leftSpan = head.index - ls.index;
+                        const rightSpan = rs.index - head.index;
+                        const timeRatio = Math.max(leftSpan, rightSpan) / Math.min(leftSpan, rightSpan);
+                        if (timeRatio > 2.2) continue;
+
                         const neckSlope = (n2.price - n1.price) / (n2.index - n1.index);
                         const headNecklinePrice = n1.price + neckSlope * (head.index - n1.index);
                         const headHeight = headNecklinePrice - head.price;
