@@ -7,6 +7,14 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
+# Auto-load EXNESS_TOKEN dari .env jika belum di-export di terminal
+if [ -z "$EXNESS_TOKEN" ] && [ -f "$SCRIPT_DIR/.env" ]; then
+    ENV_TOKEN=$(grep -E "^EXNESS_TOKEN=" "$SCRIPT_DIR/.env" | head -n 1 | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d '\r')
+    if [ -n "$ENV_TOKEN" ]; then
+        export EXNESS_TOKEN="$ENV_TOKEN"
+    fi
+fi
+
 SYMBOLS_FILE="$SCRIPT_DIR/symbols_forex_indices.txt"
 PAIRS=("USDJPYc" "EURUSDc" "USTECc" "US500c" "US30c")
 
@@ -29,6 +37,11 @@ python3 "$SCRIPT_DIR/exness_intraday_scraper.py" --symbols-file "$SYMBOLS_FILE" 
 echo ""
 echo "=== Step 3: Rebuild Unified JSONs (indicator-examples/public/) ==="
 python3 "$SCRIPT_DIR/build_unified_charts.py" --no-screener USDJPYC EURUSDC USTECC US500C US30C
+
+# 3b. Fetch Live Exness Positions (TP/SL) & Trade History
+echo ""
+echo "=== Step 3b: Update Live Exness Positions & Trade History ==="
+python3 "$SCRIPT_DIR/fetch_exness_positions.py" || true
 
 # 4. Maintain Alias Symlinks
 echo ""

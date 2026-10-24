@@ -8,6 +8,7 @@ import {
     PrimitivePaneViewZOrder,
     ISeriesApi,
     IChartApiBase,
+    ITimeScaleApi,
     Logical,
 } from 'lightweight-charts';
 import { CanvasRenderingTarget2D } from 'fancy-canvas';
@@ -19,6 +20,13 @@ export interface ChartPatternPrimitiveData {
     isForex: boolean;
 }
 
+interface LabelBox {
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+}
+
 function fmtPrice(val: number, isForex: boolean): string {
     if (isForex) {
         if (val >= 100) return val.toFixed(2);
@@ -26,6 +34,80 @@ function fmtPrice(val: number, isForex: boolean): string {
         return val.toFixed(5);
     }
     return Math.round(val).toLocaleString('id-ID');
+}
+
+/**
+ * Resolves X coordinate reliably even when `logicalIndex` projects into the future
+ * beyond the last loaded bar (`time === undefined`).
+ */
+function resolveX(
+    timeScale: ITimeScaleApi<Time>,
+    time: Time | undefined,
+    logicalIndex: number
+): number | null {
+    if (time !== undefined) {
+        const coord = timeScale.timeToCoordinate(time);
+        if (coord !== null) return coord;
+    }
+    return timeScale.logicalToCoordinate(logicalIndex as Logical);
+}
+
+/**
+ * Draws crisp floating text with a dark halo stroke (zero rectangular background boxes,
+ * zero borders — strictly honoring the Obsidian Vault Invariant while ensuring 100% legibility over candles).
+ */
+function drawHaloText(
+    ctx: CanvasRenderingContext2D,
+    text: string,
+    x: number,
+    y: number,
+    fillColor: string,
+    align: CanvasTextAlign = 'left',
+    baseline: CanvasTextBaseline = 'middle',
+    font: string = 'bold 10px "JetBrains Mono", Inter, -apple-system, sans-serif'
+): void {
+    ctx.save();
+    ctx.font = font;
+    ctx.textAlign = align;
+    ctx.textBaseline = baseline;
+    ctx.lineJoin = 'round';
+    ctx.miterLimit = 2;
+    ctx.lineWidth = 3.0;
+    ctx.strokeStyle = 'rgba(11, 14, 20, 0.88)';
+    ctx.strokeText(text, x, y);
+    ctx.fillStyle = fillColor;
+    ctx.fillText(text, x, y);
+    ctx.restore();
+}
+
+/**
+ * Draws a small directional arrowhead at (x2, y2) pointing from (x1, y1)
+ */
+function drawArrowhead(
+    ctx: CanvasRenderingContext2D,
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    color: string,
+    size: number = 4.5
+): void {
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    ctx.save();
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(
+        x2 - size * Math.cos(angle - Math.PI / 6),
+        y2 - size * Math.sin(angle - Math.PI / 6)
+    );
+    ctx.lineTo(
+        x2 - size * Math.cos(angle + Math.PI / 6),
+        y2 - size * Math.sin(angle + Math.PI / 6)
+    );
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
 }
 
 class ChartPatternPaneRenderer implements IPrimitivePaneRenderer {
@@ -60,148 +142,366 @@ class ChartPatternPaneRenderer implements IPrimitivePaneRenderer {
         target.useMediaCoordinateSpace((scope) => {
             const { context: ctx, mediaSize } = scope;
             const width = mediaSize.width;
+            const height = mediaSize.height;
 
             const timeScale = this._chart!.timeScale();
             const visibleRange = timeScale.getVisibleLogicalRange();
             const isForex = this._data!.isForex;
+            const placedLabels: LabelBox[] = [];
+
+            const resolveNonOverlappingY = (
+                x: number,
+                preferredY: number,
+                w: number,
+                h: number,
+                shiftUp: boolean
+            ): number => {
+                let curY = Math.max(14, Math.min(height - 14, preferredY));
+                const step = shiftUp ? -13 : 13;
+                for (let attempt = 0; attempt < 5; attempt++) {
+                    const hasCollision = placedLabels.some(
+                        (b) =>
+                            Math.abs(x - b.x) < (w + b.w) * 0.55 &&
+                            Math.abs(curY - b.y) < (h + b.h) * 0.65
+                    );
+                    if (!hasCollision) break;
+                    curY = Math.max(14, Math.min(height - 14, curY + step));
+                }
+                placedLabels.push({ x, y: curY, w, h });
+                return curY;
+            };
 
             for (const pat of this._data!.patterns) {
-                // Viewport culling to preserve 60 FPS on Chromebook Celeron
                 if (visibleRange) {
-                    if (pat.endIndex < visibleRange.from - 20 || pat.startIndex > visibleRange.to + 20) {
+                    if (
+                        pat.endIndex < visibleRange.from - 25 ||
+                        pat.startIndex > visibleRange.to + 25
+                    ) {
                         continue;
                     }
                 }
 
                 const isBullish = pat.direction === 'bullish';
-                const isReached = pat.status === 'target_reached';
-                const isFailed = pat.status === 'failed';
+                const isDimmed = pat.status === 'target_reached' || pat.status === 'failed';
 
-                // Color palette matching ghost candle
-                const baseColor = isBullish ? '#26A69A' : '#EF5350';
-                const lineColor = (isReached || isFailed)
-                    ? (isBullish ? 'rgba(38, 166, 154, 0.45)' : 'rgba(239, 83, 80, 0.45)')
-                    : (isBullish ? 'rgba(38, 166, 154, 0.95)' : 'rgba(239, 83, 80, 0.95)');
-                const textColor = (isReached || isFailed)
-                    ? (isBullish ? 'rgba(38, 166, 154, 0.55)' : 'rgba(239, 83, 80, 0.55)')
-                    : baseColor;
+                const primaryColor = isDimmed
+                    ? isBullish
+                        ? 'rgba(38, 166, 154, 0.52)'
+                        : 'rgba(239, 83, 80, 0.52)'
+                    : isBullish
+                      ? 'rgba(38, 166, 154, 0.96)'
+                      : 'rgba(239, 83, 80, 0.96)';
 
-                // 1. Draw Pattern Boundary, Contour & Neckline Lines
+                const connectorColor = isDimmed
+                    ? isBullish
+                        ? 'rgba(38, 166, 154, 0.30)'
+                        : 'rgba(239, 83, 80, 0.30)'
+                    : isBullish
+                      ? 'rgba(38, 166, 154, 0.62)'
+                      : 'rgba(239, 83, 80, 0.62)';
+
+                const fillColor = isDimmed
+                    ? isBullish
+                        ? 'rgba(38, 166, 154, 0.03)'
+                        : 'rgba(239, 83, 80, 0.03)'
+                    : isBullish
+                      ? 'rgba(38, 166, 154, 0.075)'
+                      : 'rgba(239, 83, 80, 0.075)';
+
+                const labelColor = isDimmed
+                    ? isBullish
+                        ? 'rgba(38, 166, 154, 0.68)'
+                        : 'rgba(239, 83, 80, 0.68)'
+                    : isBullish
+                      ? '#26A69A'
+                      : '#EF5350';
+
+                // -----------------------------------------------------------------
+                // 1. Draw Subtle Geometric Polygon Fill
+                // -----------------------------------------------------------------
+                if (pat.fillPolygon && pat.fillPolygon.length >= 3) {
+                    const pts: Array<{ x: number; y: number }> = [];
+                    for (const v of pat.fillPolygon) {
+                        const vx = resolveX(timeScale, v.time, v.index);
+                        const vy = this._series!.priceToCoordinate(v.price);
+                        if (vx !== null && vy !== null) {
+                            pts.push({ x: vx, y: vy });
+                        }
+                    }
+                    if (pts.length >= 3) {
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.moveTo(pts[0].x, pts[0].y);
+                        for (let k = 1; k < pts.length; k++) {
+                            ctx.lineTo(pts[k].x, pts[k].y);
+                        }
+                        ctx.closePath();
+                        ctx.fillStyle = fillColor;
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                }
+
+                // -----------------------------------------------------------------
+                // 2. Draw Pattern Lines with Clear Visual Hierarchy
+                // -----------------------------------------------------------------
+                let targetRayCoords: { x1: number; x2: number; y: number } | null = null;
+
                 ctx.save();
                 for (const line of pat.lines) {
-                    const x1 = timeScale.timeToCoordinate(line.x1Time) ?? timeScale.logicalToCoordinate(line.x1Index as Logical);
-                    const x2 = timeScale.timeToCoordinate(line.x2Time) ?? timeScale.logicalToCoordinate(line.x2Index as Logical);
+                    const x1 = resolveX(timeScale, line.x1Time, line.x1Index);
+                    const x2 = resolveX(timeScale, line.x2Time, line.x2Index);
                     if (x1 === null || x2 === null) continue;
 
                     const y1 = this._series!.priceToCoordinate(line.y1Price);
                     const y2 = this._series!.priceToCoordinate(line.y2Price);
                     if (y1 === null || y2 === null) continue;
 
-                    ctx.beginPath();
-                    ctx.strokeStyle = line.color || lineColor;
+                    if (
+                        line.role === 'cup_curve' &&
+                        line.ctrlIndex !== undefined &&
+                        line.ctrlPrice !== undefined
+                    ) {
+                        const baseX = resolveX(timeScale, undefined, line.ctrlIndex);
+                        const baseY = this._series!.priceToCoordinate(line.ctrlPrice);
+                        if (baseX !== null && baseY !== null) {
+                            const cpx = 2 * baseX - 0.5 * (x1 + x2);
+                            const cpy = 2 * baseY - 0.5 * (y1 + y2);
 
-                    if (line.role === 'neckline') {
-                        ctx.lineWidth = 1.8;
-                    } else if (line.role === 'connector' || line.role === 'box_wall') {
-                        ctx.lineWidth = 1.4;
-                    } else if (line.role === 'measured_move') {
-                        ctx.lineWidth = 1.2;
-                    } else {
-                        ctx.lineWidth = 1.5;
+                            ctx.beginPath();
+                            ctx.moveTo(x1, y1);
+                            ctx.quadraticCurveTo(cpx, cpy, x2, y2);
+                            ctx.closePath();
+                            ctx.fillStyle = fillColor;
+                            ctx.fill();
+
+                            ctx.beginPath();
+                            ctx.setLineDash([]);
+                            ctx.lineWidth = 1.75;
+                            ctx.strokeStyle = primaryColor;
+                            ctx.moveTo(x1, y1);
+                            ctx.quadraticCurveTo(cpx, cpy, x2, y2);
+                            ctx.stroke();
+                            continue;
+                        }
                     }
 
-                    if (line.style === 'dotted') {
+                    if (line.role === 'neckline') {
+                        ctx.strokeStyle = primaryColor;
+                        ctx.lineWidth = 1.85;
+                        ctx.setLineDash([]);
+                    } else if (
+                        line.role === 'upper_boundary' ||
+                        line.role === 'lower_boundary' ||
+                        line.role === 'flagpole'
+                    ) {
+                        ctx.strokeStyle = primaryColor;
+                        ctx.lineWidth = 1.65;
+                        ctx.setLineDash(line.style === 'dashed' ? [5, 4] : []);
+                    } else if (line.role === 'connector') {
+                        ctx.strokeStyle = connectorColor;
+                        ctx.lineWidth = 1.25;
+                        // Respect dashed style for unconfirmed FORMING leg toward neckline
+                        ctx.setLineDash(line.style === 'dashed' ? [4, 4] : []);
+                    } else if (line.role === 'box_wall') {
+                        ctx.strokeStyle = connectorColor;
+                        ctx.lineWidth = 1.15;
+                        ctx.setLineDash([3, 3]);
+                    } else if (line.role === 'measured_move') {
+                        ctx.strokeStyle = connectorColor;
+                        ctx.lineWidth = 1.15;
                         ctx.setLineDash([2, 3]);
-                    } else if (line.style === 'dashed') {
-                        ctx.setLineDash([5, 4]);
+                    } else if (line.role === 'target_ray') {
+                        ctx.strokeStyle = primaryColor;
+                        ctx.lineWidth = 1.55;
+                        ctx.setLineDash([6, 4]);
+                        targetRayCoords = { x1, x2, y: y2 };
                     } else {
+                        ctx.strokeStyle = primaryColor;
+                        ctx.lineWidth = 1.4;
                         ctx.setLineDash([]);
                     }
 
+                    ctx.beginPath();
                     ctx.moveTo(x1, y1);
                     ctx.lineTo(x2, y2);
                     ctx.stroke();
 
-                    // If target ray, draw bracket ticks at target level
+                    if (
+                        line.role === 'measured_move' &&
+                        Math.abs(y2 - y1) > 14 &&
+                        Math.abs(y2 - (this._series!.priceToCoordinate(pat.targetPrice) ?? -999)) < 3
+                    ) {
+                        drawArrowhead(ctx, x1, y1, x2, y2, primaryColor, 4.5);
+                    }
+
                     if (line.role === 'target_ray') {
                         ctx.setLineDash([]);
                         ctx.beginPath();
-                        ctx.moveTo(x2 - 4, y2 - 4);
-                        ctx.lineTo(x2 + 4, y2 - 4);
-                        ctx.moveTo(x2 - 4, y2 + 4);
-                        ctx.lineTo(x2 + 4, y2 + 4);
-                        ctx.stroke();
+                        ctx.arc(x2, y2, 2.5, 0, Math.PI * 2);
+                        ctx.fillStyle = primaryColor;
+                        ctx.fill();
                     }
                 }
                 ctx.restore();
 
-                // 2. Draw Anchor Pivot Markers (Minimalist 2.5px Dot + Truly Transparent Floating Label)
+                // -----------------------------------------------------------------
+                // 3. Draw Anchor Pivot Dots & Minimalist Pivot Badges
+                // -----------------------------------------------------------------
+                let minAnchorY = Infinity;
+                let maxAnchorY = -Infinity;
+                let sumAnchorX = 0;
+                let validAnchorCount = 0;
+
                 ctx.save();
                 for (const anc of pat.anchors) {
-                    const ax = timeScale.timeToCoordinate(anc.time) ?? timeScale.logicalToCoordinate(anc.index as Logical);
-                    if (ax === null || ax < -30 || ax > width + 30) continue;
+                    const ax = resolveX(timeScale, anc.time, anc.index);
+                    if (ax === null) continue;
                     const ay = this._series!.priceToCoordinate(anc.price);
                     if (ay === null) continue;
 
-                    // Anchor Dot
+                    if (ay < minAnchorY) minAnchorY = ay;
+                    if (ay > maxAnchorY) maxAnchorY = ay;
+                    sumAnchorX += ax;
+                    validAnchorCount++;
+
+                    if (ax < -30 || ax > width + 30) continue;
+
                     ctx.beginPath();
-                    ctx.fillStyle = lineColor;
-                    ctx.arc(ax, ay, 2.5, 0, Math.PI * 2);
+                    ctx.fillStyle = primaryColor;
+                    ctx.arc(ax, ay, 2.6, 0, Math.PI * 2);
                     ctx.fill();
 
-                    // Anchor Text Badge (e.g. LS, H, RS, N1, N2, T1, T2, Apex, R1, S1) - Truly Transparent Floating Text
-                    // Strict adherence to Obsidian Vault Invariant: zero rectangular background boxes, zero borders
                     if (anc.label && anc.label.length > 0) {
-                        ctx.font = 'bold 9px "JetBrains Mono", Inter, -apple-system, sans-serif';
-                        const isHigh = anc.label.includes('H') || anc.label.includes('LS') || anc.label.includes('RS') || anc.label.includes('T') || anc.label.includes('R') || anc.label.includes('Rim') || anc.label.includes('Peak') || anc.label.includes('Top') || anc.label.includes('Apex');
-                        const badgeY = isHigh ? ay - 6 : ay + 6;
-
-                        ctx.fillStyle = lineColor;
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = isHigh ? 'bottom' : 'top';
-                        ctx.fillText(anc.label, ax, badgeY);
+                        const isTopAnchor =
+                            anc.label.startsWith('H') ||
+                            anc.label.startsWith('LS') ||
+                            anc.label.startsWith('RS') ||
+                            anc.label.startsWith('T') ||
+                            anc.label.startsWith('R') ||
+                            anc.label === 'N' && pat.type === 'double_bottom' ||
+                            anc.label === 'P1' ||
+                            anc.label === 'P2' ||
+                            anc.label === 'B';
+                        const badgeY = isTopAnchor ? ay - 7 : ay + 7;
+                        drawHaloText(
+                            ctx,
+                            anc.label,
+                            ax,
+                            badgeY,
+                            labelColor,
+                            'center',
+                            isTopAnchor ? 'bottom' : 'top',
+                            'bold 9px "JetBrains Mono", Inter, -apple-system, sans-serif'
+                        );
                     }
                 }
                 ctx.restore();
 
-                // 3. Floating Transparent Text Label: <Nama Pola> Target <Harga> (±X.X%) Vol <Ratio>x [<Status>]
-                // Placed near the pattern end or breakout point
-                const labelAnchor = pat.anchors[pat.anchors.length - 1];
-                const lx = timeScale.timeToCoordinate(labelAnchor.time) ?? timeScale.logicalToCoordinate(labelAnchor.index as Logical);
-                if (lx === null || lx < -100 || lx > width + 100) continue;
+                if (validAnchorCount === 0) continue;
 
-                const targetY = this._series!.priceToCoordinate(pat.targetPrice);
-                const anchorY = this._series!.priceToCoordinate(labelAnchor.price);
-                if (targetY === null || anchorY === null) continue;
+                // -----------------------------------------------------------------
+                // 4. Draw Breakout Marker (if pattern has broken out)
+                // -----------------------------------------------------------------
+                if (pat.breakoutIndex !== undefined && pat.breakoutPrice !== undefined) {
+                    const bx = resolveX(timeScale, pat.breakoutTime, pat.breakoutIndex);
+                    const by = this._series!.priceToCoordinate(pat.breakoutPrice);
+                    if (bx !== null && by !== null && bx >= 0 && bx <= width) {
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.strokeStyle = primaryColor;
+                        ctx.lineWidth = 1.6;
+                        ctx.arc(bx, by, 4.2, 0, Math.PI * 2);
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
 
-                const targetStr = fmtPrice(pat.targetPrice, isForex);
-                const signStr = pat.targetPercent >= 0 ? `+${pat.targetPercent.toFixed(1)}%` : `${pat.targetPercent.toFixed(1)}%`;
-                const volStr = `${pat.volumeRatio.toFixed(1)}x`;
+                // -----------------------------------------------------------------
+                // 5. Separated Pattern Title Header & Target Price Label
+                // -----------------------------------------------------------------
+                const centerX = Math.max(
+                    60,
+                    Math.min(width - 140, sumAnchorX / validAnchorCount)
+                );
 
                 let statusBadge = pat.status.toUpperCase();
                 if (pat.specialFlag === 'hound_of_baskervilles') {
-                    statusBadge = 'HOUND OF BASKERVILLES TRAP';
+                    statusBadge = 'HOUND TRAP';
+                } else if (pat.specialFlag === 'apex_approaching' && pat.status === 'forming') {
+                    statusBadge = 'APEX ZONE';
                 }
 
-                const fullLabel = `${pat.name} Target ${targetStr} (${signStr}) Vol ${volStr} [${statusBadge}]`;
+                const volTag =
+                    pat.status !== 'forming'
+                        ? ` · Vol ${pat.volumeRatio.toFixed(1)}x${pat.isVolumeConfirmed ? '✓' : ''}`
+                        : '';
+                const headerText = `${pat.name} [${statusBadge}${volTag}]`;
 
-                ctx.save();
-                ctx.font = 'bold 10px "JetBrains Mono", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-                ctx.fillStyle = textColor;
-                ctx.textBaseline = 'middle';
+                const isInvertedPattern =
+                    pat.type === 'inverted_head_and_shoulders' ||
+                    pat.type === 'double_bottom' ||
+                    pat.type === 'triple_bottom' ||
+                    pat.type === 'horn_bottom';
+                const rawHeaderY = isInvertedPattern ? maxAnchorY + 20 : minAnchorY - 18;
+                const headerWidth = headerText.length * 6.2;
+                const safeHeaderY = resolveNonOverlappingY(
+                    centerX,
+                    rawHeaderY,
+                    headerWidth,
+                    14,
+                    !isInvertedPattern
+                );
 
-                const textWidth = ctx.measureText(fullLabel).width;
-                let textX = lx + 6;
-                if (textX + textWidth > width - 10) {
-                    textX = lx - textWidth - 6;
-                    ctx.textAlign = 'left';
-                } else {
-                    ctx.textAlign = 'left';
+                drawHaloText(
+                    ctx,
+                    headerText,
+                    centerX,
+                    safeHeaderY,
+                    labelColor,
+                    'center',
+                    'middle',
+                    'bold 10px "JetBrains Mono", Inter, -apple-system, sans-serif'
+                );
+
+                if (targetRayCoords) {
+                    const targetStr = fmtPrice(pat.targetPrice, isForex);
+                    const signStr =
+                        pat.targetPercent >= 0
+                            ? `+${pat.targetPercent.toFixed(1)}%`
+                            : `${pat.targetPercent.toFixed(1)}%`;
+                    const prefix = pat.status === 'forming' ? 'Est. Target' : 'Target';
+                    const targetLabel = `${prefix} ${targetStr} (${signStr})`;
+                    const targetLabelW = targetLabel.length * 6.0;
+
+                    const preferRight = targetRayCoords.x2 + 6 + targetLabelW < width - 8;
+                    const tx = preferRight ? targetRayCoords.x2 + 6 : targetRayCoords.x2 - 4;
+                    const tAlign: CanvasTextAlign = preferRight ? 'left' : 'right';
+                    const tRawY = preferRight
+                        ? targetRayCoords.y
+                        : isBullish
+                          ? targetRayCoords.y - 9
+                          : targetRayCoords.y + 9;
+
+                    const safeTargetY = resolveNonOverlappingY(
+                        tx,
+                        tRawY,
+                        targetLabelW,
+                        13,
+                        isBullish
+                    );
+
+                    drawHaloText(
+                        ctx,
+                        targetLabel,
+                        tx,
+                        safeTargetY,
+                        labelColor,
+                        tAlign,
+                        'middle',
+                        'bold 9.5px "JetBrains Mono", Inter, -apple-system, sans-serif'
+                    );
                 }
-
-                const textY = (anchorY + targetY) / 2;
-                ctx.fillText(fullLabel, textX, textY);
-                ctx.restore();
             }
         });
     }

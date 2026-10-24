@@ -7,6 +7,14 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
+# Auto-load EXNESS_TOKEN dari .env jika belum di-export di terminal
+if [ -z "$EXNESS_TOKEN" ] && [ -f "$SCRIPT_DIR/.env" ]; then
+    ENV_TOKEN=$(grep -E "^EXNESS_TOKEN=" "$SCRIPT_DIR/.env" | head -n 1 | cut -d'=' -f2- | tr -d '"' | tr -d "'" | tr -d '\r')
+    if [ -n "$ENV_TOKEN" ]; then
+        export EXNESS_TOKEN="$ENV_TOKEN"
+    fi
+fi
+
 echo "=========================================================="
 echo "  SINKRONISASI & UPDATE DATA XAUUSD (GOLD CENT) EXNESS"
 echo "=========================================================="
@@ -14,7 +22,7 @@ echo "=========================================================="
 # 1. Update Daily Historical EOD
 echo ""
 echo "=== Step 1: Update Daily EOD Candles (data/XAUUSDc.csv) ==="
-python3 "$SCRIPT_DIR/exness_daily_historical_scraper.py" --symbol XAUUSDc "$@"
+python3 "$SCRIPT_DIR/exness_daily_historical_scraper.py" --symbol XAUUSDc "$@" || echo "[Peringatan] Step 1 Daily EOD dilewati."
 
 # 2. Update Intraday 1M Candles (WIB UTC+7)
 echo ""
@@ -25,6 +33,11 @@ python3 "$SCRIPT_DIR/exness_intraday_scraper.py" --symbol XAUUSDc --start-date 2
 echo ""
 echo "=== Step 3: Rebuild Unified JSONs (indicator-examples/public/) ==="
 python3 "$SCRIPT_DIR/build_unified_charts.py" --no-screener XAUUSDc
+
+# 3b. Fetch Live Exness Positions (TP/SL)
+echo ""
+echo "=== Step 3b: Update Live Exness Positions (TP/SL) ==="
+python3 "$SCRIPT_DIR/fetch_exness_positions.py" || true
 
 # 4. Maintain Alias Symlinks
 cd "$SCRIPT_DIR/indicator-examples/public"

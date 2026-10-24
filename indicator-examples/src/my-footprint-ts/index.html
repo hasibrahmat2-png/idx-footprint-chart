@@ -5,13 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IDX Footprint & Orderflow Chart</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --tv-font: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, 'Inter', sans-serif;
+            --tv-bg-toolbar: #ffffff;
+            --tv-border: #e0e3eb;
+            --tv-text-main: #131722;
+            --tv-text-muted: #787b86;
+            --tv-text-light: #9598a1;
+            --tv-blue: #2962ff;
+            --tv-blue-hover: #1e53e5;
+            --tv-blue-soft: #e3effd;
+            --tv-row-hover: #f0f3fa;
+            --tv-modal-bg: #ffffff;
+            --tv-input-border: #d1d4dc;
+            --tv-input-hover: #b2b5be;
+        }
+
+        #settingsModal, #settingsModal * {
+            font-family: var(--tv-font) !important;
+        }
+
         * { box-sizing: border-box; }
         body, html {
             background-color: #ffffff;
             color: #131722;
-            font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: var(--tv-font);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             margin: 0;
@@ -390,6 +412,18 @@
         .tv-trade-btn:hover {
             background-color: #f0f3fa;
             border-color: #b2b5be;
+        }
+
+        .tv-trade-btn.active {
+            background-color: #2962FF !important;
+            border-color: #2962FF !important;
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        .tv-trade-btn.active:hover {
+            background-color: #1e53e5 !important;
+            border-color: #1e53e5 !important;
         }
 
         .tv-publish-btn, .live-pill {
@@ -1953,12 +1987,13 @@
             top: 10px;
             z-index: 15;
             font-size: 12px;
-            background: transparent;
-            padding: 0;
-            border-radius: 0;
+            background: transparent !important;
+            background-color: transparent !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
             pointer-events: none; /* Let chart clicks pass through transparent area */
-            box-shadow: none;
-            border: none;
+            box-shadow: none !important;
+            border: none !important;
             user-select: none;
             max-width: 88%;
             display: flex;
@@ -5093,28 +5128,37 @@
             width: 18px;
             height: 18px;
             border-radius: 3px;
-            border: 1px solid #d1d4dc;
+            border: 1px solid #b2b5be;
             appearance: none;
+            -webkit-appearance: none;
             cursor: pointer;
             background-color: #ffffff;
-            display: inline-grid;
-            place-content: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             margin: 0;
             vertical-align: middle;
-            transition: all 0.15s ease;
+            transition: border-color 0.15s ease, background-color 0.15s ease;
             box-sizing: border-box;
+            outline: none;
         }
-        .tv-checkbox:checked {
-            background-color: #2962ff;
+        .tv-checkbox:hover {
             border-color: #2962ff;
         }
+        .tv-checkbox:checked {
+            background-color: #2962ff !important;
+            border-color: #2962ff !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 9' fill='none'%3E%3Cpath d='M1 4.5L4 7.5L10 1.5' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            background-size: 11px 9px !important;
+        }
+        .tv-checkbox:checked:hover {
+            background-color: #1e53e5 !important;
+            border-color: #1e53e5 !important;
+        }
         .tv-checkbox:checked::after {
-            content: '';
-            width: 5px;
-            height: 9px;
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg) translate(-1px, -1px);
+            display: none !important;
         }
 
         /* Quick Color Palette */
@@ -5599,7 +5643,478 @@
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
-    </style>
+    
+        /* ==================== TRADINGVIEW SETTINGS MODAL STYLING ==================== */
+        :root {
+            --tv-font: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, 'Inter', sans-serif;
+            --tv-bg-toolbar: #ffffff;
+            --tv-border: #e0e3eb;
+            --tv-text-main: #131722;
+            --tv-text-muted: #787b86;
+            --tv-text-light: #9598a1;
+            --tv-blue: #2962ff;
+            --tv-blue-hover: #1e53e5;
+            --tv-blue-soft: #e3effd;
+            --tv-row-hover: #f0f3fa;
+            --tv-modal-bg: #ffffff;
+            --tv-input-border: #d1d4dc;
+            --tv-input-hover: #b2b5be;
+        }
+
+        .tv-modal-dark {
+            --tv-modal-bg: #1e222d;
+            --tv-border: #2a2e39;
+            --tv-text-main: #d1d4dc;
+            --tv-text-muted: #787b86;
+            --tv-text-light: #5d606b;
+            --tv-row-hover: #2a2e39;
+            --tv-input-border: #363a45;
+            --tv-input-hover: #4c525e;
+        }
+
+        #settingsModal, #settingsModal * {
+            font-family: var(--tv-font) !important;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Custom Scrollbar for Settings Content */
+        .tv-scroll::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        .tv-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .tv-scroll::-webkit-scrollbar-thumb {
+            background: #c8ccd4;
+            border-radius: 3px;
+        }
+        .tv-modal-dark .tv-scroll::-webkit-scrollbar-thumb {
+            background: #434651;
+        }
+
+        /* TradingView Authentic Checkbox (Official #2962ff Blue + Centered Crisp White Checkmark) */
+        #settingsModal .tv-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1px solid #b2b5be;
+            border-radius: 3px;
+            background-color: #ffffff;
+            cursor: pointer;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.12s ease, background-color 0.12s ease;
+            flex-shrink: 0;
+            outline: none;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        #settingsModal .tv-checkbox:hover {
+            border-color: #2962ff;
+        }
+        #settingsModal .tv-checkbox:checked {
+            background-color: #2962ff !important;
+            border-color: #2962ff !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 9' fill='none'%3E%3Cpath d='M1 4.5L4 7.5L10 1.5' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            background-size: 11px 9px !important;
+        }
+        #settingsModal .tv-checkbox:checked:hover {
+            background-color: #1e53e5 !important;
+            border-color: #1e53e5 !important;
+        }
+        #settingsModal .tv-checkbox:checked::after {
+            display: none !important;
+        }
+        .tv-modal-dark #settingsModal .tv-checkbox,
+        #settingsModal.tv-modal-dark .tv-checkbox {
+            background-color: #1e222d;
+            border-color: #50535e;
+        }
+        .tv-modal-dark #settingsModal .tv-checkbox:hover,
+        #settingsModal.tv-modal-dark .tv-checkbox:hover {
+            border-color: #2962ff;
+        }
+        .tv-modal-dark #settingsModal .tv-checkbox:checked,
+        #settingsModal.tv-modal-dark .tv-checkbox:checked {
+            background-color: #2962ff !important;
+            border-color: #2962ff !important;
+        }
+
+        /* TradingView Select Dropdown */
+        .tv-select-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .tv-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-color: var(--tv-modal-bg);
+            color: var(--tv-text-main);
+            border: 1px solid var(--tv-input-border);
+            border-radius: 6px;
+            height: 34px;
+            padding: 0 32px 0 11px;
+            font-size: 13px;
+            font-family: var(--tv-font);
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.15s ease;
+            width: 100%;
+        }
+        .tv-select:hover {
+            border-color: var(--tv-input-hover);
+        }
+        .tv-select:focus {
+            border-color: var(--tv-blue);
+        }
+        .tv-select-arrow {
+            position: absolute;
+            right: 10px;
+            pointer-events: none;
+            color: var(--tv-text-muted);
+        }
+
+        /* TradingView Number Input */
+        .tv-number-input {
+            background-color: var(--tv-modal-bg);
+            color: var(--tv-text-main);
+            border: 1px solid var(--tv-input-border);
+            border-radius: 6px;
+            height: 34px;
+            padding: 0 10px;
+            font-size: 13px;
+            font-family: var(--tv-font);
+            outline: none;
+            width: 104px;
+            transition: border-color 0.15s ease;
+        }
+        .tv-number-input:hover:not(:disabled) {
+            border-color: var(--tv-input-hover);
+        }
+        .tv-number-input:focus:not(:disabled) {
+            border-color: var(--tv-blue);
+        }
+        .tv-number-input:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            background-color: rgba(120, 123, 134, 0.08);
+        }
+
+        /* TradingView Color Swatch Box */
+        .tv-swatch-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 6px;
+            border: 1px solid var(--tv-input-border);
+            padding: 4px;
+            background-color: var(--tv-modal-bg);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: border-color 0.15s ease;
+            flex-shrink: 0;
+        }
+        .tv-swatch-btn:hover {
+            border-color: var(--tv-input-hover);
+        }
+        .tv-swatch-fill {
+            width: 100%;
+            height: 100%;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+        .tv-checkerboard {
+            background-image:
+                linear-gradient(45deg, #ccc 25%, transparent 25%),
+                linear-gradient(-45deg, #ccc 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #ccc 75%),
+                linear-gradient(-45deg, transparent 75%, #ccc 75%);
+            background-size: 8px 8px;
+            background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+        }
+        .tv-modal-dark .tv-checkerboard {
+            background-image:
+                linear-gradient(45deg, #363a45 25%, transparent 25%),
+                linear-gradient(-45deg, #363a45 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #363a45 75%),
+                linear-gradient(-45deg, transparent 75%, #363a45 75%);
+        }
+
+        /* Split Color + Line Picker Box */
+        .tv-combo-swatch {
+            height: 34px;
+            border-radius: 6px;
+            border: 1px solid var(--tv-input-border);
+            background-color: var(--tv-modal-bg);
+            padding: 4px 8px 4px 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: border-color 0.15s ease;
+        }
+        .tv-combo-swatch:hover {
+            border-color: var(--tv-input-hover);
+        }
+        .tv-diagonal-swatch {
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Status line background opacity slider */
+        .tv-opacity-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 155px;
+            height: 10px;
+            border-radius: 6px;
+            outline: none;
+            cursor: pointer;
+            border: 1px solid var(--tv-input-border);
+            background:
+                linear-gradient(to right, rgba(41, 98, 255, 0) 0%, rgba(41, 98, 255, 1) 100%),
+                repeating-conic-gradient(#cbd0d8 0% 25%, #ffffff 0% 50%) 50% / 8px 8px;
+        }
+        .tv-opacity-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #131722;
+            border: 2px solid #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+            cursor: pointer;
+        }
+
+        /* Section Header inside Settings */
+        .tv-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--tv-text-muted);
+            margin-bottom: 10px;
+            margin-top: 4px;
+        }
+
+        .tv-setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 34px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: var(--tv-text-main);
+        }
+
+        .tv-divider {
+            height: 1px;
+            background-color: var(--tv-border);
+            margin: 16px 0;
+        }
+
+        /* Left Sidebar Tab Item */
+        .tv-tab-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 10px 18px;
+            font-size: 13.5px;
+            font-weight: 400;
+            color: var(--tv-text-main);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.12s ease;
+        }
+        .tv-tab-btn:hover {
+            background-color: var(--tv-row-hover);
+        }
+        .tv-tab-btn.active {
+            background-color: #f0f3fa;
+            color: #131722;
+            font-weight: 600;
+        }
+        .tv-modal-dark .tv-tab-btn.active {
+            background-color: #2a2e39;
+            color: #ffffff;
+        }
+
+        /* ==================== THEME DARK TOOLBAR STYLES ==================== */
+        body.tv-theme-dark {
+            background-color: #131722 !important;
+            color: #d1d4dc !important;
+        }
+        body.tv-theme-dark #tv-header {
+            background-color: #1e222d !important;
+            border-bottom: 1px solid #2a2e39 !important;
+        }
+        body.tv-theme-dark #tv-left-toolbar {
+            background-color: #1e222d !important;
+            border-right: 1px solid #2a2e39 !important;
+            border-top: 1px solid #2a2e39 !important;
+        }
+        body.tv-theme-dark #right-dock {
+            background-color: #1e222d !important;
+            border-left: 1px solid #2a2e39 !important;
+            border-top: 1px solid #2a2e39 !important;
+        }
+        body.tv-theme-dark #tv-bottom-bar {
+            background-color: #1e222d !important;
+            border-top: 1px solid #2a2e39 !important;
+        }
+        body.tv-theme-dark .tv-btn,
+        body.tv-theme-dark .tv-icon-btn,
+        body.tv-theme-dark .tv-header-btn,
+        body.tv-theme-dark .tv-tool-btn,
+        body.tv-theme-dark .tv-left-tool-btn,
+        body.tv-theme-dark .dock-btn,
+        body.tv-theme-dark .range-btn,
+        body.tv-theme-dark .bottom-icon-btn,
+        body.tv-theme-dark .vol-pill-btn,
+        body.tv-theme-dark .pane-ctrl-btn {
+            color: #d1d4dc !important;
+        }
+        body.tv-theme-dark .tv-btn svg,
+        body.tv-theme-dark .tv-icon-btn svg,
+        body.tv-theme-dark .tv-header-btn svg,
+        body.tv-theme-dark #chart-type-btn svg,
+        body.tv-theme-dark .tv-btn svg.tv-chevron,
+        body.tv-theme-dark .tv-header-btn svg.tv-chevron,
+        body.tv-theme-dark .tv-left-tool-btn svg,
+        body.tv-theme-dark .dock-btn svg,
+        body.tv-theme-dark #time-scale-corner-gear svg {
+            color: #d1d4dc !important;
+            stroke: currentColor !important;
+        }
+        body.tv-theme-dark .tv-btn:hover,
+        body.tv-theme-dark .tv-icon-btn:hover,
+        body.tv-theme-dark .tv-header-btn:hover,
+        body.tv-theme-dark .tv-tool-btn:hover,
+        body.tv-theme-dark .tv-left-tool-btn:hover,
+        body.tv-theme-dark .dock-btn:hover,
+        body.tv-theme-dark .range-btn:hover,
+        body.tv-theme-dark .bottom-icon-btn:hover,
+        body.tv-theme-dark .vol-pill-btn:hover,
+        body.tv-theme-dark .pane-ctrl-btn:hover {
+            background-color: #2a2e39 !important;
+            color: #ffffff !important;
+        }
+        body.tv-theme-dark .tv-btn:hover svg,
+        body.tv-theme-dark .tv-icon-btn:hover svg,
+        body.tv-theme-dark .tv-header-btn:hover svg,
+        body.tv-theme-dark #chart-type-btn:hover svg,
+        body.tv-theme-dark .tv-left-tool-btn:hover svg,
+        body.tv-theme-dark .dock-btn:hover svg {
+            color: #2962ff !important;
+            stroke: currentColor !important;
+        }
+        body.tv-theme-dark .tv-btn.active,
+        body.tv-theme-dark .tv-tool-btn.active,
+        body.tv-theme-dark .dock-btn.active,
+        body.tv-theme-dark .range-btn.active {
+            background-color: #2a2e39 !important;
+            color: #2962ff !important;
+        }
+        body.tv-theme-dark .tv-divider,
+        body.tv-theme-dark .tv-header-divider,
+        body.tv-theme-dark .tv-left-divider,
+        body.tv-theme-dark .tv-bottom-divider {
+            background-color: #2a2e39 !important;
+        }
+        body.tv-theme-dark .tv-symbol-search,
+        body.tv-theme-dark .tv-symbol-pill,
+        body.tv-theme-dark #symbol-search-box {
+            background-color: #2a2e39 !important;
+        }
+        body.tv-theme-dark #ticker-input {
+            background-color: transparent !important;
+            color: #ffffff !important;
+            border-color: transparent !important;
+        }
+        body.tv-theme-dark .horizon-pill-btn,
+        body.tv-theme-dark .horizon-tag {
+            background-color: #2a2e39 !important;
+            color: #d1d4dc !important;
+        }
+        body.tv-theme-dark #bottom-market-clock,
+        body.tv-theme-dark #time-scale-corner-gear {
+            color: #d1d4dc !important;
+        }
+        body.tv-theme-dark .tv-dropdown-menu,
+        body.tv-theme-dark .tv-more-dropdown-menu,
+        body.tv-theme-dark #tv-tf-menu,
+        body.tv-theme-dark #more-tabs-menu {
+            background-color: #1e222d !important;
+            border-color: #2a2e39 !important;
+            color: #d1d4dc !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45) !important;
+        }
+        body.tv-theme-dark .tv-dropdown-item:hover,
+        body.tv-theme-dark .tv-more-dropdown-item:hover {
+            background-color: #2a2e39 !important;
+            color: #ffffff !important;
+        }
+        body.tv-theme-dark .sliding-drawer,
+        body.tv-theme-dark .sidebar-drawer {
+            background-color: #1e222d !important;
+            border-color: #2a2e39 !important;
+            color: #d1d4dc !important;
+        }
+        body.tv-theme-dark .sidebar-header,
+        body.tv-theme-dark .sidebar-footer {
+            background-color: #1e222d !important;
+            border-color: #2a2e39 !important;
+        }
+        body.tv-theme-dark #legend,
+        body.tv-theme-dark .tv-chart-header {
+            background: transparent !important;
+            background-color: transparent !important;
+            padding: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        body.tv-theme-dark .tv-asset-symbol {
+            color: #d1d4dc !important;
+        }
+        body.tv-theme-dark .tv-asset-name {
+            color: #787b86 !important;
+        }
+        body.tv-theme-dark .tv-ohlc-legend-row {
+            color: #d1d4dc !important;
+        }
+
+        /* Screen reader only utility for hidden color inputs */
+        .sr-only {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border-width: 0 !important;
+        }
+</style>
 </head>
 <body>
     <div id="app-wrapper">
@@ -5960,6 +6475,14 @@
                                 <span class="tv-dropdown-fav-icon fav-btn" title="Add to favorites"><svg viewBox="0 0 16 16"><path d="M8 2l1.8 3.8 4.2.6-3 3 .7 4.1L8 11.5l-3.7 2 .7-4.1-3-3 4.2-.6z"/></svg></span>
                             </div>
                         </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item" id="menu-candlestick-pattern-btn">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Candlestick Patterns: Bab 24 Edianto Ong</span>
+                            </div>
+                            <div class="tv-dropdown-item-right item-right">
+                                <span class="tv-dropdown-fav-icon fav-btn" title="Add to favorites"><svg viewBox="0 0 16 16"><path d="M8 2l1.8 3.8 4.2.6-3 3 .7 4.1L8 11.5l-3.7 2 .7-4.1-3-3 4.2-.6z"/></svg></span>
+                            </div>
+                        </div>
 
                         <div class="tv-dropdown-divider"></div>
 
@@ -6118,12 +6641,12 @@
                 </div>
 
                 <!-- Trade Button -->
-                <button id="tv-trade-btn" class="tv-trade-btn" title="Trade">Trade</button>
+                <button id="tv-trade-btn" class="tv-trade-btn active" title="Tampilkan / Sembunyikan Posisi Open di Chart">Trade</button>
 
-                <!-- Publish / Live Status Button -->
-                <button id="live-status-pill" class="tv-publish-btn live-pill offline" title="Live Running Trades Stream & Broker Account - Click to configure">
+                <!-- Live Status & Token Button -->
+                <button id="live-status-pill" class="tv-publish-btn live-pill offline" title="Live Exness & Running Trades Stream - Klik untuk memasukkan Token">
                     <span class="live-dot"></span>
-                    <span class="publish-label" id="login-btn">Publish</span>
+                    <span class="publish-label" id="login-btn">Live</span>
                     <span class="live-text" style="display: none;">OFFLINE</span>
                 </button>
             </div>
@@ -6355,6 +6878,307 @@
                     </div>
                 </div>
 
+                <!-- Candlestick Patterns Tool (Bab 24 — Edianto Ong: Anatomi & Pola Candlestick) -->
+                <button id="candlestick-pattern-btn" class="tv-left-tool-btn" title="Candlestick Patterns (Bab 24 — Edianto Ong) [Pilih Pola dari Menu Dropdown]">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="3" x2="7" y2="7"></line>
+                        <rect x="5" y="7" width="4" height="8" rx="0.5" fill="currentColor"></rect>
+                        <line x1="7" y1="15" x2="7" y2="21"></line>
+                        <line x1="17" y1="5" x2="17" y2="10"></line>
+                        <rect x="15" y="10" width="4" height="5" rx="0.5" fill="currentColor"></rect>
+                        <line x1="17" y1="15" x2="17" y2="20"></line>
+                    </svg>
+                </button>
+
+                <!-- Candlestick Patterns Floating Dropdown Menu (TradingView 1:1 Parity) -->
+                <div class="tv-dropdown-menu dropdown-menu" id="candlestick-pattern-dropdown" style="display: none; position: fixed; width: 275px; z-index: 1000; box-shadow: 0 4px 16px rgba(0,0,0,0.15);">
+                    <div style="padding: 8px 12px 6px 12px; border-bottom: 1px solid #f0f3fa;">
+                        <div class="tv-symbol-search tv-symbol-pill" style="width: 100%; box-sizing: border-box; display: flex; align-items: center; padding: 4px 12px; background-color: #e7e7e9; border-radius: 9999px; height: 30px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#787b86" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; flex-shrink: 0;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="candle-pattern-search-input" placeholder="SEARCH CANDLE PATTERN..." autocomplete="off" spellcheck="false" style="width: 100%; font-size: 13px; font-weight: 700; color: #131722; border: none; background: transparent; outline: none; text-transform: uppercase; font-family: inherit;">
+                        </div>
+                    </div>
+                    <div id="candle-pattern-items-scroll" style="max-height: 380px; overflow-y: auto;">
+                        <div class="tv-dropdown-section-title">GLOBAL MODE</div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="all">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">All Candlestick Patterns (Semua)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="off">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label" style="color: #787b86;">Turn Off (Nonaktifkan)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bullish">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label" style="color: #2ECC71; font-weight: 600;">Semua Bullish Patterns (Hijau)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bearish">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label" style="color: #FF5252; font-weight: 600;">Semua Bearish Patterns (Merah)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="reversal">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Semua Pola Reversal</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="continuation">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Semua Pola Continuation</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="1_candle">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Filter Pola 1 Candle</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="2_candle">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Filter Pola 2 Candle</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="3_candle">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Filter Pola 3 &amp; 5 Candle</span>
+                            </div>
+                        </div>
+
+                        <div class="tv-dropdown-divider"></div>
+                        <div class="tv-dropdown-section-title" style="color: #2ECC71; font-weight: 700;">1. POLA 1 CANDLE BULLISH REVERSAL</div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="southern_doji">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Southern Doji (Doji Lembah)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="southern_long_leg_doji">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Southern Long-Legged Doji</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="dragonfly">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Dragonfly Doji (Capung)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="hammer">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Hammer (Palu Bullish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="inverted_hammer">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Inverted Hammer (Palu Terbalik)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bullish_belt_hold">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bullish Belt-Hold (Yorikiri)</span>
+                            </div>
+                        </div>
+
+                        <div class="tv-dropdown-divider"></div>
+                        <div class="tv-dropdown-section-title" style="color: #FF5252; font-weight: 700;">2. POLA 1 CANDLE BEARISH REVERSAL</div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="northern_doji">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Northern Doji (Doji Puncak)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="northern_long_leg_doji">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Northern Long-Legged Doji</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="gravestone">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Gravestone Doji (Batu Nisan)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="shooting_star">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Shooting Star (Bintang Jatuh)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="hanging_man">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Hanging Man (Orang Gantung)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bearish_belt_hold">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bearish Belt-Hold</span>
+                            </div>
+                        </div>
+
+                        <div class="tv-dropdown-divider"></div>
+                        <div class="tv-dropdown-section-title" style="color: #2ECC71; font-weight: 700;">3. POLA 2 CANDLE BULLISH REVERSAL</div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bullish_pregnant">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bullish Pregnant (Harami)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bullish_pregnant_cross">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bullish Pregnant Cross</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bullish_homing_pigeon">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bullish Homing Pigeon</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="matching_low">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Matching Low</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bullish_engulfing">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bullish Engulfing</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="piercing_line">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Piercing Line</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="tweezer_bottom">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Tweezer Bottom (Jepitan Bawah)</span>
+                            </div>
+                        </div>
+
+                        <div class="tv-dropdown-divider"></div>
+                        <div class="tv-dropdown-section-title" style="color: #FF5252; font-weight: 700;">4. POLA 2 CANDLE BEARISH REVERSAL</div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bearish_pregnant">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bearish Pregnant (Harami)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bearish_pregnant_cross">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bearish Pregnant Cross</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bearish_homing_pigeon">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bearish Homing Pigeon</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="matching_high">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Matching High</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bearish_engulfing">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bearish Engulfing</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="dark_cloud_cover">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Dark Cloud Cover (Awan Gelap)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="tweezer_top">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Tweezer Top (Jepitan Atas)</span>
+                            </div>
+                        </div>
+
+                        <div class="tv-dropdown-divider"></div>
+                        <div class="tv-dropdown-section-title" style="color: #2ECC71; font-weight: 700;">5. POLA 3 CANDLE BULLISH REVERSAL</div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="morning_star">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Morning Star (Bintang Fajar)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="morning_doji_star">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Morning Doji Star</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bullish_abandoned_baby">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bullish Abandoned Baby</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="morning_tri_star">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Morning Tri-Star</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="three_green_soldiers">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Three Green Soldiers (3 Prajurit Hijau)</span>
+                            </div>
+                        </div>
+
+                        <div class="tv-dropdown-divider"></div>
+                        <div class="tv-dropdown-section-title" style="color: #FF5252; font-weight: 700;">6. POLA 3 CANDLE BEARISH REVERSAL</div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="evening_star">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Evening Star (Bintang Senja)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="evening_doji_star">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Evening Doji Star</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="bearish_abandoned_baby">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Bearish Abandoned Baby</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="evening_tri_star">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Evening Tri-Star</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="three_red_crows">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Three Red Crows (3 Gagak Merah)</span>
+                            </div>
+                        </div>
+
+                        <div class="tv-dropdown-divider"></div>
+                        <div class="tv-dropdown-section-title" style="color: #2962FF; font-weight: 700;">7. CONTINUATION &amp; ANATOMI</div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="green_marubozu">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Green Marubozu (Bullish Kuat)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="red_marubozu">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Red Marubozu (Bearish Kuat)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="upward_gap_tasuki">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Upward Gap Tasuki (Bullish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="rising_three">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Rising Three Methods (5 Candle)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="downward_gap_tasuki">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Downward Gap Tasuki (Bearish)</span>
+                            </div>
+                        </div>
+                        <div class="tv-dropdown-item tv-menu-item dropdown-item candle-pattern-option-item" data-pattern="falling_three">
+                            <div class="tv-dropdown-item-left item-left">
+                                <span class="item-label">Falling Three Methods (5 Candle)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="tv-left-divider" style="width: 24px; height: 1px; background: #e0e3eb; margin: 4px auto;"></div>
 
                 <!-- Broker Order Flow Profile (4-Shade) -->
@@ -6409,15 +7233,12 @@
                         <div id="indicators-legend-container" class="tv-indicators-legend-container" style="display: flex; flex-direction: column; gap: 2px; margin-top: 2px;"></div>
                     </div>
 
-                    <!-- Trade Focus Floating Status Pill -->
-                    <div id="trade-focus-pill" style="display: none; position: absolute; top: 12px; right: 70px; z-index: 50; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(4px); border: 1.5px solid #2962ff; border-radius: 6px; box-shadow: 0 4px 14px rgba(41, 98, 255, 0.22); padding: 5px 12px; align-items: center; gap: 10px; font-size: 11px; font-family: Inter, -apple-system, sans-serif;">
-                        <span style="display: flex; align-items: center; gap: 5px; font-weight: 700; color: #2962ff;">
-                            <span>🎯</span>
-                            <span id="trade-focus-pill-title">Fokus Trade: XAUUSDm</span>
-                        </span>
-                        <span id="trade-focus-pill-meta" style="color: #131722; font-family: monospace; font-weight: 600;"></span>
-                        <button id="trade-focus-reset-btn" style="background: #f0f3fa; border: 1px solid #d0d7de; border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 700; color: #333; cursor: pointer; display: flex; align-items: center; gap: 3px;" title="Tampilkan kembali seluruh posisi trade">
-                            ✕ Lepas Fokus
+                    <!-- Trade Focus Floating Status Pill (Transparent, No Border, Minimalist) -->
+                    <div id="trade-focus-pill" style="display: none; position: absolute; top: 12px; right: 70px; z-index: 50; background: transparent; border: none; box-shadow: none; padding: 2px 6px; align-items: center; gap: 6px; font-size: 12px; font-family: Inter, -apple-system, sans-serif;">
+                        <span id="trade-focus-pill-title" style="display: none;"></span>
+                        <span id="trade-focus-pill-meta" style="font-family: Inter, -apple-system, sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2px;"></span>
+                        <button id="trade-focus-reset-btn" style="background: transparent; border: none; padding: 0 4px; font-size: 14px; font-weight: 700; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;" title="Lepas Fokus">
+                            ✕
                         </button>
                     </div>
 
@@ -7685,10 +8506,10 @@
 
     <!-- REAL-TIME LIVE STREAM & API KEY SETTINGS MODAL -->
     <div id="live-stream-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-card" style="width: 490px; max-width: 95vw;">
+        <div class="modal-card" style="width: 510px; max-width: 95vw;">
             <div class="modal-header">
                 <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 16px; font-weight: 700; color: #131722;">Live Running Trades Stream</span>
+                    <span style="font-size: 16px; font-weight: 700; color: #131722;">Live Stream &amp; Exness Token</span>
                     <span id="live-modal-status-badge" class="live-pill offline" style="font-size: 10px; padding: 2px 7px;">
                         <span class="live-dot"></span>
                         <span class="live-text">OFFLINE</span>
@@ -7702,7 +8523,59 @@
                 </button>
             </div>
 
-            <div class="modal-body" style="padding: 16px 20px; display: flex; flex-direction: column; gap: 14px;">
+            <div class="modal-body" style="padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; max-height: 78vh; overflow-y: auto;">
+                <!-- Exness MT5 Live Token Section (Primary) -->
+                <div style="background: #f8f9fd; border: 1px solid #e0e3eb; border-radius: 6px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 12px; font-weight: 700; color: #131722;">Exness MT5 Live Token (XAUUSDc • real20)</div>
+                            <div id="exness-token-expiry-label" style="font-size: 11px; color: #787b86; margin-top: 2px;">Memeriksa status token...</div>
+                        </div>
+                        <span id="exness-modal-status-pill" class="live-pill offline" style="font-size: 10px; padding: 2px 8px; height: 22px;">
+                            <span class="live-dot"></span>
+                            <span class="live-text" id="exness-modal-status-text">OFFLINE</span>
+                        </span>
+                    </div>
+
+                    <div style="display: flex; gap: 6px; position: relative;">
+                        <input type="password" id="exness-token-input" placeholder="Tempel Bearer / JWT Token Exness (eyJhbGci...)" style="flex: 1; padding: 8px 36px 8px 10px; font-size: 12px; font-family: monospace; border: 1px solid #d1d4dc; border-radius: 4px; outline: none; background: #ffffff;">
+                        <button type="button" id="exness-toggle-token-visibility" title="Show / Hide" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #787b86; font-size: 14px;">👁</button>
+                    </div>
+
+                    <div id="exness-token-feedback" style="display: none; border-radius: 4px; padding: 7px 10px; font-size: 11.5px; font-weight: 600;"></div>
+
+                    <div style="display: flex; gap: 8px;">
+                        <button type="button" id="exness-save-token-btn" class="modal-primary-btn" style="flex: 1; padding: 8px 14px; font-size: 12px; background: #26a69a;">Save Exness Token &amp; Connect Live</button>
+                        <button type="button" id="exness-sync-now-btn" class="modal-secondary-btn" style="padding: 8px 12px; font-size: 12px;" title="Tarik ulang candle & posisi Exness sekarang">Sync Now</button>
+                    </div>
+                </div>
+
+                <!-- Stockbit Native Gateway Card (IHSG Candle 1m/1d + Live Portfolio TP/SL) -->
+                <div style="background: #f8f9fd; border: 1px solid #e0e3eb; border-radius: 6px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 12px; font-weight: 700; color: #131722;">Stockbit Native Gateway (IHSG 1m/1d &amp; Portofolio)</div>
+                            <div id="stockbit-token-expiry-label" style="font-size: 11px; color: #787b86; margin-top: 2px;">Memeriksa status token Stockbit...</div>
+                        </div>
+                        <span id="stockbit-modal-status-pill" class="live-pill offline" style="font-size: 10px; padding: 2px 8px; height: 22px;">
+                            <span class="live-dot"></span>
+                            <span class="live-text" id="stockbit-modal-status-text">OFFLINE</span>
+                        </span>
+                    </div>
+
+                    <div style="display: flex; gap: 6px; position: relative;">
+                        <input type="password" id="stockbit-token-input" placeholder="Tempel Cookie Web Terminal atau Bearer Token Stockbit..." style="flex: 1; padding: 8px 36px 8px 10px; font-size: 12px; font-family: monospace; border: 1px solid #d1d4dc; border-radius: 4px; outline: none; background: #ffffff;">
+                        <button type="button" id="stockbit-toggle-token-visibility" title="Show / Hide" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #787b86; font-size: 14px;">👁</button>
+                    </div>
+
+                    <div id="stockbit-token-feedback" style="display: none; border-radius: 4px; padding: 7px 10px; font-size: 11.5px; font-weight: 600;"></div>
+
+                    <div style="display: flex; gap: 8px;">
+                        <button type="button" id="stockbit-save-token-btn" class="modal-primary-btn" style="flex: 1; padding: 8px 14px; font-size: 12px; background: #2962FF;">Save Stockbit Cookie / Token</button>
+                        <button type="button" id="stockbit-sync-now-btn" class="modal-secondary-btn" style="padding: 8px 12px; font-size: 12px;" title="Tarik ulang candle & portofolio Stockbit sekarang">Sync IHSG</button>
+                    </div>
+                </div>
+
                 <!-- Market Session Status Card -->
                 <div id="live-market-info-card" style="background: #f8f9fd; border: 1px solid #e0e3eb; border-radius: 6px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
                     <div>
@@ -7741,24 +8614,24 @@
                 <!-- Upstream & Local Bridge Endpoints -->
                 <div style="background: #fafbfc; border: 1px solid #f0f3fa; border-radius: 6px; padding: 10px 12px; font-size: 11px; color: #787b86; display: flex; flex-direction: column; gap: 4px;">
                     <div style="display: flex; justify-content: space-between;">
-                        <span>Upstream Target:</span>
-                        <code style="color: #131722;">wss://stock.arjum.com/ws/running-trade</code>
+                        <span>Exness Live Stream:</span>
+                        <code style="color: #131722;">wss://rtapi-sg.../mt5/real20/v2/ws/ticks</code>
                     </div>
                     <div style="display: flex; justify-content: space-between;">
-                        <span>Local Client Bridge:</span>
-                        <code style="color: #131722;">ws://localhost:8765</code>
+                        <span>IDX Upstream Target:</span>
+                        <code style="color: #131722;">wss://stock.arjum.com/ws/running-trade</code>
                     </div>
                 </div>
 
                 <!-- Stream Mode Selector -->
                 <div style="display: flex; gap: 8px;">
-                    <button type="button" id="live-save-key-btn" class="modal-primary-btn" style="flex: 1; padding: 8px 14px; font-size: 12px;">Save Key &amp; Connect</button>
+                    <button type="button" id="live-save-key-btn" class="modal-primary-btn" style="flex: 1; padding: 8px 14px; font-size: 12px;">Save IDX Key &amp; Connect</button>
                     <button type="button" id="live-reconnect-btn" class="modal-secondary-btn" style="padding: 8px 14px; font-size: 12px;">Reconnect</button>
                 </div>
             </div>
 
             <div class="modal-footer" style="padding: 12px 20px; border-top: 1px solid #e0e3eb; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 11px; color: #787b86;">Otomatis reconnect dengan exponential backoff</span>
+                <span style="font-size: 11px; color: #787b86;">Lampu Hijau = Token Aktif &amp; Live • Lampu Mati = Offline/Expired</span>
                 <button type="button" id="live-modal-done-btn" class="modal-secondary-btn" style="padding: 6px 14px;">Done</button>
             </div>
         </div>
@@ -7892,6 +8765,798 @@
         </div>
     </div>
 
+  <!-- ==================== TRADINGVIEW SETTINGS MODAL (Default LIGHT MODE, Draggable) ==================== -->
+  <div id="settingsBackdrop" class="fixed inset-0 z-40 flex items-center justify-center bg-black/15 hidden">
+    <div id="settingsModal" class="w-[580px] max-w-[96vw] h-[548px] max-h-[90vh] bg-[var(--tv-modal-bg)] text-[var(--tv-text-main)] rounded-[8px] shadow-[0_12px_40px_rgba(19,23,34,0.22)] border border-[var(--tv-border)] flex flex-col overflow-hidden transition-colors duration-150">
+
+      <!-- Modal Header (Draggable) -->
+      <div id="settingsModalHeader" class="h-[54px] px-5 border-b border-[var(--tv-border)] flex items-center justify-between cursor-move shrink-0">
+        <div class="flex items-center gap-3">
+          <h2 class="text-[18px] font-bold tracking-tight">Settings</h2>
+          <!-- Light / Dark Modal Theme Toggle Pill (Default Light Mode as requested) -->
+          <button id="btnToggleModalTheme" class="px-2.5 py-0.5 rounded-full text-[11px] font-medium border border-[var(--tv-input-border)] hover:border-[var(--tv-input-hover)] flex items-center gap-1.5 transition" title="Switch Settings Modal Theme (Default: Light)">
+            <span id="modalThemeDot" class="w-2 h-2 rounded-full bg-amber-400"></span>
+            <span id="modalThemeLabel">Light Mode</span>
+          </button>
+        </div>
+        <button id="btnCloseSettingsX" class="w-8 h-8 rounded-md flex items-center justify-center text-[var(--tv-text-muted)] hover:bg-[var(--tv-row-hover)] hover:text-[var(--tv-text-main)] transition" title="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Modal Body: Left Sidebar + Right Scrollable Pane -->
+      <div class="flex flex-1 min-h-0">
+
+        <!-- Left Navigation Tabs (Exact 5 Tabs from Screenshots) -->
+        <nav class="w-[186px] border-r border-[var(--tv-border)] py-2 flex flex-col shrink-0">
+          <button class="tv-tab-btn active" data-tab="symbol">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <line x1="8" y1="3" x2="8" y2="21"/>
+              <rect x="5.5" y="7" width="5" height="9" fill="currentColor" fill-opacity="0.15"/>
+              <line x1="16" y1="4" x2="16" y2="20"/>
+              <rect x="13.5" y="8" width="5" height="7" fill="currentColor" fill-opacity="0.15"/>
+            </svg>
+            <span>Symbol</span>
+          </button>
+
+          <button class="tv-tab-btn" data-tab="statusline">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <line x1="4" y1="6" x2="20" y2="6"/>
+              <line x1="4" y1="10" x2="16" y2="10"/>
+              <line x1="4" y1="14" x2="18" y2="14"/>
+              <line x1="4" y1="18" x2="12" y2="18"/>
+            </svg>
+            <span>Status line</span>
+          </button>
+
+          <button class="tv-tab-btn" data-tab="scales">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <path d="M6 4v14h14"/>
+              <path d="M3 7l3-3 3 3"/>
+              <path d="M17 15l3 3-3 3"/>
+            </svg>
+            <span>Scales and lines</span>
+          </button>
+
+          <button class="tv-tab-btn" data-tab="canvas">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+            </svg>
+            <span>Canvas</span>
+          </button>
+
+          <button class="tv-tab-btn" data-tab="trading">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+              <polyline points="16 7 22 7 22 13"/>
+            </svg>
+            <span>Trading</span>
+          </button>
+        </nav>
+
+        <!-- Right Tab Contents -->
+        <div class="flex-1 p-5 overflow-y-auto tv-scroll">
+
+          <!-- ==================== TAB 1: SYMBOL (Screenshot 8) ==================== -->
+          <section id="tab-symbol" class="tab-pane block">
+            <div class="tv-section-title">CANDLES</div>
+
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkColorPrevClose" class="tv-checkbox" />
+                <span>Color bars based on previous close</span>
+              </span>
+            </label>
+
+            <!-- Body -->
+            <div class="tv-setting-row">
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="chkCandleBody" class="tv-checkbox" checked />
+                <span>Body</span>
+              </label>
+              <div class="flex items-center gap-2 w-[195px]">
+                <label class="tv-swatch-btn" title="Bullish Body Color">
+                  <span id="swatchBodyUp" class="tv-swatch-fill" style="background:#4caf50;"></span>
+                  <input type="color" id="colBodyUp" value="#4caf50" class="sr-only" />
+                </label>
+                <label class="tv-swatch-btn" title="Bearish Body Color">
+                  <span id="swatchBodyDown" class="tv-swatch-fill" style="background:#ef5350;"></span>
+                  <input type="color" id="colBodyDown" value="#ef5350" class="sr-only" />
+                </label>
+              </div>
+            </div>
+
+            <!-- Borders -->
+            <div class="tv-setting-row">
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="chkCandleBorder" class="tv-checkbox" checked />
+                <span>Borders</span>
+              </label>
+              <div class="flex items-center gap-2 w-[195px]">
+                <label class="tv-swatch-btn" title="Bullish Border Color">
+                  <span id="swatchBorderUp" class="tv-swatch-fill" style="background:#131722;"></span>
+                  <input type="color" id="colBorderUp" value="#131722" class="sr-only" />
+                </label>
+                <label class="tv-swatch-btn" title="Bearish Border Color">
+                  <span id="swatchBorderDown" class="tv-swatch-fill" style="background:#131722;"></span>
+                  <input type="color" id="colBorderDown" value="#131722" class="sr-only" />
+                </label>
+              </div>
+            </div>
+
+            <!-- Wick -->
+            <div class="tv-setting-row">
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="chkCandleWick" class="tv-checkbox" checked />
+                <span>Wick</span>
+              </label>
+              <div class="flex items-center gap-2 w-[195px]">
+                <label class="tv-swatch-btn" title="Bullish Wick Color">
+                  <span id="swatchWickUp" class="tv-swatch-fill" style="background:#4caf50;"></span>
+                  <input type="color" id="colWickUp" value="#4caf50" class="sr-only" />
+                </label>
+                <label class="tv-swatch-btn" title="Bearish Wick Color">
+                  <span id="swatchWickDown" class="tv-swatch-fill" style="background:#ef5350;"></span>
+                  <input type="color" id="colWickDown" value="#ef5350" class="sr-only" />
+                </label>
+              </div>
+            </div>
+
+            <div class="tv-divider"></div>
+            <div class="tv-section-title">DATA MODIFICATION</div>
+
+            <!-- Precision -->
+            <div class="tv-setting-row">
+              <span>Precision</span>
+              <div class="tv-select-wrap w-[195px]">
+                <select id="selPrecision" class="tv-select">
+                  <option value="default" selected>Default</option>
+                  <option value="0">0 (Integer)</option>
+                  <option value="1">1 decimal (0.1)</option>
+                  <option value="2">2 decimals (0.01)</option>
+                  <option value="3">3 decimals (0.001)</option>
+                  <option value="4">4 decimals (0.0001)</option>
+                </select>
+                <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+
+            <!-- Timezone -->
+            <div class="tv-setting-row">
+              <span>Timezone</span>
+              <div class="tv-select-wrap w-[195px]">
+                <select id="selTimezone" class="tv-select">
+                  <option value="UTC+7" selected>(UTC+7) Jakarta</option>
+                  <option value="UTC">(UTC) Universal Time</option>
+                  <option value="UTC-4">(UTC-4) New York</option>
+                  <option value="UTC+1">(UTC+1) London</option>
+                  <option value="UTC+8">(UTC+8) Singapore</option>
+                  <option value="UTC+9">(UTC+9) Tokyo</option>
+                </select>
+                <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==================== TAB 2: STATUS LINE (Screenshot 7) ==================== -->
+          <section id="tab-statusline" class="tab-pane hidden">
+            <div class="tv-section-title">SYMBOL</div>
+
+            <!-- Title -->
+            <div class="tv-setting-row">
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="chkStatusTitle" class="tv-checkbox" checked />
+                <span>Title</span>
+              </label>
+              <div class="tv-select-wrap w-[195px]">
+                <select id="selStatusTitleMode" class="tv-select">
+                  <option value="description">Description</option>
+                  <option value="ticker">Ticker</option>
+                  <option value="both" selected>Ticker and description</option>
+                </select>
+                <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+
+            <!-- Chart values -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkStatusOhlc" class="tv-checkbox" checked />
+                <span>Chart values</span>
+              </span>
+            </label>
+
+            <!-- Bar change values -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkStatusBarChange" class="tv-checkbox" checked />
+                <span>Bar change values</span>
+              </span>
+            </label>
+
+            <!-- Volume -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkStatusVolume" class="tv-checkbox" checked />
+                <span>Volume</span>
+              </span>
+            </label>
+
+            <div class="tv-divider"></div>
+            <div class="tv-section-title">INDICATORS</div>
+
+            <!-- Titles -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkIndTitles" class="tv-checkbox" checked />
+                <span>Titles</span>
+              </span>
+            </label>
+
+            <!-- Inputs (Indented under Titles) -->
+            <label class="tv-setting-row pl-7 cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkIndInputs" class="tv-checkbox" checked />
+                <span>Inputs</span>
+              </span>
+            </label>
+
+            <!-- Values -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkIndValues" class="tv-checkbox" checked />
+                <span>Values</span>
+              </span>
+            </label>
+
+            <!-- Background with Opacity Slider -->
+            <div class="tv-setting-row">
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="chkStatusBg" class="tv-checkbox" checked />
+                <span>Background</span>
+              </label>
+              <div class="flex items-center justify-end w-[195px]">
+                <input type="range" id="rngStatusBgOpacity" min="0" max="100" value="35" class="tv-opacity-slider" />
+              </div>
+            </div>
+          </section>
+
+          <!-- ==================== TAB 3: SCALES AND LINES (Screenshots 5 & 6) ==================== -->
+          <section id="tab-scales" class="tab-pane hidden">
+            <div class="tv-section-title">PRICE SCALE</div>
+
+            <!-- Scale modes (A and L) -->
+            <div class="tv-setting-row">
+              <span>Scale modes (A and L)</span>
+              <div class="tv-select-wrap w-[195px]">
+                <select id="selScaleModes" class="tv-select">
+                  <option value="hover" selected>Visible on mouse over</option>
+                  <option value="always">Always visible</option>
+                  <option value="hidden">Always invisible</option>
+                </select>
+                <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+
+            <!-- Lock price to bar ratio -->
+            <div class="tv-setting-row">
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="chkLockRatio" class="tv-checkbox" />
+                <span>Lock price to bar ratio</span>
+              </label>
+              <div class="w-[195px]">
+                <input type="text" id="inpLockRatio" value="0.0565302" disabled class="tv-number-input w-[140px]" />
+              </div>
+            </div>
+
+            <!-- Scales placement -->
+            <div class="tv-setting-row">
+              <span>Scales placement</span>
+              <div class="tv-select-wrap w-[195px]">
+                <select id="selScalesPlacement" class="tv-select">
+                  <option value="auto" selected>Auto</option>
+                  <option value="right">Right</option>
+                  <option value="left">Left</option>
+                </select>
+                <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+
+            <div class="tv-divider"></div>
+            <div class="tv-section-title">PRICE LABELS &amp; LINES</div>
+
+            <!-- No overlapping labels -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkNoOverlapLabels" class="tv-checkbox" checked />
+                <span>No overlapping labels</span>
+              </span>
+            </label>
+
+            <!-- Plus button -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkPlusButton" class="tv-checkbox" checked />
+                <span>Plus button</span>
+              </span>
+            </label>
+
+            <!-- Countdown to bar close -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkCountdown" class="tv-checkbox" />
+                <span>Countdown to bar close</span>
+              </span>
+            </label>
+
+            <!-- Symbol label & price line -->
+            <div class="tv-setting-row mb-2">
+              <span>Symbol</span>
+              <div class="flex items-center gap-2 w-[235px]">
+                <div class="tv-select-wrap flex-1">
+                  <select id="selSymbolLabel" class="tv-select">
+                    <option value="name_value_line">Name, value, line</option>
+                    <option value="value_line" selected>Value, line</option>
+                    <option value="name_value">Name, value</option>
+                    <option value="value">Value</option>
+                    <option value="hidden">Hidden</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <label class="tv-combo-swatch" title="Symbol Price Line Color">
+                  <span class="tv-diagonal-swatch" style="background: linear-gradient(135deg, #089981 50%, #ef5350 50%);"></span>
+                  <span class="w-5 h-[1px] bg-current opacity-60"></span>
+                  <input type="color" id="colSymbolLine" value="#ef5350" class="sr-only" />
+                </label>
+              </div>
+            </div>
+
+            <!-- Value according to scale sub-dropdown -->
+            <div class="tv-setting-row">
+              <span></span>
+              <div class="w-[235px]">
+                <div class="tv-select-wrap w-[162px]">
+                  <select id="selSymbolScaleMode" class="tv-select">
+                    <option value="scale" selected>Value according to scale</option>
+                    <option value="percent">Percentage</option>
+                    <option value="indexed">Indexed to 100</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Average close -->
+            <div class="tv-setting-row">
+              <span>Average close</span>
+              <div class="flex items-center gap-2 w-[235px]">
+                <div class="tv-select-wrap w-[145px]">
+                  <select id="selAvgClose" class="tv-select">
+                    <option value="hidden" selected>Hidden</option>
+                    <option value="value_line">Value, line</option>
+                    <option value="value">Value</option>
+                    <option value="line">Line</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="tv-combo-swatch opacity-75">
+                  <span class="tv-diagonal-swatch" style="background: linear-gradient(135deg, #26a69a 50%, #ef5350 50%);"></span>
+                  <span class="w-5 h-[1px] bg-current opacity-60"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Previous day close -->
+            <div class="tv-setting-row">
+              <span>Previous day close</span>
+              <div class="flex items-center gap-2 w-[235px]">
+                <div class="tv-select-wrap flex-1">
+                  <select id="selPrevCloseLine" class="tv-select">
+                    <option value="hidden" selected>Hidden</option>
+                    <option value="value_line">Value, line</option>
+                    <option value="value">Value</option>
+                    <option value="line">Line</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="tv-combo-swatch">
+                  <span class="w-5 h-5 rounded-[3px] bg-[#787b86]"></span>
+                  <span class="w-5 h-[1px] bg-current opacity-60"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Indicators and financials -->
+            <div class="tv-setting-row">
+              <span>Indicators and financials</span>
+              <div class="w-[235px]">
+                <div class="tv-select-wrap w-[162px]">
+                  <select id="selIndLabels" class="tv-select">
+                    <option value="value_line" selected>Value, line</option>
+                    <option value="value">Value</option>
+                    <option value="name_value">Name, value</option>
+                    <option value="hidden">Hidden</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pre/post market -->
+            <div class="tv-setting-row">
+              <span>Pre/post market</span>
+              <div class="flex items-center gap-1.5 w-[235px]">
+                <div class="tv-select-wrap flex-1">
+                  <select id="selPrePost" class="tv-select">
+                    <option value="value_line" selected>Value, line</option>
+                    <option value="value">Value</option>
+                    <option value="hidden">Hidden</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <span class="tv-swatch-btn"><span class="tv-swatch-fill" style="background:#ff9800;"></span></span>
+                <span class="tv-swatch-btn"><span class="tv-swatch-fill" style="background:#2962ff;"></span></span>
+              </div>
+            </div>
+
+            <!-- High and low -->
+            <div class="tv-setting-row">
+              <span>High and low</span>
+              <div class="flex items-center gap-2 w-[235px]">
+                <div class="tv-select-wrap flex-1">
+                  <select id="selHighLowLine" class="tv-select">
+                    <option value="hidden" selected>Hidden</option>
+                    <option value="value_line">Value, line</option>
+                    <option value="value">Value</option>
+                    <option value="line">Line</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="tv-combo-swatch">
+                  <span class="tv-diagonal-swatch" style="background: linear-gradient(135deg, #26a69a 50%, #ef5350 50%);"></span>
+                  <span class="w-5 h-[1px] bg-current opacity-60"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bid and ask -->
+            <div class="tv-setting-row">
+              <span>Bid and ask</span>
+              <div class="flex items-center gap-1.5 w-[235px]">
+                <div class="tv-select-wrap flex-1">
+                  <select id="selBidAsk" class="tv-select">
+                    <option value="hidden" selected>Hidden</option>
+                    <option value="value_line">Value, line</option>
+                    <option value="value">Value</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <span class="tv-swatch-btn"><span class="tv-swatch-fill" style="background:#2962ff;"></span></span>
+                <span class="tv-swatch-btn"><span class="tv-swatch-fill" style="background:#ef5350;"></span></span>
+              </div>
+            </div>
+
+            <div class="tv-divider"></div>
+            <div class="tv-section-title">TIME SCALE</div>
+
+            <!-- Day of week on labels -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkDayOfWeek" class="tv-checkbox" checked />
+                <span>Day of week on labels</span>
+              </span>
+            </label>
+
+            <!-- Date format -->
+            <div class="tv-setting-row">
+              <span>Date format</span>
+              <div class="w-[235px]">
+                <div class="tv-select-wrap w-[155px]">
+                  <select id="selDateFormat" class="tv-select">
+                    <option value="Mon 29 Sep '97" selected>Mon 29 Sep '97</option>
+                    <option value="29 Sep '97">29 Sep '97</option>
+                    <option value="1997-09-29">1997-09-29</option>
+                    <option value="29/09/1997">29/09/1997</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Time hours format -->
+            <div class="tv-setting-row">
+              <span>Time hours format</span>
+              <div class="w-[235px]">
+                <div class="tv-select-wrap w-[120px]">
+                  <select id="selTimeFormat" class="tv-select">
+                    <option value="24" selected>24-hours</option>
+                    <option value="12">12-hours</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Save chart left edge position -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkSaveLeftEdge" class="tv-checkbox" />
+                <span>Save chart left edge position when changing interval</span>
+              </span>
+            </label>
+          </section>
+
+          <!-- ==================== TAB 4: CANVAS (Screenshots 3 & 4) ==================== -->
+          <section id="tab-canvas" class="tab-pane hidden">
+            <div class="tv-section-title">CHART BASIC STYLES</div>
+
+            <!-- Background -->
+            <div class="tv-setting-row">
+              <span>Background</span>
+              <div class="flex items-center gap-2 w-[210px]">
+                <div class="tv-select-wrap flex-1">
+                  <select id="selBgType" class="tv-select">
+                    <option value="solid" selected>Solid</option>
+                    <option value="gradient">Gradient</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <label class="tv-swatch-btn" title="Primary Background Color">
+                  <span id="swatchBg1" class="tv-swatch-fill" style="background:#d8dadf;"></span>
+                  <input type="color" id="colBg1" value="#d8dadf" class="sr-only" />
+                </label>
+                <label id="wrapBg2" class="tv-swatch-btn hidden" title="Secondary Gradient Color">
+                  <span id="swatchBg2" class="tv-swatch-fill" style="background:#eef0f4;"></span>
+                  <input type="color" id="colBg2" value="#eef0f4" class="sr-only" />
+                </label>
+              </div>
+            </div>
+
+            <!-- Grid lines -->
+            <div class="tv-setting-row">
+              <span>Grid lines</span>
+              <div class="flex items-center gap-2 w-[210px]">
+                <div class="tv-select-wrap flex-1">
+                  <select id="selGridMode" class="tv-select">
+                    <option value="both" selected>Vert and horz</option>
+                    <option value="vert">Vertical</option>
+                    <option value="horz">Horizontal</option>
+                    <option value="none">None</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <label id="wrapGridColor" class="tv-swatch-btn" title="Grid Line Color">
+                  <span id="swatchGrid" class="tv-swatch-fill" style="background:#cfd2d9;"></span>
+                  <input type="color" id="colGrid" value="#cfd2d9" class="sr-only" />
+                </label>
+              </div>
+            </div>
+
+            <!-- Session breaks -->
+            <div class="tv-setting-row">
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="chkSessionBreaks" class="tv-checkbox" />
+                <span>Session breaks</span>
+              </label>
+              <div class="w-[210px]">
+                <label class="tv-combo-swatch" title="Session Break Color">
+                  <span id="swatchSession" class="w-5 h-5 rounded-[3px]" style="background:#2962ff;"></span>
+                  <span class="text-[11px] tracking-widest opacity-70">----</span>
+                  <input type="color" id="colSession" value="#2962ff" class="sr-only" />
+                </label>
+              </div>
+            </div>
+
+            <!-- Crosshair -->
+            <div class="tv-setting-row">
+              <span>Crosshair</span>
+              <div class="w-[210px]">
+                <label class="tv-combo-swatch" title="Crosshair Line Color">
+                  <span id="swatchCrosshair" class="w-5 h-5 rounded-[3px]" style="background:#787b86;"></span>
+                  <span class="text-[11px] tracking-widest opacity-70">----</span>
+                  <input type="color" id="colCrosshair" value="#787b86" class="sr-only" />
+                </label>
+              </div>
+            </div>
+
+            <!-- Watermark -->
+            <div class="tv-setting-row">
+              <span>Watermark</span>
+              <div class="flex items-center gap-2 w-[210px]">
+                <div class="tv-select-wrap flex-1">
+                  <select id="selWatermark" class="tv-select">
+                    <option value="hidden" selected>Hidden</option>
+                    <option value="replay">Replay mode</option>
+                    <option value="visible">Always visible</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <label class="tv-swatch-btn" title="Watermark Color">
+                  <span id="swatchWatermark" class="tv-swatch-fill tv-checkerboard" style="background-color:rgba(19,23,34,0.12);"></span>
+                  <input type="color" id="colWatermark" value="#8c9099" class="sr-only" />
+                </label>
+              </div>
+            </div>
+
+            <div class="tv-divider"></div>
+            <div class="tv-section-title">SCALES</div>
+
+            <!-- Text -->
+            <div class="tv-setting-row">
+              <span>Text</span>
+              <div class="flex items-center gap-2 w-[210px]">
+                <label class="tv-swatch-btn" title="Scales Text Color">
+                  <span id="swatchScaleText" class="tv-swatch-fill" style="background:#131722;"></span>
+                  <input type="color" id="colScaleText" value="#131722" class="sr-only" />
+                </label>
+                <div class="tv-select-wrap w-[82px]">
+                  <select id="selScaleFontSize" class="tv-select">
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12" selected>12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="16">16</option>
+                  </select>
+                  <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lines -->
+            <div class="tv-setting-row">
+              <span>Lines</span>
+              <div class="w-[210px]">
+                <label class="tv-swatch-btn" title="Scale Border Line Color">
+                  <span id="swatchScaleLine" class="tv-swatch-fill tv-checkerboard" style="background-color:#c4c7cf;"></span>
+                  <input type="color" id="colScaleLine" value="#c4c7cf" class="sr-only" />
+                </label>
+              </div>
+            </div>
+
+            <div class="tv-divider"></div>
+            <div class="tv-section-title">BUTTONS</div>
+
+            <!-- Navigation -->
+            <div class="tv-setting-row">
+              <span>Navigation</span>
+              <div class="tv-select-wrap w-[210px]">
+                <select id="selNavButtons" class="tv-select">
+                  <option value="hover" selected>Visible on mouse over</option>
+                  <option value="always">Always visible</option>
+                  <option value="hidden">Always invisible</option>
+                </select>
+                <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+
+            <!-- Pane -->
+            <div class="tv-setting-row">
+              <span>Pane</span>
+              <div class="tv-select-wrap w-[210px]">
+                <select id="selPaneButtons" class="tv-select">
+                  <option value="hover" selected>Visible on mouse over</option>
+                  <option value="always">Always visible</option>
+                  <option value="hidden">Always invisible</option>
+                </select>
+                <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+
+            <div class="tv-divider"></div>
+            <div class="tv-section-title">MARGINS</div>
+
+            <!-- Top Margin -->
+            <div class="tv-setting-row">
+              <span>Top</span>
+              <div class="flex items-center gap-2 w-[210px]">
+                <input type="number" id="inpMarginTop" min="0" max="45" value="12" class="tv-number-input" />
+                <span class="text-[var(--tv-text-muted)] text-[13px]">%</span>
+              </div>
+            </div>
+
+            <!-- Bottom Margin -->
+            <div class="tv-setting-row">
+              <span>Bottom</span>
+              <div class="flex items-center gap-2 w-[210px]">
+                <input type="number" id="inpMarginBottom" min="0" max="45" value="10" class="tv-number-input" />
+                <span class="text-[var(--tv-text-muted)] text-[13px]">%</span>
+              </div>
+            </div>
+
+            <!-- Right Margin -->
+            <div class="tv-setting-row">
+              <span>Right</span>
+              <div class="flex items-center gap-2 w-[210px]">
+                <input type="number" id="inpMarginRight" min="0" max="60" value="8" class="tv-number-input" />
+                <span class="text-[var(--tv-text-muted)] text-[13px]">bars</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==================== TAB 5: TRADING (Screenshot 2) ==================== -->
+          <section id="tab-trading" class="tab-pane hidden">
+            <div class="tv-section-title">APPEARANCE</div>
+
+            <!-- Positions and orders -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkTradingPositions" class="tv-checkbox" checked />
+                <span>Positions and orders</span>
+              </span>
+            </label>
+
+            <!-- Profit and loss value -->
+            <label class="tv-setting-row cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <input type="checkbox" id="chkTradingPnl" class="tv-checkbox" checked />
+                <span>Profit and loss value</span>
+              </span>
+            </label>
+
+            <!-- Indented Positions mode -->
+            <div class="tv-setting-row pl-6">
+              <label class="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" id="chkTradingPosSub" class="tv-checkbox" checked />
+                <span>Positions</span>
+              </label>
+              <div class="tv-select-wrap w-[135px]">
+                <select id="selTradingPnlMode" class="tv-select">
+                  <option value="money" selected>Money</option>
+                  <option value="ticks">Ticks</option>
+                  <option value="percent">Percentage</option>
+                </select>
+                <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+
+            <!-- Order and position alignment -->
+            <div class="tv-setting-row mt-4">
+              <span>Order and position alignment</span>
+              <div class="tv-select-wrap w-[135px]">
+                <select id="selTradingAlign" class="tv-select">
+                  <option value="left" selected>Left</option>
+                  <option value="center">Center</option>
+                  <option value="right">Right</option>
+                </select>
+                <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <!-- Modal Footer (Template Dropdown + Cancel / Ok Buttons) -->
+      <div class="h-[62px] px-5 border-t border-[var(--tv-border)] flex items-center justify-between shrink-0 bg-[var(--tv-modal-bg)]">
+        <!-- Template Selector -->
+        <div class="tv-select-wrap w-[142px]">
+          <select id="selTemplatePreset" class="tv-select font-medium">
+            <option value="" selected disabled>Template</option>
+            <option value="gray_default">Gray Classic (Default)</option>
+            <option value="tv_light">TradingView Clean White</option>
+            <option value="tv_dark">TradingView Pro Dark</option>
+          </select>
+          <svg class="tv-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+
+        <!-- Cancel & Ok -->
+        <div class="flex items-center gap-2.5">
+          <button id="btnSettingsCancel" class="h-[34px] px-4 rounded-[6px] border border-[var(--tv-input-border)] hover:border-[var(--tv-input-hover)] text-[13px] font-medium transition">
+            Cancel
+          </button>
+          <button id="btnSettingsOk" class="h-[34px] px-5 rounded-[6px] bg-[#131722] hover:bg-[#2a2e39] text-white text-[13px] font-semibold transition shadow-sm">
+            Ok
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+    
     <!-- Universal Stock Autocomplete Portal -->
     <div id="stock-autocomplete-portal" class="stock-autocomplete-portal"></div>
 

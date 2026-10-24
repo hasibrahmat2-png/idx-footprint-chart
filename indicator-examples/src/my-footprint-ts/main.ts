@@ -45,6 +45,8 @@ import { MarketStructurePrimitive, detectMarketStructure } from './market-struct
 import { GapPrimitive, computeGaps } from './gap-primitive';
 import { ChartPatternPrimitive } from './chart-pattern-primitive';
 import { detectChartPatterns, DetectedChartPattern, ChartPatternMode } from './chart-pattern-detector';
+import { CandlestickPatternPrimitive } from './candlestick-pattern-primitive';
+import { detectCandlestickPatterns, DetectedCandlestickPattern, CandlestickPatternMode } from './candlestick-pattern-detector';
 
 declare global {
     interface Window {
@@ -621,12 +623,13 @@ try {
         const toastEl = document.getElementById('tv-toast');
         let toastTimer: any = null;
         function showToast(message: string) {
-            if (!toastEl) return;
-            toastEl.textContent = message;
-            toastEl.classList.add('show');
+            if (toastEl) {
+                toastEl.textContent = message;
+                toastEl.classList.add('show');
+            }
             clearTimeout(toastTimer);
             toastTimer = setTimeout(() => {
-                toastEl.classList.remove('show');
+                if (toastEl) toastEl.classList.remove('show');
             }, 2200);
         }
 
@@ -5459,6 +5462,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
         let cashflowData: any = null;
         let historySearchQuery = '';
         let isTradeDrawingsVisible = false;
+        let isOpenPositionsVisible = true;
 
         function parseFakeUtcTimestamp(dtStr: string): number {
             if (!dtStr) return 0;
@@ -5482,7 +5486,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
         }
 
         function findIntradayBarIndex(ts: number, targetDate: string, data: any[]): number {
-            if (!data || data.length === 0 || !ts || !targetDate) return -1;
+            if (!data || data.length === 0 || !ts) return -1;
             const firstDate = typeof data[0].time === 'string'
                 ? data[0].time.slice(0, 10)
                 : new Date(data[0].time * 1000).toISOString().slice(0, 10);
@@ -5490,8 +5494,11 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 ? data[data.length - 1].time.slice(0, 10)
                 : new Date(data[data.length - 1].time * 1000).toISOString().slice(0, 10);
 
+            const derivedDate = new Date(ts * 1000).toISOString().slice(0, 10);
+            const effDate = targetDate || derivedDate;
+
             // If trade is strictly outside the range of loaded intraday bars, skip
-            if (targetDate < firstDate || targetDate > lastDate) return -1;
+            if (effDate < firstDate || effDate > lastDate) return -1;
 
             let low = 0;
             let high = data.length - 1;
@@ -5510,20 +5517,20 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 const bestDate = typeof data[best].time === 'string'
                     ? data[best].time.slice(0, 10)
                     : new Date(data[best].time * 1000).toISOString().slice(0, 10);
-                if (bestDate === targetDate) {
+                if (bestDate === effDate || bestDate === derivedDate) {
                     return best;
                 }
                 // Pre-market trade (ts earlier than first bar of targetDate)
-                if (bestDate < targetDate && best + 1 < data.length) {
+                if (bestDate < effDate && best + 1 < data.length) {
                     const nextDate = typeof data[best + 1].time === 'string'
                         ? data[best + 1].time.slice(0, 10)
                         : new Date(data[best + 1].time * 1000).toISOString().slice(0, 10);
-                    if (nextDate === targetDate) {
+                    if (nextDate === effDate || nextDate === derivedDate) {
                         return best + 1;
                     }
                 }
             } else if (data.length > 0) {
-                if (firstDate === targetDate) {
+                if (firstDate === effDate || firstDate === derivedDate) {
                     return 0;
                 }
             }
@@ -5692,10 +5699,58 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
             }
         }
 
+        function computeOpenPositionUnrealizedPnl(pos: TradePosition, curPrice: number): { unAmt: number; unPct: number; isWin: boolean } {
+            const entry = Number(pos.entryPrice || 0);
+            const liveP = Number(curPrice || entry);
+            const isShort =
+                pos.type?.toUpperCase() === 'SELL' ||
+                pos.type?.toUpperCase() === 'SHORT' ||
+                pos.command?.toUpperCase() === 'SELL' ||
+                pos.command?.toUpperCase() === 'SHORT' ||
+                Boolean(pos.tp && pos.tp > 0 && pos.tp < entry) ||
+                Boolean(pos.sl && pos.sl > 0 && pos.sl > entry);
+            const mult = isShort ? -1 : 1;
+            const priceDiff = (liveP - entry) * mult;
+            const unPct = entry > 0 ? Number(((priceDiff / entry) * 100).toFixed(2)) : 0;
+
+            const isForexPos =
+                pos.currency === 'USC' ||
+                Boolean(pos.symbol && (pos.symbol.endsWith('c') || pos.symbol.endsWith('m') || pos.symbol.startsWith('XAU')));
+
+            let unAmt = 0;
+            if (isForexPos) {
+                const lot = Number(pos.lot || pos.shares || 0);
+                const upperSym = String(pos.symbol || '').toUpperCase();
+                if (upperSym.startsWith('XAU')) {
+                    // Gold Cent (XAUUSDc): 1 lot = 1 oz = 100 USC per $1.00 price move
+                    unAmt = priceDiff * lot * 100;
+                } else if (upperSym.startsWith('BTC')) {
+                    // BTC Cent (BTCUSDc): 1 lot = 0.01 BTC = 1 USC per $1.00 price move
+                    unAmt = priceDiff * lot * 1;
+                } else if (upperSym.startsWith('USDJPY') || upperSym.startsWith('USDCAD') || upperSym.startsWith('USDCHF')) {
+                    // USD base currency Cent: 1 lot = 1,000 USD = 100,000 USC converted from quote currency
+                    unAmt = liveP > 0 ? (priceDiff / liveP) * lot * 100000 : 0;
+                } else {
+                    // Direct USD quote FX Cent (EURUSDc, GBPUSDc, AUDUSDc, etc.): 1 lot = 1,000 units = 100,000 USC
+                    unAmt = priceDiff * lot * 100000;
+                }
+                unAmt = Number(unAmt.toFixed(2));
+            } else {
+                const shares = pos.shares && pos.shares >= 100 ? Number(pos.shares) : Number(pos.lot || 0) * 100;
+                unAmt = Math.round(priceDiff * shares);
+            }
+
+            return {
+                unAmt,
+                unPct,
+                isWin: unAmt >= 0
+            };
+        }
+
         function renderTradePositions() {
             if (!nativeTradePositionPrimitive) return;
 
-            if (!isTradeDrawingsVisible && !focusedTradeId) {
+            if (!isTradeDrawingsVisible && !isOpenPositionsVisible && !focusedTradeId) {
                 nativeTradePositionPrimitive.setPositions([]);
                 if (footprintTradePositionPrimitive) {
                     footprintTradePositionPrimitive.setPositions([]);
@@ -5723,6 +5778,14 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
             // WHEN FOCUSED: HIDE ALL OTHER TRADES TEMPORARILY (User Request)
             if (focusedTradeId) {
                 symPositions = symPositions.filter(p => p.id === focusedTradeId);
+            } else {
+                symPositions = symPositions.filter(p => {
+                    if (p.isOpen) {
+                        return isOpenPositionsVisible;
+                    } else {
+                        return isTradeDrawingsVisible;
+                    }
+                });
             }
 
             if (symPositions.length === 0) {
@@ -5764,9 +5827,13 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         if (entryIdx !== undefined && entryIdx >= 0 && exitIdx >= 0) {
                             const entryBar = currentChartData[entryIdx];
                             const latestBar = currentChartData[exitIdx];
-                            const curPrice = Number(latestBar?.close || pos.entryPrice);
-                            const unAmt = (curPrice - pos.entryPrice) * pos.shares;
-                            const unPct = pos.entryPrice > 0 ? ((curPrice - pos.entryPrice) / pos.entryPrice) * 100 : 0;
+                            const curPrice = Number(latestBar?.close || pos.currentPrice || pos.entryPrice);
+                            const { unAmt, unPct, isWin } = computeOpenPositionUnrealizedPnl(pos, curPrice);
+                            pos.currentPrice = curPrice;
+                            pos.exitPrice = curPrice;
+                            pos.realizedAmount = unAmt;
+                            pos.realizedPercentage = unPct;
+                            pos.isWin = isWin;
                             mappedPositions.push({
                                 ...pos,
                                 entryBarIndex: entryIdx,
@@ -5775,10 +5842,11 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                                 entryBarHigh: entryBar?.high,
                                 exitBarLow: latestBar?.low,
                                 exitBarHigh: latestBar?.high,
+                                currentPrice: curPrice,
                                 exitPrice: curPrice,
                                 realizedAmount: unAmt,
                                 realizedPercentage: unPct,
-                                isWin: unAmt >= 0,
+                                isWin,
                                 showBox: false,
                                 isOpen: true,
                                 isFocused: focusedTradeId === pos.id
@@ -5817,9 +5885,13 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         if (entryIdx >= 0 && exitIdx >= 0) {
                             const entryBar = currentChartData[entryIdx];
                             const latestBar = currentChartData[exitIdx];
-                            const curPrice = Number(latestBar?.close || pos.entryPrice);
-                            const unAmt = (curPrice - pos.entryPrice) * pos.shares;
-                            const unPct = pos.entryPrice > 0 ? ((curPrice - pos.entryPrice) / pos.entryPrice) * 100 : 0;
+                            const curPrice = Number(latestBar?.close || pos.currentPrice || pos.entryPrice);
+                            const { unAmt, unPct, isWin } = computeOpenPositionUnrealizedPnl(pos, curPrice);
+                            pos.currentPrice = curPrice;
+                            pos.exitPrice = curPrice;
+                            pos.realizedAmount = unAmt;
+                            pos.realizedPercentage = unPct;
+                            pos.isWin = isWin;
                             mappedPositions.push({
                                 ...pos,
                                 entryBarIndex: entryIdx,
@@ -5828,10 +5900,11 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                                 entryBarHigh: entryBar?.high,
                                 exitBarLow: latestBar?.low,
                                 exitBarHigh: latestBar?.high,
+                                currentPrice: curPrice,
                                 exitPrice: curPrice,
                                 realizedAmount: unAmt,
                                 realizedPercentage: unPct,
-                                isWin: unAmt >= 0,
+                                isWin,
                                 showBox: true,
                                 isOpen: true,
                                 isFocused: focusedTradeId === pos.id
@@ -5954,19 +6027,23 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
             focusedTradeId = pos.id;
             focusedTradePos = pos;
 
-            // Show floating focus status pill on chart
+            // Show floating focus status pill on chart (transparent, no border, simplified)
             const pill = document.getElementById('trade-focus-pill');
-            const pillTitle = document.getElementById('trade-focus-pill-title');
             const pillMeta = document.getElementById('trade-focus-pill-meta');
-            if (pill && pillTitle && pillMeta) {
+            if (pill && pillMeta) {
                 const isForex = pos.currency === 'USC' || (pos.symbol && pos.symbol.endsWith('c')) || (pos.symbol && pos.symbol.startsWith('XAU'));
                 const pnlSign = pos.realizedPercentage >= 0 ? '+' : '';
                 const amtSign = pos.realizedAmount >= 0 ? '+' : '';
                 const pnlStr = isForex 
                     ? `${amtSign}${(pos.realizedAmount || 0).toFixed(1)} USC`
                     : `${amtSign}Rp ${Math.round(pos.realizedAmount || 0).toLocaleString('id-ID')}`;
-                pillTitle.textContent = `Fokus: ${pos.symbol}`;
-                pillMeta.textContent = `${pos.entryDatetime.slice(11, 16)} | ${pnlSign}${(pos.realizedPercentage || 0).toFixed(2)}% (${pnlStr}) | ${pos.lot}${isForex ? ' Lot' : 'L'}`;
+                const pnlPct = `${pnlSign}${(pos.realizedPercentage || 0).toFixed(2)}%`;
+                const isWin = (pos.realizedAmount || 0) >= 0;
+                const accentColor = isWin ? '#089981' : '#F23645';
+
+                // Disajikan sederhana: profit/loss nominal dan persentase saja
+                pillMeta.textContent = `${pnlStr} (${pnlPct})`;
+                pillMeta.style.color = accentColor;
                 pill.style.display = 'flex';
             }
 
@@ -6369,14 +6446,17 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     const pctSign = (pos.realizedPercentage || 0) >= 0 ? '+' : '';
                     const amtSign = (pos.realizedAmount || 0) >= 0 ? '+' : '';
 
-                    badgeHtml = `<span class="action-${isGain ? 'win' : 'loss'}">${cmd} • ${isGain ? 'WIN' : 'LOSS'}</span>`;
+                    badgeHtml = pos.isOpen
+                        ? `<span class="action-open">${cmd} • OPEN</span>`
+                        : `<span class="action-${isGain ? 'win' : 'loss'}">${cmd} • ${isGain ? 'WIN' : 'LOSS'}</span>`;
 
                     const symFormat = getInstrumentFormatInfo(pos.symbol, pos.entryPrice);
                     const prec = symFormat.precision;
                     const fmtP = (v: number) => (prec > 0 && typeof v === 'number' && !isNaN(v)) ? v.toFixed(prec) : String(v ?? '-');
+                    const liveOrExitP = pos.isOpen ? (pos.currentPrice || pos.exitPrice || pos.entryPrice) : pos.exitPrice;
                     priceHtml = `
                         <div class="price-buy">${fmtP(pos.entryPrice)}</div>
-                        <div class="price-sell">→ ${pos.isOpen ? '(Hold)' : fmtP(pos.exitPrice)}</div>
+                        <div class="price-sell">→ ${pos.isOpen ? `${fmtP(liveOrExitP)} (Hold)` : fmtP(pos.exitPrice)}</div>
                     `;
 
                     lotHtml = `<strong>${pos.lot}</strong>`;
@@ -6386,7 +6466,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
 
                     pnlHtml = `
                         <div class="pnl-pct ${pnlColorClass}">${pctSign}${(pos.realizedPercentage || 0).toFixed(2)}%</div>
-                        <div class="pnl-rp ${pnlColorClass}">${amtSign}${(pos.realizedAmount || 0).toFixed(1)} USC</div>
+                        <div class="pnl-rp ${pnlColorClass}">${amtSign}${(pos.realizedAmount || 0).toFixed(pos.isOpen ? 2 : 1)} USC</div>
                     `;
                 } else if (pos.isOpen) {
                     badgeHtml = `<span class="action-open">OPEN</span>`;
@@ -7203,85 +7283,31 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
 
         async function loadTradeHistoryData(): Promise<void> {
             try {
-                // 1. Load IHSG Stockbit Trade History
+                // 1. Load IHSG Stockbit Trade History & Live Portfolio (with Smart Order TP/SL/TS)
                 try {
-                    const resp = await fetch('/stockbit_trade_history_2026.json');
-                    if (resp.ok) {
-                        const data = await resp.json();
-                        if (data) {
-                            if (Array.isArray(data.positions)) {
-                                allPositionsData = data.positions.map((p: any) => ({
-                                    id: String(p.id || ''),
-                                    symbol: String(p.symbol || '').toUpperCase(),
-                                    entryTime: Number(p.entry_time) || parseFakeUtcTimestamp(p.entry_datetime),
-                                    entryDatetime: String(p.entry_datetime || ''),
-                                    entryDate: String(p.entry_date || ''),
-                                    entryPrice: Number(p.entry_price || 0),
-                                    exitTime: Number(p.exit_time) || parseFakeUtcTimestamp(p.exit_datetime),
-                                    exitDatetime: String(p.exit_datetime || ''),
-                                    exitDate: String(p.exit_date || ''),
-                                    exitPrice: Number(p.exit_price || 0),
-                                    shares: Number(p.shares || 0),
-                                    lot: Number(p.lot || 0),
-                                    realizedAmount: Number(p.realized_amount || 0),
-                                    realizedPercentage: Number(p.realized_percentage || 0),
-                                    isWin: Boolean(p.is_win),
-                                    isDayTrade: Boolean(p.is_day_trade),
-                                    isOpen: false,
-                                    currency: 'IDR',
-                                }));
-                            }
-
-                            openPositionsMap.clear();
-                            if (Array.isArray(data.open_positions)) {
-                                allOpenPositionsData = data.open_positions.map((p: any) => ({
-                                    id: String(p.id || ''),
-                                    symbol: String(p.symbol || '').toUpperCase(),
-                                    entryTime: Number(p.entry_time) || parseFakeUtcTimestamp(p.entry_datetime),
-                                    entryDatetime: String(p.entry_datetime || ''),
-                                    entryDate: String(p.entry_date || ''),
-                                    entryPrice: Number(p.entry_price || 0),
-                                    exitTime: 0,
-                                    exitDatetime: '',
-                                    exitDate: '',
-                                    exitPrice: 0,
-                                    shares: Number(p.shares || 0),
-                                    lot: Number(p.lot || 0),
-                                    realizedAmount: 0,
-                                    realizedPercentage: 0,
-                                    isWin: false,
-                                    isDayTrade: false,
-                                    isOpen: true,
-                                    currency: 'IDR',
-                                }));
-                                for (const op of allOpenPositionsData) {
-                                    openPositionsMap.set(op.symbol, op);
-                                }
-                            } else {
-                                allOpenPositionsData = [];
-                            }
-
-                            if (data.cashflow) {
-                                cashflowData = data.cashflow;
+                    let data: any = null;
+                    try {
+                        const liveSbResp = await fetch(`/api/stockbit/portfolio?t=${Date.now()}`);
+                        if (liveSbResp.ok) {
+                            const liveSbJson = await liveSbResp.json();
+                            if (liveSbJson && (Array.isArray(liveSbJson.positions) || Array.isArray(liveSbJson.open_positions))) {
+                                data = liveSbJson;
                             }
                         }
-                    }
-                } catch (sbErr) {
-                    console.warn("[Trade History] Failed to load Stockbit trade history:", sbErr);
-                }
+                    } catch (_e) {}
 
-                // 2. Load Forex Trade History (Exness MT5)
-                try {
-                    const fxResp = await fetch('/forex_trade_history_2026.json');
-                    if (fxResp.ok) {
-                        const fxData = await fxResp.json();
-                        if (fxData) {
-                            forexSummaryData = fxData.summary || null;
-                            forexCashflowData = fxData.cashflow || null;
-                            const rawFxList = Array.isArray(fxData.positions) ? fxData.positions : (Array.isArray(fxData.trades) ? fxData.trades : []);
-                            allForexPositionsData = rawFxList.map((p: any) => ({
-                                id: String(p.id || p.ticket || ''),
-                                symbol: String(p.symbol || ''),
+                    if (!data) {
+                        const resp = await fetch(`/stockbit_trade_history_2026.json?t=${Date.now()}`);
+                        if (resp.ok) {
+                            data = await resp.json();
+                        }
+                    }
+
+                    if (data) {
+                        if (Array.isArray(data.positions)) {
+                            allPositionsData = data.positions.map((p: any) => ({
+                                id: String(p.id || ''),
+                                symbol: String(p.symbol || '').toUpperCase(),
                                 entryTime: Number(p.entry_time) || parseFakeUtcTimestamp(p.entry_datetime),
                                 entryDatetime: String(p.entry_datetime || ''),
                                 entryDate: String(p.entry_date || ''),
@@ -7290,17 +7316,193 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                                 exitDatetime: String(p.exit_datetime || ''),
                                 exitDate: String(p.exit_date || ''),
                                 exitPrice: Number(p.exit_price || 0),
-                                shares: Number(p.shares || p.lot || 0),
+                                shares: Number(p.shares || 0),
                                 lot: Number(p.lot || 0),
                                 realizedAmount: Number(p.realized_amount || 0),
                                 realizedPercentage: Number(p.realized_percentage || 0),
                                 isWin: Boolean(p.is_win),
                                 isDayTrade: Boolean(p.is_day_trade),
-                                isOpen: Boolean(p.is_open),
-                                type: String(p.type || p.command || 'BUY').toUpperCase(),
-                                currency: String(p.currency || 'USC'),
+                                isOpen: false,
+                                currency: 'IDR',
                             }));
                         }
+
+                        openPositionsMap.clear();
+                        const activeSymInputSb = (document.getElementById('ticker-input') as HTMLInputElement)?.value?.toUpperCase() || '';
+                        const activeLatestCloseSb = (currentChartData && currentChartData.length > 0) ? Number(currentChartData[currentChartData.length - 1]?.close || 0) : 0;
+
+                        if (Array.isArray(data.open_positions)) {
+                            allOpenPositionsData = data.open_positions.map((p: any) => {
+                                const symUpper = String(p.symbol || '').toUpperCase();
+                                const posObj: TradePosition = {
+                                    id: String(p.id || ''),
+                                    symbol: symUpper,
+                                    type: String(p.type || p.command || 'BUY').toUpperCase(),
+                                    command: String(p.command || p.type || 'BUY').toUpperCase(),
+                                    entryTime: Number(p.entry_time) || parseFakeUtcTimestamp(p.entry_datetime),
+                                    entryDatetime: String(p.entry_datetime || ''),
+                                    entryDate: String(p.entry_date || ''),
+                                    entryPrice: Number(p.entry_price || 0),
+                                    exitTime: 0,
+                                    exitDatetime: '',
+                                    exitDate: '',
+                                    exitPrice: Number(p.current_price || p.exit_price || p.entry_price || 0),
+                                    shares: Number(p.shares || (Number(p.lot || 0) * 100)),
+                                    lot: Number(p.lot || 0),
+                                    realizedAmount: Number(p.realized_amount || 0),
+                                    realizedPercentage: Number(p.realized_percentage || 0),
+                                    isWin: Number(p.realized_amount || 0) >= 0,
+                                    isDayTrade: false,
+                                    isOpen: true,
+                                    currency: 'IDR',
+                                    tp: p.tp != null && Number(p.tp) > 0 ? Number(p.tp) : undefined,
+                                    sl: p.sl != null && Number(p.sl) > 0 ? Number(p.sl) : undefined,
+                                    currentPrice: p.current_price != null && Number(p.current_price) > 0 ? Number(p.current_price) : undefined,
+                                };
+                                const scrItem = screenerMap.get(symUpper);
+                                const liveP = (activeSymInputSb === symUpper && activeLatestCloseSb > 0)
+                                    ? activeLatestCloseSb
+                                    : Number(scrItem?.price || posObj.currentPrice || posObj.entryPrice);
+                                if (liveP > 0) {
+                                    const { unAmt, unPct, isWin } = computeOpenPositionUnrealizedPnl(posObj, liveP);
+                                    posObj.currentPrice = liveP;
+                                    posObj.exitPrice = liveP;
+                                    posObj.realizedAmount = unAmt;
+                                    posObj.realizedPercentage = unPct;
+                                    posObj.isWin = isWin;
+                                    if (scrItem && (!scrItem.price || scrItem.price === 0)) {
+                                        scrItem.price = liveP;
+                                    }
+                                }
+                                return posObj;
+                            });
+                            for (const op of allOpenPositionsData) {
+                                openPositionsMap.set(op.symbol, { ...op });
+                            }
+                        } else {
+                            allOpenPositionsData = [];
+                        }
+
+                        if (data.cashflow) {
+                            cashflowData = data.cashflow;
+                        }
+                    }
+                } catch (sbErr) {
+                    console.warn("[Trade History] Failed to load Stockbit trade history:", sbErr);
+                }
+
+                // 2. Load Forex Trade History & Open Positions (Exness MT5 Live API + Static Fallback)
+                try {
+                    let fxData: any = null;
+                    try {
+                        const liveHistResp = await fetch(`/api/exness/history?t=${Date.now()}`);
+                        if (liveHistResp.ok) {
+                            const liveHistJson = await liveHistResp.json();
+                            if (liveHistJson && (liveHistJson.ok || liveHistJson.status === 'ok') && Array.isArray(liveHistJson.positions) && liveHistJson.positions.length > 0) {
+                                fxData = liveHistJson;
+                            }
+                        }
+                    } catch (_e) {}
+
+                    if (!fxData) {
+                        const fxResp = await fetch(`/forex_trade_history_2026.json?t=${Date.now()}`);
+                        if (fxResp.ok) {
+                            fxData = await fxResp.json();
+                        }
+                    }
+
+                    if (fxData) {
+                        forexSummaryData = fxData.summary || null;
+                        forexCashflowData = fxData.cashflow || null;
+                        const closedFxList = Array.isArray(fxData.positions) ? fxData.positions : (Array.isArray(fxData.trades) ? fxData.trades : []);
+                        let openFxList = Array.isArray(fxData.open_positions) ? [...fxData.open_positions] : [];
+
+                        // Ambil juga open positions live dari /api/exness/positions (fallback ke exness_open_positions.json)
+                        try {
+                            let openData: any = null;
+                            try {
+                                const liveOpenResp = await fetch(`/api/exness/positions?t=${Date.now()}`);
+                                if (liveOpenResp.ok) {
+                                    const liveOpenJson = await liveOpenResp.json();
+                                    if (liveOpenJson && (liveOpenJson.ok || liveOpenJson.status === 'ok') && Array.isArray(liveOpenJson.positions)) {
+                                        openData = liveOpenJson;
+                                    }
+                                }
+                            } catch (_e2) {}
+
+                            if (!openData) {
+                                const openResp = await fetch(`/exness_open_positions.json?t=${Date.now()}`);
+                                if (openResp.ok) {
+                                    openData = await openResp.json();
+                                }
+                            }
+
+                            if (openData && Array.isArray(openData.positions)) {
+                                const liveList = openData.positions;
+                                if (openData.ok === true || openData.status === 'ok') {
+                                    openFxList = [...liveList];
+                                } else if (liveList.length > 0) {
+                                    const seen = new Set(liveList.map((p: any) => String(p.id || p.ticket || '')));
+                                    openFxList = [...liveList, ...openFxList.filter((p: any) => !seen.has(String(p.id || p.ticket || '')))];
+                                }
+                            }
+                        } catch (opErr) {
+                            // fallback ke openFxList bawaan history
+                        }
+
+                            const rawFxList = [...openFxList, ...closedFxList];
+                            const activeSymInput = (document.getElementById('ticker-input') as HTMLInputElement)?.value?.toUpperCase() || '';
+                            const activeLatestClose = (currentChartData && currentChartData.length > 0) ? Number(currentChartData[currentChartData.length - 1]?.close || 0) : 0;
+
+                            allForexPositionsData = rawFxList.map((p: any) => {
+                                const posObj: TradePosition = {
+                                    id: String(p.id || p.ticket || ''),
+                                    symbol: String(p.symbol || ''),
+                                    entryTime: Number(p.entry_time) || parseFakeUtcTimestamp(p.entry_datetime),
+                                    entryDatetime: String(p.entry_datetime || ''),
+                                    entryDate: String(p.entry_date || ''),
+                                    entryPrice: Number(p.entry_price || 0),
+                                    exitTime: Number(p.exit_time) || parseFakeUtcTimestamp(p.exit_datetime),
+                                    exitDatetime: String(p.exit_datetime || ''),
+                                    exitDate: String(p.exit_date || ''),
+                                    exitPrice: Number(p.exit_price || 0),
+                                    shares: Number(p.shares || p.lot || 0),
+                                    lot: Number(p.lot || 0),
+                                    realizedAmount: Number(p.realized_amount || 0),
+                                    realizedPercentage: Number(p.realized_percentage || 0),
+                                    isWin: Boolean(p.is_win),
+                                    isDayTrade: Boolean(p.is_day_trade),
+                                    isOpen: Boolean(p.is_open),
+                                    type: String(p.type || p.command || 'BUY').toUpperCase(),
+                                    currency: String(p.currency || 'USC'),
+                                    tp: p.tp != null ? Number(p.tp) : (p.take_profit != null ? Number(p.take_profit) : undefined),
+                                    sl: p.sl != null ? Number(p.sl) : (p.stop_loss != null ? Number(p.stop_loss) : undefined),
+                                    currentPrice: p.current_price != null ? Number(p.current_price) : undefined,
+                                };
+                                if (posObj.isOpen) {
+                                    const scrItem = screenerMap.get(posObj.symbol.toUpperCase());
+                                    const liveP = (activeSymInput && isForexMatch(activeSymInput, posObj.symbol) && activeLatestClose > 0)
+                                        ? activeLatestClose
+                                        : Number(scrItem?.price || posObj.currentPrice || posObj.entryPrice);
+                                    if (liveP > 0) {
+                                        const { unAmt, unPct, isWin } = computeOpenPositionUnrealizedPnl(posObj, liveP);
+                                        posObj.currentPrice = liveP;
+                                        posObj.exitPrice = liveP;
+                                        posObj.realizedAmount = unAmt;
+                                        posObj.realizedPercentage = unPct;
+                                        posObj.isWin = isWin;
+                                    }
+                                }
+                                return posObj;
+                            });
+
+                            // Daftarkan open forex position ke openPositionsMap agar muncul di portfolio watchlist
+                            for (const posObj of allForexPositionsData) {
+                                const sym = String(posObj.symbol || '').toUpperCase().trim();
+                                if (sym && posObj.isOpen) {
+                                    openPositionsMap.set(sym, { ...posObj });
+                                }
+                            }
                     }
                 } catch (fxErr) {
                     console.warn("[Trade History] Failed to load forex trade history:", fxErr);
@@ -11754,6 +11956,20 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 console.warn("Could not attach chart pattern primitive to footprint series:", e);
             }
 
+            // Attach Bab 24: Candlestick Patterns Primitive (Edianto Ong: Anatomi & Pola)
+            const nativeCandlestickPatternPrimitive = new CandlestickPatternPrimitive();
+            nativeCandles.attachPrimitive(nativeCandlestickPatternPrimitive);
+
+            let footprintCandlestickPatternPrimitive: CandlestickPatternPrimitive | null = null;
+            try {
+                if (typeof (footprintSeries as any).attachPrimitive === 'function') {
+                    footprintCandlestickPatternPrimitive = new CandlestickPatternPrimitive();
+                    (footprintSeries as any).attachPrimitive(footprintCandlestickPatternPrimitive);
+                }
+            } catch (e) {
+                console.warn("Could not attach candlestick pattern primitive to footprint series:", e);
+            }
+
             // Right Price Scale Mode (Linear vs Logarithmic)
             let isLogScale = localStorage.getItem('user_chart_scale_mode') === 'log';
             chart.priceScale('right').applyOptions({
@@ -11794,6 +12010,8 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 if (bpDd) bpDd.style.display = 'none';
                 const patDd = document.getElementById('chart-pattern-dropdown');
                 if (patDd) patDd.style.display = 'none';
+                const cpatDd = document.getElementById('candlestick-pattern-dropdown');
+                if (cpatDd) cpatDd.style.display = 'none';
                 closeAutocomplete();
             };
 
@@ -12408,13 +12626,15 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
             const INTRADAY_TRIGGER_THRESHOLD = 40;
             const INTRADAY_MAX_BUFFER = 1200;
 
-            function setupAndRenderIntraday(fullDataset: any[], tf: string): void {
+            function setupAndRenderIntraday(fullDataset: any[], tf: string, skipBackfill: boolean = false): void {
                 masterIntradayCandles = fullDataset || [];
                 windowEndIdx = masterIntradayCandles.length;
                 windowStartIdx = Math.max(0, windowEndIdx - INTRADAY_INITIAL_WINDOW);
                 const windowSlice = masterIntradayCandles.slice(windowStartIdx, windowEndIdx);
                 renderChartDataset(windowSlice, tf, true);
-                requestIntradayBackfill(activeLoadedTicker);
+                if (!skipBackfill) {
+                    requestIntradayBackfill(activeLoadedTicker);
+                }
             }
 
             function expandWindowLeft(): void {
@@ -12684,6 +12904,75 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     case 'bearish_rectangle': return 'Bearish Rectangle';
                     case 'cup_and_handle': return 'Cup and Handle';
                     case 'off': return 'Off';
+                    default: return mode;
+                }
+            }
+
+            // Bab 24: Candlestick Patterns (Edianto Ong: Anatomi, Single, Double, Triple, Continuation) State
+            const savedCandlePatternMode = (localStorage.getItem('user_candlestick_patterns_mode') as CandlestickPatternMode) || 'off';
+            let candlestickPatternMode: CandlestickPatternMode = savedCandlePatternMode;
+            let currentDetectedCandlestickPatterns: DetectedCandlestickPattern[] = [];
+            const hiddenCandlestickPatternIds = new Set<string>();
+            const dismissedCandlestickPatternIds = new Set<string>();
+            let setCandlestickPatternModeGlobal: ((mode: CandlestickPatternMode, showToastMsg?: boolean) => void) | null = null;
+
+            function getCandlestickPatternDisplayName(mode: CandlestickPatternMode): string {
+                switch (mode) {
+                    case 'all': return 'ALL (Semua Candlestick)';
+                    case 'off': return 'Off';
+                    case 'bullish': return 'Semua Pola Bullish';
+                    case 'bearish': return 'Semua Pola Bearish';
+                    case 'reversal': return 'Semua Reversal';
+                    case 'continuation': return 'Semua Continuation';
+                    case '1_candle': return 'Pola 1 Candle';
+                    case '2_candle': return 'Pola 2 Candle';
+                    case '3_candle': return 'Pola 3 & 5 Candle';
+                    case 'southern_doji': return 'Southern Doji';
+                    case 'southern_long_leg_doji': return 'Southern Long-Leg Doji';
+                    case 'dragonfly': return 'Dragonfly Doji';
+                    case 'hammer': return 'Hammer';
+                    case 'inverted_hammer': return 'Inverted Hammer';
+                    case 'bullish_belt_hold': return 'Bullish Belt-Hold';
+                    case 'northern_doji': return 'Northern Doji';
+                    case 'northern_long_leg_doji': return 'Northern Long-Leg Doji';
+                    case 'gravestone': return 'Gravestone Doji';
+                    case 'shooting_star': return 'Shooting Star';
+                    case 'hanging_man': return 'Hanging Man';
+                    case 'bearish_belt_hold': return 'Bearish Belt-Hold';
+                    case 'bullish_pregnant': return 'Bullish Pregnant';
+                    case 'bullish_pregnant_cross': return 'Bullish Pregnant Cross';
+                    case 'bullish_homing_pigeon': return 'Bullish Homing Pigeon';
+                    case 'matching_low': return 'Matching Low';
+                    case 'bullish_engulfing': return 'Bullish Engulfing';
+                    case 'piercing_line': return 'Piercing Line';
+                    case 'tweezer_bottom': return 'Tweezer Bottom';
+                    case 'bearish_pregnant': return 'Bearish Pregnant';
+                    case 'bearish_pregnant_cross': return 'Bearish Pregnant Cross';
+                    case 'bearish_homing_pigeon': return 'Bearish Homing Pigeon';
+                    case 'matching_high': return 'Matching High';
+                    case 'bearish_engulfing': return 'Bearish Engulfing';
+                    case 'dark_cloud_cover': return 'Dark Cloud Cover';
+                    case 'tweezer_top': return 'Tweezer Top';
+                    case 'morning_star': return 'Morning Star';
+                    case 'morning_doji_star': return 'Morning Doji Star';
+                    case 'bullish_abandoned_baby': return 'Bullish Abandoned Baby';
+                    case 'morning_tri_star': return 'Morning Tri-Star';
+                    case 'three_green_soldiers':
+                    case 'three_white_soldiers': return 'Three Green Soldiers';
+                    case 'evening_star': return 'Evening Star';
+                    case 'evening_doji_star': return 'Evening Doji Star';
+                    case 'bearish_abandoned_baby': return 'Bearish Abandoned Baby';
+                    case 'evening_tri_star': return 'Evening Tri-Star';
+                    case 'three_red_crows':
+                    case 'three_black_crows': return 'Three Red Crows';
+                    case 'green_marubozu':
+                    case 'white_marubozu': return 'Green Marubozu';
+                    case 'red_marubozu':
+                    case 'black_marubozu': return 'Red Marubozu';
+                    case 'upward_gap_tasuki': return 'Upward Gap Tasuki';
+                    case 'rising_three': return 'Rising Three Methods';
+                    case 'downward_gap_tasuki': return 'Downward Gap Tasuki';
+                    case 'falling_three': return 'Falling Three Methods';
                     default: return mode;
                 }
             }
@@ -13848,6 +14137,45 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     }
                 }
 
+                // Overlay: Candlestick Patterns (Bab 24 — Edianto Ong: Anatomi & Pola Candlestick)
+                if (candlestickPatternMode !== 'off') {
+                    if (currentDetectedCandlestickPatterns.length === 0) {
+                        const modeLabel = getCandlestickPatternDisplayName(candlestickPatternMode);
+                        html += `
+                            <div class="ind-legend-row" data-id="overlay_candlestick_patterns_none">
+                                <span class="ind-legend-title" style="color: #2ECC71; font-weight: 600;">Candlestick <span style="color: #FFB300;">(${modeLabel})</span></span>
+                                <span class="ind-legend-val" style="color: #787b86;">No Patterns Found</span>
+                                <div class="ind-actions-group">
+                                    <button type="button" class="ind-action-btn ind-del-btn" data-id="overlay_candlestick_patterns_all" title="Turn Off Candlestick Patterns">${legTrash}</button>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        currentDetectedCandlestickPatterns.forEach((cpat, idx) => {
+                            const isHidden = hiddenCandlestickPatternIds.has(cpat.id);
+                            const isVisible = !isHidden;
+                            const rowId = `overlay_cpat_${cpat.id}`;
+
+                            const patColor = cpat.direction === 'bullish' ? '#2ECC71' : '#FF5252';
+                            const catLabel = cpat.category === 'reversal' ? 'Rev' : 'Cont';
+                            const countLabel = `${cpat.candleCount}C`;
+                            const rowTitle = `${cpat.name} #${idx + 1}`;
+                            const valStr = isVisible ? `${catLabel} • ${countLabel}` : 'Hidden';
+
+                            html += `
+                                <div class="ind-legend-row ${isVisible ? '' : 'hidden-state'}" data-id="${rowId}">
+                                    <span class="ind-legend-title" style="color: ${patColor}; font-weight: 600;" title="${rowTitle} [${cpat.category.toUpperCase()} | ${cpat.direction.toUpperCase()} | ${cpat.candleCount} Candle]">${rowTitle}</span>
+                                    <span class="ind-legend-val" id="val-${rowId}" style="color: ${patColor}; font-size: 11px;">${valStr}</span>
+                                    <div class="ind-actions-group">
+                                        <button type="button" class="ind-action-btn ind-eye-btn" data-id="${rowId}" title="${isVisible ? 'Hide ' + rowTitle : 'Show ' + rowTitle}">${getLegEye(isVisible)}</button>
+                                        <button type="button" class="ind-action-btn ind-del-btn" data-id="${rowId}" title="Remove ${rowTitle}">${legTrash}</button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                }
+
                 // Overlay: Volume (TradingView 1:1 Standard Overlay)
                 if (volumeVisible) {
                     const isVisible = !isVolumeSeriesHidden;
@@ -14317,6 +14645,16 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         renderChartPatterns();
                         return;
                     }
+                    if (id.startsWith('overlay_cpat_')) {
+                        const cpatId = id.substring('overlay_cpat_'.length);
+                        if (hiddenCandlestickPatternIds.has(cpatId)) {
+                            hiddenCandlestickPatternIds.delete(cpatId);
+                        } else {
+                            hiddenCandlestickPatternIds.add(cpatId);
+                        }
+                        renderCandlestickPatterns();
+                        return;
+                    }
                     if (id === 'overlay_trendline_up') {
                         trendlineUpVisible = !trendlineUpVisible;
                         localStorage.setItem('user_auto_trendline_up_visible', trendlineUpVisible ? 'true' : 'false');
@@ -14511,6 +14849,19 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     if (id === 'overlay_chart_patterns' || id === 'overlay_chart_patterns_all' || id === 'overlay_chart_patterns_none') {
                         if (setChartPatternModeGlobal) {
                             setChartPatternModeGlobal('off');
+                        }
+                        return;
+                    }
+                    if (id.startsWith('overlay_cpat_')) {
+                        const cpatId = id.substring('overlay_cpat_'.length);
+                        dismissedCandlestickPatternIds.add(cpatId);
+                        renderCandlestickPatterns();
+                        showToast('Removed Candlestick Pattern');
+                        return;
+                    }
+                    if (id === 'overlay_candlestick_patterns' || id === 'overlay_candlestick_patterns_all' || id === 'overlay_candlestick_patterns_none') {
+                        if (setCandlestickPatternModeGlobal) {
+                            setCandlestickPatternModeGlobal('off');
                         }
                         return;
                     }
@@ -14882,6 +15233,11 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 renderGaps(data);
                 renderChartPatterns(data);
                 try {
+                    renderCandlestickPatterns(data);
+                } catch (cpErr) {
+                    console.error("Error rendering candlestick patterns:", cpErr);
+                }
+                try {
                     renderTradePositions();
                 } catch (tpErr) {
                     console.error("Error rendering trade positions:", tpErr);
@@ -14991,6 +15347,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         try {
                             setupAndRenderIntraday(data, tf);
                             updateHorizonTrendStates();
+                            reconcileExnessCandles(ticker, tf, 'initial');
                         } catch (renderErr) {
                             console.error("Error rendering cached intraday dataset:", renderErr);
                         }
@@ -15039,6 +15396,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                             try {
                                 setupAndRenderIntraday(data, tf);
                                 updateHorizonTrendStates();
+                                reconcileExnessCandles(ticker, tf, 'initial');
                             } catch (renderErr) {
                                 console.error("Error rendering intraday chart dataset:", renderErr);
                             }
@@ -15055,6 +15413,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                                     try {
                                         setupAndRenderIntraday(data, tf);
                                         updateHorizonTrendStates();
+                                        reconcileExnessCandles(ticker, tf, 'initial');
                                     } catch (renderErr2) {
                                         console.error("Error rendering fallback chart dataset:", renderErr2);
                                     }
@@ -15088,6 +15447,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                             renderChartDataset(data, tf);
                             updateHorizonTrendStates(cached1dData);
                             requestIntradayBackfill(ticker);
+                            reconcileExnessCandles(ticker, tf, 'initial');
                         } catch (renderErr) {
                             console.error("Error rendering cached daily dataset:", renderErr);
                         }
@@ -15162,6 +15522,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                                                     const enriched = merge1mFootprintIntoDaily(cached1dData, cached1mData);
                                                     try {
                                                         renderChartDataset(enriched, '1d');
+                                                        reconcileExnessCandles(ticker, '1d', 'initial');
                                                     } catch (err) {
                                                         console.error("Error rendering enriched 1D dataset:", err);
                                                     }
@@ -15175,6 +15536,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                             try {
                                 renderChartDataset(data, tf);
                                 requestIntradayBackfill(ticker);
+                                reconcileExnessCandles(ticker, tf, 'initial');
                             } catch (renderErr) {
                                 console.error("Error rendering daily chart dataset:", renderErr);
                             }
@@ -15257,6 +15619,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     target.closest('#indicators-btn') || target.closest('#indicators-menu') ||
                     target.closest('#broker-profile-dropdown') || target.closest('#broker-profile-left-btn') ||
                     target.closest('#chart-pattern-dropdown') || target.closest('#chart-pattern-btn') ||
+                    target.closest('#candlestick-pattern-dropdown') || target.closest('#candlestick-pattern-btn') ||
                     target.closest('[data-id="overlay_broker_profile"]')
                 ) {
                     return;
@@ -17578,6 +17941,184 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
             updateChartPatternBtnUI();
             updatePatternDropdownSelection();
 
+            // =========================================================================
+            // Bab 24: Candlestick Patterns Controller (Edianto Ong: Anatomi & Pola Candlestick)
+            // Floating Dropdown Menu (TradingView 1:1 Parity) with Individual & Group Selection
+            // Blackboard Teacher Handwriting Style (Chalk Circles & Handwritten Labels)
+            // =========================================================================
+            const candlePatternBtn = document.getElementById('candlestick-pattern-btn') as HTMLElement | null;
+            const menuCandlePatternBtn = document.getElementById('menu-candlestick-pattern-btn') as HTMLElement | null;
+            const candlePatternDropdown = document.getElementById('candlestick-pattern-dropdown') as HTMLElement | null;
+            const candlePatternSearchInput = document.getElementById('candle-pattern-search-input') as HTMLInputElement | null;
+
+            function updateCandlestickPatternBtnUI() {
+                const displayName = getCandlestickPatternDisplayName(candlestickPatternMode);
+                if (candlePatternBtn) {
+                    candlePatternBtn.classList.remove('active', 'active-intact', 'active-major');
+                    if (candlestickPatternMode !== 'off') {
+                        candlePatternBtn.classList.add('active');
+                        candlePatternBtn.title = `Candlestick Patterns (Bab 24 — Edianto Ong): ${displayName} [Klik untuk ganti pola]`;
+                    } else {
+                        candlePatternBtn.title = `Candlestick Patterns (Bab 24 — Edianto Ong) [Pilih Pola dari Dropdown]`;
+                    }
+                }
+                if (menuCandlePatternBtn) {
+                    menuCandlePatternBtn.classList.remove('active', 'active-intact', 'active-major');
+                    if (candlestickPatternMode !== 'off') {
+                        menuCandlePatternBtn.classList.add('active');
+                    }
+                }
+            }
+
+            function updateCandlestickPatternDropdownSelection() {
+                if (!candlePatternDropdown) return;
+                candlePatternDropdown.querySelectorAll('.candle-pattern-option-item').forEach((el: Element) => {
+                    const p = (el as HTMLElement).dataset.pattern;
+                    if (p === candlestickPatternMode) {
+                        el.classList.add('is-selected');
+                    } else {
+                        el.classList.remove('is-selected');
+                    }
+                });
+            }
+
+            function openCandlestickPatternDropdown(triggerEl?: HTMLElement | null) {
+                if (!candlePatternDropdown) return;
+                const isShowing = candlePatternDropdown.style.display === 'block';
+                closeAllTopDropdowns();
+
+                if (!isShowing) {
+                    const anchor = triggerEl || candlePatternBtn;
+                    if (anchor) {
+                        const rect = anchor.getBoundingClientRect();
+                        if (anchor === candlePatternBtn) {
+                            candlePatternDropdown.style.top = `${Math.min(window.innerHeight - 400, Math.max(10, rect.top))}px`;
+                            candlePatternDropdown.style.left = `${rect.right + 6}px`;
+                        } else {
+                            candlePatternDropdown.style.top = `${Math.min(window.innerHeight - 400, rect.bottom + 6)}px`;
+                            candlePatternDropdown.style.left = `${Math.min(window.innerWidth - 280, Math.max(10, rect.left))}px`;
+                        }
+                    }
+                    candlePatternDropdown.style.display = 'block';
+                    updateCandlestickPatternDropdownSelection();
+
+                    setTimeout(() => {
+                        if (candlePatternSearchInput) {
+                            candlePatternSearchInput.value = '';
+                            candlePatternSearchInput.focus();
+                            candlePatternDropdown.querySelectorAll('.candle-pattern-option-item').forEach((item: Element) => {
+                                (item as HTMLElement).style.display = 'flex';
+                            });
+                        }
+                    }, 50);
+                } else {
+                    candlePatternDropdown.style.display = 'none';
+                }
+            }
+
+            candlePatternDropdown?.querySelectorAll('.candle-pattern-option-item').forEach((item: Element) => {
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const p = (item as HTMLElement).dataset.pattern as CandlestickPatternMode;
+                    if (p) {
+                        setCandlestickPatternMode(p);
+                    }
+                    if (candlePatternDropdown) candlePatternDropdown.style.display = 'none';
+                });
+            });
+
+            candlePatternSearchInput?.addEventListener('input', () => {
+                const q = candlePatternSearchInput.value.trim().toUpperCase();
+                candlePatternDropdown?.querySelectorAll('.candle-pattern-option-item').forEach((item: Element) => {
+                    const label = (item.querySelector('.item-label')?.textContent || (item as HTMLElement).dataset.pattern || '').toUpperCase();
+                    (item as HTMLElement).style.display = label.includes(q) ? 'flex' : 'none';
+                });
+            });
+
+            candlePatternBtn?.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openCandlestickPatternDropdown(candlePatternBtn);
+            });
+
+            menuCandlePatternBtn?.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openCandlestickPatternDropdown(menuCandlePatternBtn);
+            });
+
+            function clearCandlestickPatterns() {
+                nativeCandlestickPatternPrimitive.clearData();
+                if (footprintCandlestickPatternPrimitive) footprintCandlestickPatternPrimitive.clearData();
+            }
+
+            function renderCandlestickPatterns(bars?: any[]) {
+                clearCandlestickPatterns();
+                if (candlestickPatternMode === 'off') {
+                    currentDetectedCandlestickPatterns = [];
+                    renderIndicatorsLegend();
+                    return;
+                }
+
+                const dataToScan = (bars && Array.isArray(bars) && bars.length > 0)
+                    ? bars
+                    : (currentChartData && currentChartData.length > 0 ? currentChartData : cached1dData);
+                if (!dataToScan || dataToScan.length < 15) {
+                    currentDetectedCandlestickPatterns = [];
+                    renderIndicatorsLegend();
+                    return;
+                }
+
+                const tickerInput = document.getElementById('ticker-input') as HTMLInputElement | null;
+                const currentSym = (activeLoadedTicker || tickerInput?.value || 'KAQI').toUpperCase();
+                const isFx = currentSym.endsWith('c') || currentSym.endsWith('m') || currentSym.includes('USD') || currentSym.includes('EUR') || currentSym.includes('XAU') || currentSym.includes('USTEC') || currentSym.includes('US500') || currentSym.includes('US30');
+
+                // Detect candlestick patterns
+                const detected = detectCandlestickPatterns(dataToScan, isFx, candlestickPatternMode);
+
+                // Filter out dismissed patterns
+                currentDetectedCandlestickPatterns = detected.filter(p => !dismissedCandlestickPatternIds.has(p.id));
+
+                // Filter out hidden patterns for canvas rendering
+                const patternsToDraw = currentDetectedCandlestickPatterns.filter(p => !hiddenCandlestickPatternIds.has(p.id));
+
+                const candleData = {
+                    patterns: patternsToDraw,
+                    visible: true,
+                };
+
+                nativeCandlestickPatternPrimitive.setData(candleData);
+                if (footprintCandlestickPatternPrimitive) footprintCandlestickPatternPrimitive.setData(candleData);
+                renderIndicatorsLegend();
+            }
+
+            function setCandlestickPatternMode(newMode: CandlestickPatternMode, showNotification: boolean = true) {
+                candlestickPatternMode = newMode;
+                localStorage.setItem('user_candlestick_patterns_mode', candlestickPatternMode);
+                dismissedCandlestickPatternIds.clear();
+                hiddenCandlestickPatternIds.clear();
+                updateCandlestickPatternBtnUI();
+                updateCandlestickPatternDropdownSelection();
+
+                if (candlestickPatternMode !== 'off') {
+                    renderCandlestickPatterns();
+                    if (showNotification) {
+                        const displayName = getCandlestickPatternDisplayName(candlestickPatternMode);
+                        showToast(`Candlestick Pattern: ${displayName}`);
+                    }
+                } else {
+                    clearCandlestickPatterns();
+                    currentDetectedCandlestickPatterns = [];
+                    if (showNotification) {
+                        showToast('Candlestick Patterns: Nonaktif');
+                    }
+                    renderIndicatorsLegend();
+                }
+            }
+            setCandlestickPatternModeGlobal = setCandlestickPatternMode;
+
+            updateCandlestickPatternBtnUI();
+            updateCandlestickPatternDropdownSelection();
 
             // Enable Magnet Mode crosshair (TradingView style snapping)
             chart.applyOptions({
@@ -18153,11 +18694,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
 
             document.getElementById('time-scale-corner-gear')?.addEventListener('click', (e) => {
                 e.stopPropagation();
-                if (volumeVisible) {
-                    openVolumeSettingsModal();
-                } else {
-                    showToast('TradingView Chart Options');
-                }
+                openChartSettingsModal();
             });
 
             // Settings Modal Tabs
@@ -19671,15 +20208,867 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
             });
             document.getElementById('undo-btn')?.addEventListener('click', () => showToast('Undo action'));
             document.getElementById('redo-btn')?.addEventListener('click', () => showToast('Redo action'));
-            document.getElementById('settings-btn')?.addEventListener('click', () => showToast('Chart Settings feature coming soon'));
-            document.getElementById('layout-btn')?.addEventListener('click', () => showToast('Workspace Layouts coming soon'));
-            document.getElementById('tv-trade-btn')?.addEventListener('click', () => showToast('Order Execution & Broker Trade panel'));
-            document.getElementById('login-btn')?.addEventListener('click', (e) => {
-                e.stopPropagation();
-                showToast('Stockbit / Broker Account connection coming soon');
+            
+            // ==================== TRADINGVIEW FULL CHART SETTINGS MODAL ENGINE ====================
+            interface ChartSettingsState {
+                // Tab 1: Symbol
+                colorPrevClose: boolean;
+                showBody: boolean;
+                bodyUp: string;
+                bodyDown: string;
+                showBorder: boolean;
+                borderUp: string;
+                borderDown: string;
+                showWick: boolean;
+                wickUp: string;
+                wickDown: string;
+                precision: string;
+                timezone: string;
+
+                // Tab 2: Status line
+                showStatusTitle: boolean;
+                statusTitleMode: 'ticker' | 'description' | 'both';
+                showStatusOhlc: boolean;
+                showStatusBarChange: boolean;
+                showStatusVolume: boolean;
+                showIndTitles: boolean;
+                showIndInputs: boolean;
+                showIndValues: boolean;
+                showStatusBg: boolean;
+                statusBgOpacity: number;
+
+                // Tab 3: Scales and lines
+                scaleModesVis: 'hover' | 'always' | 'hidden';
+                lockRatio: boolean;
+                lockRatioVal: string;
+                scalesPlacement: 'auto' | 'left' | 'right';
+                noOverlapLabels: boolean;
+                plusButton: boolean;
+                countdown: boolean;
+                symbolLabelMode: 'value_line' | 'value' | 'line' | 'hidden';
+                symbolLineColor: string;
+                symbolScaleMode: 'scale' | 'indexed';
+                avgCloseMode: 'value_line' | 'value' | 'line' | 'hidden';
+                prevCloseLineMode: 'value_line' | 'value' | 'line' | 'hidden';
+                indLabelsMode: 'value_line' | 'value' | 'line' | 'hidden';
+                prePostMode: 'value_line' | 'value' | 'line' | 'hidden';
+                highLowLineMode: 'value_line' | 'value' | 'line' | 'hidden';
+                bidAskMode: 'value_line' | 'value' | 'line' | 'hidden';
+                dayOfWeek: boolean;
+                dateFormat: string;
+                timeFormat: '12' | '24';
+                saveLeftEdge: boolean;
+
+                // Tab 4: Canvas
+                bgType: 'solid' | 'gradient';
+                bg1: string;
+                bg2: string;
+                gridMode: 'both' | 'vert' | 'horz' | 'none';
+                gridColor: string;
+                sessionBreaks: boolean;
+                sessionColor: string;
+                crosshairColor: string;
+                watermarkMode: 'ticker' | 'desc' | 'hidden';
+                watermarkColor: string;
+                scaleTextColor: string;
+                scaleFontSize: number;
+                scaleLineColor: string;
+                navButtonsVis: 'hover' | 'always' | 'hidden';
+                paneButtonsVis: 'hover' | 'always' | 'hidden';
+                marginTop: number;
+                marginBottom: number;
+                marginRight: number;
+
+                // Tab 5: Trading
+                tradingPositions: boolean;
+                tradingPnl: boolean;
+                tradingPosSub: boolean;
+                tradingPnlMode: 'money' | 'percent' | 'ticks';
+                tradingAlign: 'left' | 'center' | 'right';
+            }
+
+            // ⭐ DEFAULT SAVED TEMPLATE: Active IDX Footprint Layout & Style
+            const CURRENT_SAVED_TEMPLATE: ChartSettingsState = {
+                colorPrevClose: false,
+                showBody: true,
+                bodyUp: '#4CAF50',
+                bodyDown: '#F23645',
+                showBorder: true,
+                borderUp: '#000000',
+                borderDown: '#000000',
+                showWick: true,
+                wickUp: '#4CAF50',
+                wickDown: '#F23645',
+                precision: 'default',
+                timezone: 'UTC+7',
+
+                showStatusTitle: true,
+                statusTitleMode: 'both',
+                showStatusOhlc: true,
+                showStatusBarChange: true,
+                showStatusVolume: true,
+                showIndTitles: true,
+                showIndInputs: true,
+                showIndValues: true,
+                showStatusBg: false, // 100% Transparent by default (no disturbing box on indicator legend)
+                statusBgOpacity: 0,
+
+                scaleModesVis: 'hover',
+                lockRatio: false,
+                lockRatioVal: '0.0565302',
+                scalesPlacement: 'right',
+                noOverlapLabels: true,
+                plusButton: true,
+                countdown: false,
+                symbolLabelMode: 'value_line',
+                symbolLineColor: '#ef5350',
+                symbolScaleMode: 'scale',
+                avgCloseMode: 'hidden',
+                prevCloseLineMode: 'hidden',
+                indLabelsMode: 'value_line',
+                prePostMode: 'value_line',
+                highLowLineMode: 'hidden',
+                bidAskMode: 'hidden',
+                dayOfWeek: true,
+                dateFormat: "Mon 29 Sep '97",
+                timeFormat: '24',
+                saveLeftEdge: false,
+
+                bgType: 'solid',
+                bg1: '#E2E2E2',
+                bg2: '#EFEFEF',
+                gridMode: 'none',
+                gridColor: '#D1D4DC',
+                sessionBreaks: false,
+                sessionColor: '#2962ff',
+                crosshairColor: '#9C9C9C',
+                watermarkMode: 'hidden',
+                watermarkColor: '#8C9099',
+                scaleTextColor: '#0F0F0F',
+                scaleFontSize: 11,
+                scaleLineColor: '#d1d4dc',
+                navButtonsVis: 'hover',
+                paneButtonsVis: 'hover',
+                marginTop: 10,
+                marginBottom: 8,
+                marginRight: 4,
+
+                tradingPositions: true,
+                tradingPnl: true,
+                tradingPosSub: true,
+                tradingPnlMode: 'money',
+                tradingAlign: 'left',
+            };
+
+            let isSettingsModalDark = false;
+
+            let currentChartSettings: ChartSettingsState = (() => {
+                try {
+                    const saved = localStorage.getItem('idx_tv_chart_settings_v1');
+                    if (saved) {
+                        const parsed = JSON.parse(saved);
+                        if (parsed.statusBgOpacity === 35 || parsed.statusBgOpacity === undefined) {
+                            parsed.showStatusBg = false;
+                            parsed.statusBgOpacity = 0;
+                        }
+                        return { ...CURRENT_SAVED_TEMPLATE, ...parsed };
+                    }
+                } catch (_e) {}
+                return JSON.parse(JSON.stringify(CURRENT_SAVED_TEMPLATE));
+            })();
+
+            let savedSnapshotSettings: ChartSettingsState = JSON.parse(JSON.stringify(currentChartSettings));
+
+            function syncInputsFromSettings(s: ChartSettingsState) {
+                // Tab 1: Symbol
+                const chkColorPrevClose = document.getElementById('chkColorPrevClose') as HTMLInputElement | null;
+                if (chkColorPrevClose) chkColorPrevClose.checked = s.colorPrevClose;
+                const chkCandleBody = document.getElementById('chkCandleBody') as HTMLInputElement | null;
+                if (chkCandleBody) chkCandleBody.checked = s.showBody;
+                const colBodyUp = document.getElementById('colBodyUp') as HTMLInputElement | null;
+                if (colBodyUp) colBodyUp.value = s.bodyUp;
+                const swatchBodyUp = document.getElementById('swatchBodyUp');
+                if (swatchBodyUp) swatchBodyUp.style.background = s.bodyUp;
+                const colBodyDown = document.getElementById('colBodyDown') as HTMLInputElement | null;
+                if (colBodyDown) colBodyDown.value = s.bodyDown;
+                const swatchBodyDown = document.getElementById('swatchBodyDown');
+                if (swatchBodyDown) swatchBodyDown.style.background = s.bodyDown;
+
+                const chkCandleBorder = document.getElementById('chkCandleBorder') as HTMLInputElement | null;
+                if (chkCandleBorder) chkCandleBorder.checked = s.showBorder;
+                const colBorderUp = document.getElementById('colBorderUp') as HTMLInputElement | null;
+                if (colBorderUp) colBorderUp.value = s.borderUp;
+                const swatchBorderUp = document.getElementById('swatchBorderUp');
+                if (swatchBorderUp) swatchBorderUp.style.background = s.borderUp;
+                const colBorderDown = document.getElementById('colBorderDown') as HTMLInputElement | null;
+                if (colBorderDown) colBorderDown.value = s.borderDown;
+                const swatchBorderDown = document.getElementById('swatchBorderDown');
+                if (swatchBorderDown) swatchBorderDown.style.background = s.borderDown;
+
+                const chkCandleWick = document.getElementById('chkCandleWick') as HTMLInputElement | null;
+                if (chkCandleWick) chkCandleWick.checked = s.showWick;
+                const colWickUp = document.getElementById('colWickUp') as HTMLInputElement | null;
+                if (colWickUp) colWickUp.value = s.wickUp;
+                const swatchWickUp = document.getElementById('swatchWickUp');
+                if (swatchWickUp) swatchWickUp.style.background = s.wickUp;
+                const colWickDown = document.getElementById('colWickDown') as HTMLInputElement | null;
+                if (colWickDown) colWickDown.value = s.wickDown;
+                const swatchWickDown = document.getElementById('swatchWickDown');
+                if (swatchWickDown) swatchWickDown.style.background = s.wickDown;
+
+                const selPrecision = document.getElementById('selPrecision') as HTMLSelectElement | null;
+                if (selPrecision) selPrecision.value = s.precision;
+                const selTimezone = document.getElementById('selTimezone') as HTMLSelectElement | null;
+                if (selTimezone) selTimezone.value = s.timezone;
+
+                // Tab 2: Status line
+                const chkStatusTitle = document.getElementById('chkStatusTitle') as HTMLInputElement | null;
+                if (chkStatusTitle) chkStatusTitle.checked = s.showStatusTitle;
+                const selStatusTitleMode = document.getElementById('selStatusTitleMode') as HTMLSelectElement | null;
+                if (selStatusTitleMode) selStatusTitleMode.value = s.statusTitleMode;
+                const chkStatusOhlc = document.getElementById('chkStatusOhlc') as HTMLInputElement | null;
+                if (chkStatusOhlc) chkStatusOhlc.checked = s.showStatusOhlc;
+                const chkStatusBarChange = document.getElementById('chkStatusBarChange') as HTMLInputElement | null;
+                if (chkStatusBarChange) chkStatusBarChange.checked = s.showStatusBarChange;
+                const chkStatusVolume = document.getElementById('chkStatusVolume') as HTMLInputElement | null;
+                if (chkStatusVolume) chkStatusVolume.checked = s.showStatusVolume;
+                const chkIndTitles = document.getElementById('chkIndTitles') as HTMLInputElement | null;
+                if (chkIndTitles) chkIndTitles.checked = s.showIndTitles;
+                const chkIndInputs = document.getElementById('chkIndInputs') as HTMLInputElement | null;
+                if (chkIndInputs) chkIndInputs.checked = s.showIndInputs;
+                const chkIndValues = document.getElementById('chkIndValues') as HTMLInputElement | null;
+                if (chkIndValues) chkIndValues.checked = s.showIndValues;
+                const chkStatusBg = document.getElementById('chkStatusBg') as HTMLInputElement | null;
+                if (chkStatusBg) chkStatusBg.checked = s.showStatusBg;
+                const rngStatusBgOpacity = document.getElementById('rngStatusBgOpacity') as HTMLInputElement | null;
+                if (rngStatusBgOpacity) rngStatusBgOpacity.value = String(s.statusBgOpacity);
+
+                // Tab 3: Scales and lines
+                const selScaleModes = document.getElementById('selScaleModes') as HTMLSelectElement | null;
+                if (selScaleModes) selScaleModes.value = s.scaleModesVis;
+                const chkLockRatio = document.getElementById('chkLockRatio') as HTMLInputElement | null;
+                if (chkLockRatio) chkLockRatio.checked = s.lockRatio;
+                const inpLockRatio = document.getElementById('inpLockRatio') as HTMLInputElement | null;
+                if (inpLockRatio) {
+                    inpLockRatio.disabled = !s.lockRatio;
+                    inpLockRatio.value = s.lockRatioVal;
+                }
+                const selScalesPlacement = document.getElementById('selScalesPlacement') as HTMLSelectElement | null;
+                if (selScalesPlacement) selScalesPlacement.value = s.scalesPlacement;
+                const chkNoOverlapLabels = document.getElementById('chkNoOverlapLabels') as HTMLInputElement | null;
+                if (chkNoOverlapLabels) chkNoOverlapLabels.checked = s.noOverlapLabels;
+                const chkPlusButton = document.getElementById('chkPlusButton') as HTMLInputElement | null;
+                if (chkPlusButton) chkPlusButton.checked = s.plusButton;
+                const chkCountdown = document.getElementById('chkCountdown') as HTMLInputElement | null;
+                if (chkCountdown) chkCountdown.checked = s.countdown;
+
+                const selSymbolLabel = document.getElementById('selSymbolLabel') as HTMLSelectElement | null;
+                if (selSymbolLabel) selSymbolLabel.value = s.symbolLabelMode;
+                const colSymbolLine = document.getElementById('colSymbolLine') as HTMLInputElement | null;
+                if (colSymbolLine) colSymbolLine.value = s.symbolLineColor;
+                const selSymbolScaleMode = document.getElementById('selSymbolScaleMode') as HTMLSelectElement | null;
+                if (selSymbolScaleMode) selSymbolScaleMode.value = s.symbolScaleMode;
+
+                const selAvgCloseLine = document.getElementById('selAvgCloseLine') as HTMLSelectElement | null;
+                if (selAvgCloseLine) selAvgCloseLine.value = s.avgCloseMode;
+                const selPrevCloseLine = document.getElementById('selPrevCloseLine') as HTMLSelectElement | null;
+                if (selPrevCloseLine) selPrevCloseLine.value = s.prevCloseLineMode;
+                const selIndLabels = document.getElementById('selIndLabels') as HTMLSelectElement | null;
+                if (selIndLabels) selIndLabels.value = s.indLabelsMode;
+                const selPrePostMarket = document.getElementById('selPrePostMarket') as HTMLSelectElement | null;
+                if (selPrePostMarket) selPrePostMarket.value = s.prePostMode;
+                const selHighLowLine = document.getElementById('selHighLowLine') as HTMLSelectElement | null;
+                if (selHighLowLine) selHighLowLine.value = s.highLowLineMode;
+                const selBidAsk = document.getElementById('selBidAsk') as HTMLSelectElement | null;
+                if (selBidAsk) selBidAsk.value = s.bidAskMode;
+
+                const chkDayOfWeek = document.getElementById('chkDayOfWeek') as HTMLInputElement | null;
+                if (chkDayOfWeek) chkDayOfWeek.checked = s.dayOfWeek;
+                const selDateFormat = document.getElementById('selDateFormat') as HTMLSelectElement | null;
+                if (selDateFormat) selDateFormat.value = s.dateFormat;
+                const selTimeFormat = document.getElementById('selTimeFormat') as HTMLSelectElement | null;
+                if (selTimeFormat) selTimeFormat.value = s.timeFormat;
+                const chkSaveLeftEdge = document.getElementById('chkSaveLeftEdge') as HTMLInputElement | null;
+                if (chkSaveLeftEdge) chkSaveLeftEdge.checked = s.saveLeftEdge;
+
+                // Tab 4: Canvas
+                const selBgType = document.getElementById('selBgType') as HTMLSelectElement | null;
+                if (selBgType) selBgType.value = s.bgType;
+                const colBg1 = document.getElementById('colBg1') as HTMLInputElement | null;
+                if (colBg1) colBg1.value = s.bg1;
+                const swatchBg1 = document.getElementById('swatchBg1');
+                if (swatchBg1) swatchBg1.style.background = s.bg1;
+                const colBg2 = document.getElementById('colBg2') as HTMLInputElement | null;
+                if (colBg2) colBg2.value = s.bg2;
+                const swatchBg2 = document.getElementById('swatchBg2');
+                if (swatchBg2) swatchBg2.style.background = s.bg2;
+                const wrapBg2 = document.getElementById('wrapBg2');
+                if (wrapBg2) wrapBg2.classList.toggle('hidden', s.bgType !== 'gradient');
+
+                const selGridMode = document.getElementById('selGridMode') as HTMLSelectElement | null;
+                if (selGridMode) selGridMode.value = s.gridMode;
+                const colGrid = document.getElementById('colGrid') as HTMLInputElement | null;
+                if (colGrid) colGrid.value = s.gridColor;
+                const swatchGrid = document.getElementById('swatchGrid');
+                if (swatchGrid) swatchGrid.style.background = s.gridColor;
+                const wrapGridColor = document.getElementById('wrapGridColor');
+                if (wrapGridColor) wrapGridColor.classList.toggle('hidden', s.gridMode === 'none');
+
+                const chkSessionBreaks = document.getElementById('chkSessionBreaks') as HTMLInputElement | null;
+                if (chkSessionBreaks) chkSessionBreaks.checked = s.sessionBreaks;
+                const colSession = document.getElementById('colSession') as HTMLInputElement | null;
+                if (colSession) colSession.value = s.sessionColor;
+                const swatchSession = document.getElementById('swatchSession');
+                if (swatchSession) swatchSession.style.background = s.sessionColor;
+
+                const colCrosshair = document.getElementById('colCrosshair') as HTMLInputElement | null;
+                if (colCrosshair) colCrosshair.value = s.crosshairColor;
+                const swatchCrosshair = document.getElementById('swatchCrosshair');
+                if (swatchCrosshair) swatchCrosshair.style.background = s.crosshairColor;
+
+                const selWatermark = document.getElementById('selWatermark') as HTMLSelectElement | null;
+                if (selWatermark) selWatermark.value = s.watermarkMode;
+                const colWatermark = document.getElementById('colWatermark') as HTMLInputElement | null;
+                if (colWatermark) colWatermark.value = s.watermarkColor;
+                const swatchWatermark = document.getElementById('swatchWatermark');
+                if (swatchWatermark) swatchWatermark.style.backgroundColor = s.watermarkColor;
+
+                const colScaleText = document.getElementById('colScaleText') as HTMLInputElement | null;
+                if (colScaleText) colScaleText.value = s.scaleTextColor;
+                const swatchScaleText = document.getElementById('swatchScaleText');
+                if (swatchScaleText) swatchScaleText.style.background = s.scaleTextColor;
+
+                const selScaleFontSize = document.getElementById('selScaleFontSize') as HTMLSelectElement | null;
+                if (selScaleFontSize) selScaleFontSize.value = String(s.scaleFontSize);
+                const colScaleLine = document.getElementById('colScaleLine') as HTMLInputElement | null;
+                if (colScaleLine) colScaleLine.value = s.scaleLineColor;
+                const swatchScaleLine = document.getElementById('swatchScaleLine');
+                if (swatchScaleLine) swatchScaleLine.style.backgroundColor = s.scaleLineColor;
+
+                const selNavButtons = document.getElementById('selNavButtons') as HTMLSelectElement | null;
+                if (selNavButtons) selNavButtons.value = s.navButtonsVis;
+                const selPaneButtons = document.getElementById('selPaneButtons') as HTMLSelectElement | null;
+                if (selPaneButtons) selPaneButtons.value = s.paneButtonsVis;
+
+                const inpMarginTop = document.getElementById('inpMarginTop') as HTMLInputElement | null;
+                if (inpMarginTop) inpMarginTop.value = String(s.marginTop);
+                const inpMarginBottom = document.getElementById('inpMarginBottom') as HTMLInputElement | null;
+                if (inpMarginBottom) inpMarginBottom.value = String(s.marginBottom);
+                const inpMarginRight = document.getElementById('inpMarginRight') as HTMLInputElement | null;
+                if (inpMarginRight) inpMarginRight.value = String(s.marginRight);
+
+                // Tab 5: Trading
+                const chkTradingPositions = document.getElementById('chkTradingPositions') as HTMLInputElement | null;
+                if (chkTradingPositions) chkTradingPositions.checked = s.tradingPositions;
+                const chkTradingPnl = document.getElementById('chkTradingPnl') as HTMLInputElement | null;
+                if (chkTradingPnl) chkTradingPnl.checked = s.tradingPnl;
+                const chkTradingPosSub = document.getElementById('chkTradingPosSub') as HTMLInputElement | null;
+                if (chkTradingPosSub) chkTradingPosSub.checked = s.tradingPosSub;
+                const selTradingPnlMode = document.getElementById('selTradingPnlMode') as HTMLSelectElement | null;
+                if (selTradingPnlMode) selTradingPnlMode.value = s.tradingPnlMode;
+                const selTradingAlign = document.getElementById('selTradingAlign') as HTMLSelectElement | null;
+                if (selTradingAlign) selTradingAlign.value = s.tradingAlign;
+            }
+
+            function readSettingsFromInputs(): ChartSettingsState {
+                const s = currentChartSettings;
+
+                // Tab 1
+                const chkColorPrevClose = document.getElementById('chkColorPrevClose') as HTMLInputElement | null;
+                if (chkColorPrevClose) s.colorPrevClose = chkColorPrevClose.checked;
+                const chkCandleBody = document.getElementById('chkCandleBody') as HTMLInputElement | null;
+                if (chkCandleBody) s.showBody = chkCandleBody.checked;
+                const colBodyUp = document.getElementById('colBodyUp') as HTMLInputElement | null;
+                if (colBodyUp) s.bodyUp = colBodyUp.value;
+                const colBodyDown = document.getElementById('colBodyDown') as HTMLInputElement | null;
+                if (colBodyDown) s.bodyDown = colBodyDown.value;
+
+                const chkCandleBorder = document.getElementById('chkCandleBorder') as HTMLInputElement | null;
+                if (chkCandleBorder) s.showBorder = chkCandleBorder.checked;
+                const colBorderUp = document.getElementById('colBorderUp') as HTMLInputElement | null;
+                if (colBorderUp) s.borderUp = colBorderUp.value;
+                const colBorderDown = document.getElementById('colBorderDown') as HTMLInputElement | null;
+                if (colBorderDown) s.borderDown = colBorderDown.value;
+
+                const chkCandleWick = document.getElementById('chkCandleWick') as HTMLInputElement | null;
+                if (chkCandleWick) s.showWick = chkCandleWick.checked;
+                const colWickUp = document.getElementById('colWickUp') as HTMLInputElement | null;
+                if (colWickUp) s.wickUp = colWickUp.value;
+                const colWickDown = document.getElementById('colWickDown') as HTMLInputElement | null;
+                if (colWickDown) s.wickDown = colWickDown.value;
+
+                const selPrecision = document.getElementById('selPrecision') as HTMLSelectElement | null;
+                if (selPrecision) s.precision = selPrecision.value;
+                const selTimezone = document.getElementById('selTimezone') as HTMLSelectElement | null;
+                if (selTimezone) s.timezone = selTimezone.value;
+
+                // Tab 2
+                const chkStatusTitle = document.getElementById('chkStatusTitle') as HTMLInputElement | null;
+                if (chkStatusTitle) s.showStatusTitle = chkStatusTitle.checked;
+                const selStatusTitleMode = document.getElementById('selStatusTitleMode') as HTMLSelectElement | null;
+                if (selStatusTitleMode) s.statusTitleMode = selStatusTitleMode.value as any;
+                const chkStatusOhlc = document.getElementById('chkStatusOhlc') as HTMLInputElement | null;
+                if (chkStatusOhlc) s.showStatusOhlc = chkStatusOhlc.checked;
+                const chkStatusBarChange = document.getElementById('chkStatusBarChange') as HTMLInputElement | null;
+                if (chkStatusBarChange) s.showStatusBarChange = chkStatusBarChange.checked;
+                const chkStatusVolume = document.getElementById('chkStatusVolume') as HTMLInputElement | null;
+                if (chkStatusVolume) s.showStatusVolume = chkStatusVolume.checked;
+                const chkIndTitles = document.getElementById('chkIndTitles') as HTMLInputElement | null;
+                if (chkIndTitles) s.showIndTitles = chkIndTitles.checked;
+                const chkIndInputs = document.getElementById('chkIndInputs') as HTMLInputElement | null;
+                if (chkIndInputs) s.showIndInputs = chkIndInputs.checked;
+                const chkIndValues = document.getElementById('chkIndValues') as HTMLInputElement | null;
+                if (chkIndValues) s.showIndValues = chkIndValues.checked;
+                const chkStatusBg = document.getElementById('chkStatusBg') as HTMLInputElement | null;
+                if (chkStatusBg) s.showStatusBg = chkStatusBg.checked;
+                const rngStatusBgOpacity = document.getElementById('rngStatusBgOpacity') as HTMLInputElement | null;
+                if (rngStatusBgOpacity) s.statusBgOpacity = Number(rngStatusBgOpacity.value) || 0;
+
+                // Tab 3
+                const selScaleModes = document.getElementById('selScaleModes') as HTMLSelectElement | null;
+                if (selScaleModes) s.scaleModesVis = selScaleModes.value as any;
+                const chkLockRatio = document.getElementById('chkLockRatio') as HTMLInputElement | null;
+                if (chkLockRatio) s.lockRatio = chkLockRatio.checked;
+                const inpLockRatio = document.getElementById('inpLockRatio') as HTMLInputElement | null;
+                if (inpLockRatio) {
+                    inpLockRatio.disabled = !s.lockRatio;
+                    s.lockRatioVal = inpLockRatio.value;
+                }
+                const selScalesPlacement = document.getElementById('selScalesPlacement') as HTMLSelectElement | null;
+                if (selScalesPlacement) s.scalesPlacement = selScalesPlacement.value as any;
+                const chkNoOverlapLabels = document.getElementById('chkNoOverlapLabels') as HTMLInputElement | null;
+                if (chkNoOverlapLabels) s.noOverlapLabels = chkNoOverlapLabels.checked;
+                const chkPlusButton = document.getElementById('chkPlusButton') as HTMLInputElement | null;
+                if (chkPlusButton) s.plusButton = chkPlusButton.checked;
+                const chkCountdown = document.getElementById('chkCountdown') as HTMLInputElement | null;
+                if (chkCountdown) s.countdown = chkCountdown.checked;
+
+                const selSymbolLabel = document.getElementById('selSymbolLabel') as HTMLSelectElement | null;
+                if (selSymbolLabel) s.symbolLabelMode = selSymbolLabel.value as any;
+                const colSymbolLine = document.getElementById('colSymbolLine') as HTMLInputElement | null;
+                if (colSymbolLine) s.symbolLineColor = colSymbolLine.value;
+                const selSymbolScaleMode = document.getElementById('selSymbolScaleMode') as HTMLSelectElement | null;
+                if (selSymbolScaleMode) s.symbolScaleMode = selSymbolScaleMode.value as any;
+
+                const selAvgCloseLine = document.getElementById('selAvgCloseLine') as HTMLSelectElement | null;
+                if (selAvgCloseLine) s.avgCloseMode = selAvgCloseLine.value as any;
+                const selPrevCloseLine = document.getElementById('selPrevCloseLine') as HTMLSelectElement | null;
+                if (selPrevCloseLine) s.prevCloseLineMode = selPrevCloseLine.value as any;
+                const selIndLabels = document.getElementById('selIndLabels') as HTMLSelectElement | null;
+                if (selIndLabels) s.indLabelsMode = selIndLabels.value as any;
+                const selPrePostMarket = document.getElementById('selPrePostMarket') as HTMLSelectElement | null;
+                if (selPrePostMarket) s.prePostMode = selPrePostMarket.value as any;
+                const selHighLowLine = document.getElementById('selHighLowLine') as HTMLSelectElement | null;
+                if (selHighLowLine) s.highLowLineMode = selHighLowLine.value as any;
+                const selBidAsk = document.getElementById('selBidAsk') as HTMLSelectElement | null;
+                if (selBidAsk) s.bidAskMode = selBidAsk.value as any;
+
+                const chkDayOfWeek = document.getElementById('chkDayOfWeek') as HTMLInputElement | null;
+                if (chkDayOfWeek) s.dayOfWeek = chkDayOfWeek.checked;
+                const selDateFormat = document.getElementById('selDateFormat') as HTMLSelectElement | null;
+                if (selDateFormat) s.dateFormat = selDateFormat.value;
+                const selTimeFormat = document.getElementById('selTimeFormat') as HTMLSelectElement | null;
+                if (selTimeFormat) s.timeFormat = selTimeFormat.value as any;
+                const chkSaveLeftEdge = document.getElementById('chkSaveLeftEdge') as HTMLInputElement | null;
+                if (chkSaveLeftEdge) s.saveLeftEdge = chkSaveLeftEdge.checked;
+
+                // Tab 4
+                const selBgType = document.getElementById('selBgType') as HTMLSelectElement | null;
+                if (selBgType) s.bgType = selBgType.value as any;
+                const colBg1 = document.getElementById('colBg1') as HTMLInputElement | null;
+                if (colBg1) s.bg1 = colBg1.value;
+                const colBg2 = document.getElementById('colBg2') as HTMLInputElement | null;
+                if (colBg2) s.bg2 = colBg2.value;
+                const wrapBg2 = document.getElementById('wrapBg2');
+                if (wrapBg2) wrapBg2.classList.toggle('hidden', s.bgType !== 'gradient');
+
+                const selGridMode = document.getElementById('selGridMode') as HTMLSelectElement | null;
+                if (selGridMode) s.gridMode = selGridMode.value as any;
+                const colGrid = document.getElementById('colGrid') as HTMLInputElement | null;
+                if (colGrid) s.gridColor = colGrid.value;
+                const wrapGridColor = document.getElementById('wrapGridColor');
+                if (wrapGridColor) wrapGridColor.classList.toggle('hidden', s.gridMode === 'none');
+
+                const chkSessionBreaks = document.getElementById('chkSessionBreaks') as HTMLInputElement | null;
+                if (chkSessionBreaks) s.sessionBreaks = chkSessionBreaks.checked;
+                const colSession = document.getElementById('colSession') as HTMLInputElement | null;
+                if (colSession) s.sessionColor = colSession.value;
+                const colCrosshair = document.getElementById('colCrosshair') as HTMLInputElement | null;
+                if (colCrosshair) s.crosshairColor = colCrosshair.value;
+
+                const selWatermark = document.getElementById('selWatermark') as HTMLSelectElement | null;
+                if (selWatermark) s.watermarkMode = selWatermark.value as any;
+                const colWatermark = document.getElementById('colWatermark') as HTMLInputElement | null;
+                if (colWatermark) s.watermarkColor = colWatermark.value;
+
+                const colScaleText = document.getElementById('colScaleText') as HTMLInputElement | null;
+                if (colScaleText) s.scaleTextColor = colScaleText.value;
+                const selScaleFontSize = document.getElementById('selScaleFontSize') as HTMLSelectElement | null;
+                if (selScaleFontSize) s.scaleFontSize = Number(selScaleFontSize.value) || 12;
+                const colScaleLine = document.getElementById('colScaleLine') as HTMLInputElement | null;
+                if (colScaleLine) s.scaleLineColor = colScaleLine.value;
+
+                const selNavButtons = document.getElementById('selNavButtons') as HTMLSelectElement | null;
+                if (selNavButtons) s.navButtonsVis = selNavButtons.value as any;
+                const selPaneButtons = document.getElementById('selPaneButtons') as HTMLSelectElement | null;
+                if (selPaneButtons) s.paneButtonsVis = selPaneButtons.value as any;
+
+                const inpMarginTop = document.getElementById('inpMarginTop') as HTMLInputElement | null;
+                if (inpMarginTop) s.marginTop = Number(inpMarginTop.value) || 12;
+                const inpMarginBottom = document.getElementById('inpMarginBottom') as HTMLInputElement | null;
+                if (inpMarginBottom) s.marginBottom = Number(inpMarginBottom.value) || 10;
+                const inpMarginRight = document.getElementById('inpMarginRight') as HTMLInputElement | null;
+                if (inpMarginRight) s.marginRight = Number(inpMarginRight.value) || 4;
+
+                // Tab 5
+                const chkTradingPositions = document.getElementById('chkTradingPositions') as HTMLInputElement | null;
+                if (chkTradingPositions) s.tradingPositions = chkTradingPositions.checked;
+                const chkTradingPnl = document.getElementById('chkTradingPnl') as HTMLInputElement | null;
+                if (chkTradingPnl) s.tradingPnl = chkTradingPnl.checked;
+                const chkTradingPosSub = document.getElementById('chkTradingPosSub') as HTMLInputElement | null;
+                if (chkTradingPosSub) s.tradingPosSub = chkTradingPosSub.checked;
+                const selTradingPnlMode = document.getElementById('selTradingPnlMode') as HTMLSelectElement | null;
+                if (selTradingPnlMode) s.tradingPnlMode = selTradingPnlMode.value as any;
+                const selTradingAlign = document.getElementById('selTradingAlign') as HTMLSelectElement | null;
+                if (selTradingAlign) s.tradingAlign = selTradingAlign.value as any;
+
+                // Update swatches visually matching original file
+                const swatchBodyUp = document.getElementById('swatchBodyUp');
+                if (swatchBodyUp) swatchBodyUp.style.background = s.bodyUp;
+                const swatchBodyDown = document.getElementById('swatchBodyDown');
+                if (swatchBodyDown) swatchBodyDown.style.background = s.bodyDown;
+                const swatchBorderUp = document.getElementById('swatchBorderUp');
+                if (swatchBorderUp) swatchBorderUp.style.background = s.borderUp;
+                const swatchBorderDown = document.getElementById('swatchBorderDown');
+                if (swatchBorderDown) swatchBorderDown.style.background = s.borderDown;
+                const swatchWickUp = document.getElementById('swatchWickUp');
+                if (swatchWickUp) swatchWickUp.style.background = s.wickUp;
+                const swatchWickDown = document.getElementById('swatchWickDown');
+                if (swatchWickDown) swatchWickDown.style.background = s.wickDown;
+                const swatchBg1 = document.getElementById('swatchBg1');
+                if (swatchBg1) swatchBg1.style.background = s.bg1;
+                const swatchBg2 = document.getElementById('swatchBg2');
+                if (swatchBg2) swatchBg2.style.background = s.bg2;
+                const swatchGrid = document.getElementById('swatchGrid');
+                if (swatchGrid) swatchGrid.style.background = s.gridColor;
+                const swatchSession = document.getElementById('swatchSession');
+                if (swatchSession) swatchSession.style.background = s.sessionColor;
+                const swatchCrosshair = document.getElementById('swatchCrosshair');
+                if (swatchCrosshair) swatchCrosshair.style.background = s.crosshairColor;
+                const swatchWatermark = document.getElementById('swatchWatermark');
+                if (swatchWatermark) swatchWatermark.style.backgroundColor = s.watermarkColor;
+                const swatchScaleText = document.getElementById('swatchScaleText');
+                if (swatchScaleText) swatchScaleText.style.background = s.scaleTextColor;
+                const swatchScaleLine = document.getElementById('swatchScaleLine');
+                if (swatchScaleLine) swatchScaleLine.style.backgroundColor = s.scaleLineColor;
+
+                return s;
+            }
+
+            function applyChartSettings(s: ChartSettingsState) {
+                // Determine whether theme is Dark or Light (boolean type guaranteed)
+                const isDarkTheme: boolean = Boolean(
+                    s.bg1 === '#131722' ||
+                    isSettingsModalDark ||
+                    (s.scaleTextColor && s.scaleTextColor.toLowerCase() === '#b2b5be')
+                );
+                document.body.classList.toggle('tv-theme-dark', isDarkTheme);
+                const modalEl = document.getElementById('settingsModal');
+                if (modalEl) modalEl.classList.toggle('tv-modal-dark', isDarkTheme);
+                const themeLabel = document.getElementById('modalThemeLabel');
+                if (themeLabel) themeLabel.textContent = isDarkTheme ? 'Dark Mode' : 'Light Mode';
+                const themeDot = document.getElementById('modalThemeDot');
+                if (themeDot) {
+                    themeDot.className = isDarkTheme ? 'w-2 h-2 rounded-full bg-indigo-400' : 'w-2 h-2 rounded-full bg-amber-400';
+                }
+
+                // 1. Chart Layout, Grid, Crosshair, Margins
+                chart.applyOptions({
+                    layout: {
+                        background: {
+                            type: s.bgType === 'gradient' ? ColorType.VerticalGradient : ColorType.Solid,
+                            color: s.bg1,
+                            topColor: s.bg1,
+                            bottomColor: s.bg2,
+                        },
+                        textColor: s.scaleTextColor,
+                        fontSize: s.scaleFontSize,
+                    },
+                    grid: {
+                        vertLines: {
+                            visible: s.gridMode === 'both' || s.gridMode === 'vert',
+                            color: s.gridMode === 'none' ? 'rgba(0, 0, 0, 0)' : s.gridColor,
+                        },
+                        horzLines: {
+                            visible: s.gridMode === 'both' || s.gridMode === 'horz',
+                            color: s.gridMode === 'none' ? 'rgba(0, 0, 0, 0)' : s.gridColor,
+                        },
+                    },
+                    crosshair: {
+                        vertLine: {
+                            color: s.crosshairColor,
+                        },
+                        horzLine: {
+                            color: s.crosshairColor,
+                        },
+                    },
+                    timeScale: {
+                        rightOffset: Number(s.marginRight) || 4,
+                        borderColor: s.scaleLineColor,
+                    },
+                    rightPriceScale: {
+                        visible: s.scalesPlacement === 'right' || s.scalesPlacement === 'auto',
+                        borderColor: s.scaleLineColor,
+                    },
+                    leftPriceScale: {
+                        visible: s.scalesPlacement === 'left',
+                        borderColor: s.scaleLineColor,
+                    },
+                });
+
+                // 2. Candlestick Style
+                if (chartNativeCandlesSeries) {
+                    chartNativeCandlesSeries.applyOptions({
+                    upColor: s.showBody ? s.bodyUp : 'rgba(0,0,0,0)',
+                    downColor: s.showBody ? s.bodyDown : 'rgba(0,0,0,0)',
+                    borderVisible: s.showBorder,
+                    borderUpColor: s.borderUp,
+                    borderDownColor: s.borderDown,
+                    wickVisible: s.showWick,
+                    wickUpColor: s.wickUp,
+                    wickDownColor: s.wickDown,
+                    });
+                }
+
+                // 3. Status Line (Legend) Visibility & Transparency
+                const titleRow = document.getElementById('chart-title-row');
+                if (titleRow) {
+                    titleRow.style.display = s.showStatusTitle ? 'flex' : 'none';
+                    const tickerSpan = document.getElementById('header-ticker');
+                    const compSpan = document.getElementById('header-company-name');
+                    if (tickerSpan) tickerSpan.style.display = s.statusTitleMode === 'description' ? 'none' : 'inline';
+                    if (compSpan) compSpan.style.display = s.statusTitleMode === 'ticker' ? 'none' : 'inline';
+                }
+
+                const ohlcRow = document.getElementById('ohlc-legend-row');
+                if (ohlcRow) {
+                    ohlcRow.style.display = s.showStatusOhlc ? 'flex' : 'none';
+                }
+
+                const indContainer = document.getElementById('indicators-legend-container');
+                if (indContainer) {
+                    indContainer.style.display = s.showIndTitles ? 'flex' : 'none';
+                }
+
+                // Legend background box is ALWAYS 100% transparent so candles and chart are never blocked
+                const legendBox = document.getElementById('legend');
+                if (legendBox) {
+                    legendBox.style.backgroundColor = 'transparent';
+                    legendBox.style.padding = '0';
+                    legendBox.style.borderRadius = '0';
+                    legendBox.style.border = 'none';
+                    legendBox.style.boxShadow = 'none';
+                }
+
+                // 4. Watermark visibility
+                const watermarkLogo = document.getElementById('tv-watermark-logo');
+                if (watermarkLogo) {
+                    watermarkLogo.style.display = s.watermarkMode === 'hidden' ? 'none' : 'flex';
+                }
+
+                // 5. Trading Positions
+                if (isOpenPositionsVisible !== s.tradingPositions) {
+                    isOpenPositionsVisible = s.tradingPositions;
+                    const tvTradeBtn = document.getElementById('tv-trade-btn');
+                    if (tvTradeBtn) tvTradeBtn.classList.toggle('active', isOpenPositionsVisible);
+                    renderTradePositions();
+                }
+            }
+
+            function openChartSettingsModal() {
+                savedSnapshotSettings = JSON.parse(JSON.stringify(currentChartSettings));
+                syncInputsFromSettings(currentChartSettings);
+                const backdrop = document.getElementById('settingsBackdrop');
+                if (backdrop) {
+                    backdrop.classList.remove('hidden');
+                    backdrop.style.display = 'flex';
+                }
+            }
+
+            function closeChartSettingsModal(revert: boolean) {
+                if (revert) {
+                    currentChartSettings = JSON.parse(JSON.stringify(savedSnapshotSettings));
+                    syncInputsFromSettings(currentChartSettings);
+                    applyChartSettings(currentChartSettings);
+                    showToast('Changes canceled');
+                } else {
+                    savedSnapshotSettings = JSON.parse(JSON.stringify(currentChartSettings));
+                    try {
+                        localStorage.setItem('idx_tv_chart_settings_v1', JSON.stringify(currentChartSettings));
+                    } catch (_e) {}
+                    showToast('Chart settings saved');
+                }
+                const backdrop = document.getElementById('settingsBackdrop');
+                if (backdrop) {
+                    backdrop.classList.add('hidden');
+                    backdrop.style.display = 'none';
+                }
+            }
+
+            // Bind Top Toolbar Settings Button & Gear Button
+            document.getElementById('settings-btn')?.addEventListener('click', openChartSettingsModal);
+            document.getElementById('time-scale-corner-gear')?.addEventListener('click', openChartSettingsModal);
+            document.getElementById('btnCloseSettingsX')?.addEventListener('click', () => closeChartSettingsModal(false));
+            document.getElementById('btnSettingsCancel')?.addEventListener('click', () => closeChartSettingsModal(true));
+            document.getElementById('btnSettingsOk')?.addEventListener('click', () => closeChartSettingsModal(false));
+
+            // Close when clicking backdrop outside modal
+            document.getElementById('settingsBackdrop')?.addEventListener('click', (e) => {
+                if (e.target === document.getElementById('settingsBackdrop')) {
+                    closeChartSettingsModal(false);
+                }
             });
 
-            // ================= REAL-TIME RUNNING TRADES & LIVE STREAMING ENGINE =================
+            // Tabs navigation
+            document.querySelectorAll('#settingsModal .tv-tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#settingsModal .tv-tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const target = btn.getAttribute('data-tab');
+                    document.querySelectorAll('#settingsModal .tab-pane').forEach(pane => {
+                        pane.classList.toggle('hidden', pane.id !== ('tab-' + target));
+                    });
+                });
+            });
+
+            // Theme toggle button (Switches both Settings Modal and Toolbars theme)
+            document.getElementById('btnToggleModalTheme')?.addEventListener('click', () => {
+                isSettingsModalDark = !isSettingsModalDark;
+                if (isSettingsModalDark) {
+                    currentChartSettings.bg1 = '#131722';
+                    currentChartSettings.gridColor = '#1e222d';
+                    currentChartSettings.scaleTextColor = '#b2b5be';
+                    currentChartSettings.scaleLineColor = '#2a2e39';
+                    currentChartSettings.crosshairColor = '#434651';
+                } else {
+                    currentChartSettings.bg1 = CURRENT_SAVED_TEMPLATE.bg1;
+                    currentChartSettings.gridColor = CURRENT_SAVED_TEMPLATE.gridColor;
+                    currentChartSettings.scaleTextColor = CURRENT_SAVED_TEMPLATE.scaleTextColor;
+                    currentChartSettings.scaleLineColor = CURRENT_SAVED_TEMPLATE.scaleLineColor;
+                    currentChartSettings.crosshairColor = CURRENT_SAVED_TEMPLATE.crosshairColor;
+                }
+                syncInputsFromSettings(currentChartSettings);
+                applyChartSettings(currentChartSettings);
+            });
+
+            // Draggable modal header
+            const settingsHeader = document.getElementById('settingsModalHeader');
+            const settingsModal = document.getElementById('settingsModal');
+            let modalDragState = { dragging: false, startX: 0, startY: 0, dx: 0, dy: 0 };
+            if (settingsHeader && settingsModal) {
+                settingsHeader.addEventListener('mousedown', (e: MouseEvent) => {
+                    if ((e.target as HTMLElement).closest('button')) return;
+                    modalDragState.dragging = true;
+                    modalDragState.startX = e.clientX - modalDragState.dx;
+                    modalDragState.startY = e.clientY - modalDragState.dy;
+                });
+                window.addEventListener('mousemove', (e: MouseEvent) => {
+                    if (!modalDragState.dragging || !settingsModal) return;
+                    modalDragState.dx = e.clientX - modalDragState.startX;
+                    modalDragState.dy = e.clientY - modalDragState.startY;
+                    settingsModal.style.transform = 'translate(' + modalDragState.dx + 'px, ' + modalDragState.dy + 'px)';
+                });
+                window.addEventListener('mouseup', () => {
+                    modalDragState.dragging = false;
+                });
+            }
+
+            // Input listeners for live updates (Exact match to tradingview_lightweight_charts_full_settings_modal_light_mode.html)
+            const allSettingsInputs = document.querySelectorAll(
+                '#settingsModal input, #settingsModal select'
+            );
+            allSettingsInputs.forEach(el => {
+                if (el.id === 'selTemplatePreset') return;
+                el.addEventListener('input', () => {
+                    readSettingsFromInputs();
+                    applyChartSettings(currentChartSettings);
+                });
+                el.addEventListener('change', () => {
+                    readSettingsFromInputs();
+                    applyChartSettings(currentChartSettings);
+                });
+            });
+
+            // Template preset selector (Exact 1:1 match to tradingview_lightweight_charts_full_settings_modal_light_mode.html)
+            document.getElementById('selTemplatePreset')?.addEventListener('change', (e) => {
+                const val = (e.target as HTMLSelectElement).value;
+                if (val === 'gray_default') {
+                    isSettingsModalDark = false;
+                    currentChartSettings = JSON.parse(JSON.stringify(CURRENT_SAVED_TEMPLATE));
+                    showToast('Template applied: Gray Classic (Default)');
+                } else if (val === 'tv_light') {
+                    isSettingsModalDark = false;
+                    currentChartSettings = {
+                        ...CURRENT_SAVED_TEMPLATE,
+                        bgType: 'solid',
+                        bg1: '#ffffff',
+                        gridMode: 'both',
+                        gridColor: '#f0f3fa',
+                        scaleTextColor: '#131722',
+                        scaleLineColor: '#d1d4dc',
+                        bodyUp: '#089981',
+                        bodyDown: '#f23645',
+                        borderUp: '#089981',
+                        borderDown: '#f23645',
+                        wickUp: '#089981',
+                        wickDown: '#f23645',
+                    };
+                    showToast('Template applied: TradingView Clean White');
+                } else if (val === 'tv_dark') {
+                    isSettingsModalDark = true;
+                    currentChartSettings = {
+                        ...CURRENT_SAVED_TEMPLATE,
+                        bgType: 'solid',
+                        bg1: '#131722',
+                        gridMode: 'both',
+                        gridColor: '#1e222d',
+                        scaleTextColor: '#b2b5be',
+                        scaleLineColor: '#2a2e39',
+                        bodyUp: '#089981',
+                        bodyDown: '#f23645',
+                        borderUp: '#089981',
+                        borderDown: '#f23645',
+                        wickUp: '#089981',
+                        wickDown: '#f23645',
+                        crosshairColor: '#434651',
+                    };
+                    showToast('Template applied: TradingView Pro Dark');
+                }
+                (e.target as HTMLSelectElement).value = '';
+                syncInputsFromSettings(currentChartSettings);
+                applyChartSettings(currentChartSettings);
+            });
+
+            // Apply loaded or default settings at initial load
+            applyChartSettings(currentChartSettings);
+
+            document.getElementById('layout-btn')?.addEventListener('click', () => showToast('Workspace Layouts coming soon'));
+            const tvTradeBtn = document.getElementById('tv-trade-btn');
+            if (tvTradeBtn) {
+                tvTradeBtn.classList.toggle('active', isOpenPositionsVisible);
+                tvTradeBtn.addEventListener('click', () => {
+                    isOpenPositionsVisible = !isOpenPositionsVisible;
+                    tvTradeBtn.classList.toggle('active', isOpenPositionsVisible);
+                    renderTradePositions();
+                    showToast(
+                        isOpenPositionsVisible
+                            ? 'Open Position ditampilkan di chart'
+                            : 'Open Position disembunyikan dari chart'
+                    );
+                });
+            }
+            // Note: #login-btn is inside #live-status-pill; do not stopPropagation so clicking 'Live' opens the token modal.
+
             // ================= REAL-TIME RUNNING TRADES & LIVE STREAMING ENGINE =================
             interface RunningTradeTick {
                 symbol?: string;
@@ -19699,6 +21088,429 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
             // liveSocket is declared at top level
             let reconnectTimer: any = null;
             let indicatorDebounceTimer: any = null;
+
+            function refreshAllDrawingTools() {
+                renderAutoSr();
+                renderGhostCandle();
+                renderAutoTrendlines();
+                renderAutoChannels();
+                renderAutoMs();
+                renderGaps();
+                renderChartPatterns();
+                renderCandlestickPatterns();
+                updateHorizonTrendStates(cached1dData);
+            }
+
+            function applyOfficialBarToActiveSeries(bar: any) {
+                if (!bar || !currentChartData || currentChartData.length === 0) return;
+                const lastIdx = currentChartData.length - 1;
+                const lastBar = currentChartData[lastIdx];
+                if (!lastBar) return;
+
+                // Only update bars within the currently loaded sliding window range
+                if (bar.time < currentChartData[0].time) return;
+
+                let targetBar: any = null;
+                let isHistorical = false;
+                let targetIdx = -1;
+
+                for (let i = currentChartData.length - 1; i >= 0; i--) {
+                    if (currentChartData[i].time === bar.time) {
+                        targetIdx = i;
+                        break;
+                    }
+                    if (currentChartData[i].time < bar.time) {
+                        break;
+                    }
+                }
+
+                if (targetIdx >= 0) {
+                    targetBar = currentChartData[targetIdx];
+                    targetBar.open = Number(bar.open);
+                    targetBar.high = Number(bar.high);
+                    targetBar.low = Number(bar.low);
+                    targetBar.close = Number(bar.close);
+                    targetBar.volume = Number(bar.volume || targetBar.volume || 0);
+                    isHistorical = targetIdx < currentChartData.length - 1;
+                } else if (bar.time > lastBar.time) {
+                    targetBar = {
+                        time: Number(bar.time),
+                        open: Number(bar.open),
+                        high: Number(bar.high),
+                        low: Number(bar.low),
+                        close: Number(bar.close),
+                        volume: Number(bar.volume || 1),
+                        levels: bar.levels || [{
+                            price: Number(bar.close),
+                            bidVolume: 0,
+                            askVolume: Number(bar.volume || 1)
+                        }]
+                    };
+                    currentChartData.push(targetBar);
+                    if (masterIntradayCandles && masterIntradayCandles.length > 0 && masterIntradayCandles !== currentChartData) {
+                        const mLast = masterIntradayCandles[masterIntradayCandles.length - 1];
+                        if (!mLast || bar.time > mLast.time) {
+                            masterIntradayCandles.push(targetBar);
+                            windowEndIdx = masterIntradayCandles.length;
+                        }
+                    }
+                    isHistorical = false;
+                }
+
+                if (!targetBar) return;
+
+                chartDataMap.set(targetBar.time, targetBar);
+                try {
+                    (nativeCandles as any).update(targetBar, isHistorical);
+                    if (barSeries && currentChartStyle === 'bars') (barSeries as any).update(targetBar, isHistorical);
+                    if (lineChartSeries && currentChartStyle === 'line') (lineChartSeries as any).update({ time: targetBar.time, value: targetBar.close }, isHistorical);
+                    if (areaChartSeries && currentChartStyle === 'area') (areaChartSeries as any).update({ time: targetBar.time, value: targetBar.close }, isHistorical);
+                    if (volumeVisible && volumeSeries) {
+                        let isUp = targetBar.close >= targetBar.open;
+                        if (volumeColorByPrevClose && targetIdx > 0) {
+                            const prevB = currentChartData[targetIdx - 1];
+                            if (prevB) isUp = targetBar.close >= prevB.close;
+                        }
+                        const volColor = isUp ? volumeUpColor : volumeDownColor;
+                        (volumeSeries as any).update({
+                            time: targetBar.time,
+                            value: targetBar.volume || 0,
+                            color: volColor
+                        }, isHistorical);
+                        volumeDataMap.set(targetBar.time, {
+                            value: targetBar.volume || 0,
+                            color: volColor
+                        });
+                    }
+                } catch (updateErr) {
+                    console.warn('[Exness Reconcile] Series update warning:', updateErr);
+                }
+            }
+
+            function mergeOfficialBarsIntoArray(targetArr: any[], officialBars: any[]): boolean {
+                if (!Array.isArray(targetArr) || !Array.isArray(officialBars) || officialBars.length === 0) return false;
+                let appendedNew = false;
+                let needsSort = false;
+                const indexByTime = new Map<number, number>();
+                const startScan = Math.max(0, targetArr.length - 5000);
+                const minScanTime = targetArr.length > 0 ? Number(targetArr[startScan].time || 0) : 0;
+                let lastTime = targetArr.length > 0 ? Number(targetArr[targetArr.length - 1].time || 0) : 0;
+                for (let i = startScan; i < targetArr.length; i++) {
+                    indexByTime.set(Number(targetArr[i].time), i);
+                }
+                for (const ob of officialBars) {
+                    const t = Number(ob.time);
+                    if (!t) continue;
+                    const existingIdx = indexByTime.get(t);
+                    if (existingIdx !== undefined) {
+                        const existing = targetArr[existingIdx];
+                        existing.open = Number(ob.open);
+                        existing.high = Number(ob.high);
+                        existing.low = Number(ob.low);
+                        existing.close = Number(ob.close);
+                        existing.volume = Number(ob.volume ?? existing.volume ?? 0);
+                    } else if (targetArr.length === 0 || t >= minScanTime) {
+                        const newBar: any = {
+                            time: t,
+                            open: Number(ob.open),
+                            high: Number(ob.high),
+                            low: Number(ob.low),
+                            close: Number(ob.close),
+                            volume: Number(ob.volume || 1),
+                            levels: [{
+                                price: Number(ob.close),
+                                bidVolume: 0,
+                                askVolume: Number(ob.volume || 1)
+                            }]
+                        };
+                        if (t < lastTime) {
+                            needsSort = true;
+                        } else {
+                            lastTime = t;
+                        }
+                        targetArr.push(newBar);
+                        indexByTime.set(t, targetArr.length - 1);
+                        appendedNew = true;
+                    }
+                }
+                if (needsSort) {
+                    targetArr.sort((a, b) => Number(a.time) - Number(b.time));
+                }
+                return appendedNew;
+            }
+
+            function findEarliestUnsynced1mTime(bars: any[]): number {
+                if (!Array.isArray(bars) || bars.length === 0) return 0;
+                let earliest = Number(bars[bars.length - 1].time || 0);
+                const startIdx = Math.max(1, bars.length - 1500);
+                for (let i = startIdx; i < bars.length; i++) {
+                    const prevT = Number(bars[i - 1].time || 0);
+                    const currT = Number(bars[i].time || 0);
+                    const diffSec = currT - prevT;
+                    // Detect any intraday gap > 2 minutes that isn't the daily 04:00-05:05 WIB maintenance break or weekend
+                    if (diffSec > 120 && diffSec < 36000) {
+                        const prevHourWib = Math.floor((prevT % 86400) / 3600);
+                        if (prevHourWib !== 3 && prevHourWib !== 4) {
+                            earliest = Math.min(earliest, prevT);
+                            break;
+                        }
+                    }
+                }
+                return earliest;
+            }
+
+            async function reconcileStockbitCandles(
+                symbolInput?: string,
+                tfInput?: string,
+                mode: 'initial' | 'candle_close' | 'manual' = 'initial'
+            ): Promise<void> {
+                const sym = (symbolInput || getCurrentSymbol() || 'IHSG').trim().toUpperCase();
+                const isForex = getInstrumentFormatInfo(sym, 1).isForex || defaultForexTradedSymbols.some(s => isForexMatch(s, sym));
+                if (isForex) return;
+
+                const tf = tfInput || currentActiveTf;
+                try {
+                    const last1mFakeWib = (cached1mData && cached1mData.length > 0 && cached1mLoadedTicker === sym)
+                        ? Number(cached1mData[cached1mData.length - 1]?.time || 0)
+                        : 0;
+                    const fromUtcSec = last1mFakeWib > 25200 ? (last1mFakeWib - 25200 - 3600) : 0;
+
+                    const [resp1d, resp1m] = await Promise.all([
+                        fetch(`/api/stockbit/candles?symbol=${encodeURIComponent(sym)}&tf=1d&t=${Date.now()}`).catch(() => null),
+                        fetch(`/api/stockbit/candles?symbol=${encodeURIComponent(sym)}&tf=1m&from=${fromUtcSec}&t=${Date.now()}`).catch(() => null),
+                    ]);
+
+                    let bars1d: any[] = [];
+                    if (resp1d && resp1d.ok) {
+                        const json1d = await resp1d.json();
+                        if (json1d && json1d.ok && Array.isArray(json1d.bars)) {
+                            bars1d = json1d.bars;
+                        }
+                    }
+
+                    let bars1m: any[] = [];
+                    if (resp1m && resp1m.ok) {
+                        const json1m = await resp1m.json();
+                        if (json1m && json1m.ok && Array.isArray(json1m.bars)) {
+                            bars1m = json1m.bars;
+                        }
+                    }
+
+                    if (bars1d.length === 0 && bars1m.length === 0) return;
+
+                    // Update screenerMap in memory with latest official daily bar
+                    if (bars1d.length > 0) {
+                        const latestD = bars1d[bars1d.length - 1];
+                        let scrItem = screenerMap.get(sym);
+                        if (scrItem && latestD) {
+                            scrItem.price = Number(latestD.close || scrItem.price);
+                            scrItem.change = Number(latestD.change ?? scrItem.change ?? 0);
+                            scrItem.change_percentage = Number(latestD.change_percentage ?? scrItem.change_percentage ?? 0);
+                            scrItem.volume = Number(latestD.volume || scrItem.volume || 0);
+                            scrItem.value = Number(latestD.value || scrItem.value || 0);
+                            scrItem.frequency = Number(latestD.frequency || scrItem.frequency || 0);
+                            scrItem.net_foreign = Number(latestD.net_foreign ?? scrItem.net_foreign ?? 0);
+                            dirtyScreenerSymbols.add(sym);
+                            scheduleScreenerUpdate();
+                        }
+                    }
+
+                    let changed1d = false;
+                    if (bars1d.length > 0 && cached1dData && cached1dData.length > 0 && cached1dLoadedTicker === sym) {
+                        const mapByTime = new Map<number, number>();
+                        for (let i = 0; i < cached1dData.length; i++) {
+                            mapByTime.set(Number(cached1dData[i].time), i);
+                        }
+                        let needsSort = false;
+                        for (const b of bars1d) {
+                            const t = Number(b.time);
+                            if (!t) continue;
+                            const idx = mapByTime.get(t);
+                            if (idx !== undefined) {
+                                const ex = cached1dData[idx];
+                                if (ex.close !== b.close || ex.volume !== b.volume || ex.high !== b.high || ex.low !== b.low || ex.value !== b.value) {
+                                    Object.assign(ex, b);
+                                    changed1d = true;
+                                }
+                            } else {
+                                const lastT = Number(cached1dData[cached1dData.length - 1]?.time || 0);
+                                if (t < lastT) needsSort = true;
+                                cached1dData.push({ ...b });
+                                mapByTime.set(t, cached1dData.length - 1);
+                                changed1d = true;
+                            }
+                        }
+                        if (needsSort) {
+                            cached1dData.sort((a: any, b: any) => Number(a.time) - Number(b.time));
+                        }
+                    }
+
+                    let changed1m = false;
+                    if (bars1m.length > 0 && cached1mData && cached1mData.length > 0 && cached1mLoadedTicker === sym) {
+                        changed1m = mergeOfficialBarsIntoArray(cached1mData, bars1m);
+                    }
+
+                    // Verify active symbol & timeframe haven't changed while awaiting fetch
+                    const curSymNow = getCurrentSymbol().toUpperCase();
+                    if (curSymNow !== sym || currentActiveTf !== tf) return;
+
+                    const isIntraday = tf === '1m' || tf === '5m' || tf === '15m' || tf === '1h' || tf === '1S';
+                    if (isIntraday && cached1mData && cached1mData.length > 0 && (changed1m || mode === 'manual')) {
+                        let data = cached1mData;
+                        if (tf === '5m') data = resampleIntradayBars(cached1mData, 300);
+                        else if (tf === '15m') data = resampleIntradayBars(cached1mData, 900);
+                        else if (tf === '1h') data = resampleIntradayBars(cached1mData, 3600);
+                        else if (tf === '1S') data = resampleIntradayToSessionBars(cached1mData);
+                        setupAndRenderIntraday(data, tf, true);
+                    } else if (!isIntraday && cached1dData && cached1dData.length > 0 && (changed1d || changed1m || mode === 'manual')) {
+                        let data = cached1dData;
+                        if (tf === '1W') data = resampleDailyToWeekly(cached1dData);
+                        else if (tf === '1M') data = resampleDailyToMonthly(cached1dData);
+                        else if (tf === '1Y') data = resampleDailyToYearly(cached1dData);
+                        else if (cached1mData && cached1mData.length > 0 && cached1mLoadedTicker === sym) {
+                            data = merge1mFootprintIntoDaily(cached1dData, cached1mData);
+                        }
+                        renderChartDataset(data, tf);
+                    }
+
+                    updateLegendToLatest();
+                    updateTrafficLight();
+                    recalculateAllIndicators();
+                    refreshAllDrawingTools();
+                    renderTradePositions();
+                } catch (err) {
+                    console.warn('[Stockbit Reconcile] Failed to fetch official Stockbit candles:', err);
+                }
+            }
+
+            async function reconcileExnessCandles(
+                symbolInput?: string,
+                tfInput?: string,
+                mode: 'initial' | 'candle_close' | 'manual' = 'candle_close',
+                isRetry: boolean = false
+            ): Promise<void> {
+                const sym = (symbolInput || getCurrentSymbol() || 'XAUUSDc').trim();
+                const isForex = getInstrumentFormatInfo(sym, 1).isForex || defaultForexTradedSymbols.some(s => isForexMatch(s, sym));
+                if (!isForex) {
+                    return reconcileStockbitCandles(sym, tfInput, mode);
+                }
+
+                const tf = tfInput || currentActiveTf;
+                const exnessTfMap: Record<string, number> = {
+                    '1m': 1,
+                    '5m': 5,
+                    '15m': 15,
+                    '1h': 60,
+                    '1d': 1440
+                };
+
+                try {
+                    const earliestUnsyncedTime = (cached1mData && cached1mData.length > 0) ? findEarliestUnsynced1mTime(cached1mData) : 0;
+                    const nowWibSec = Math.floor(Date.now() / 1000) + 25200;
+                    const gapMinutes = earliestUnsyncedTime > 0 ? Math.max(0, Math.ceil((nowWibSec - earliestUnsyncedTime) / 60)) : 500;
+                    const hasGap = gapMinutes > 2;
+                    const activeTfNum = exnessTfMap[tf] || 1;
+                    const count1m = (mode === 'initial' || mode === 'manual' || hasGap)
+                        ? -Math.min(5000, Math.max(500, gapMinutes + 30))
+                        : -6;
+                    const countActive = (mode === 'initial' || mode === 'manual' || hasGap)
+                        ? (activeTfNum === 1440
+                            ? -Math.min(200, Math.max(15, Math.ceil(gapMinutes / 1440) + 5))
+                            : -Math.min(1000, Math.max(200, Math.ceil(gapMinutes / activeTfNum) + 30)))
+                        : -6;
+
+                    // 1. Always keep cached1mData authoritative with Exness 1m candles
+                    const resp1m = await fetch(`/api/exness/candles?symbol=${encodeURIComponent(sym)}&tf=1&count=${count1m}&t=${Date.now()}`);
+                    let bars1m: any[] = [];
+                    if (resp1m.ok) {
+                        const json1m = await resp1m.json();
+                        if (json1m && (json1m.ok || json1m.status === 'ok') && Array.isArray(json1m.bars)) {
+                            bars1m = json1m.bars;
+                        }
+                    }
+
+                    let appendedMany1m = false;
+                    if (bars1m.length > 0 && cached1mData && cached1mData.length > 0 && (cached1mLoadedTicker === sym || isForexMatch(cached1mLoadedTicker, sym))) {
+                        appendedMany1m = mergeOfficialBarsIntoArray(cached1mData, bars1m);
+                    }
+
+                    // 2. If active timeframe is 5m, 15m, 1h, or 1d, also fetch official Exness candles for that exact timeframe
+                    let activeOfficialBars: any[] = bars1m;
+                    if (activeTfNum !== 1) {
+                        const respTf = await fetch(`/api/exness/candles?symbol=${encodeURIComponent(sym)}&tf=${activeTfNum}&count=${countActive}&t=${Date.now()}`);
+                        if (respTf.ok) {
+                            const jsonTf = await respTf.json();
+                            if (jsonTf && (jsonTf.ok || jsonTf.status === 'ok') && Array.isArray(jsonTf.bars)) {
+                                activeOfficialBars = jsonTf.bars;
+                            }
+                        }
+                    }
+
+                    // Also sync cached1dData if we fetched 1d or if mode is initial/manual
+                    if (activeTfNum === 1440 && activeOfficialBars.length > 0 && cached1dData && cached1dData.length > 0 && (cached1dLoadedTicker === sym || isForexMatch(cached1dLoadedTicker, sym))) {
+                        mergeOfficialBarsIntoArray(cached1dData, activeOfficialBars);
+                    } else if ((mode === 'initial' || mode === 'manual' || hasGap) && cached1dData && cached1dData.length > 0 && (cached1dLoadedTicker === sym || isForexMatch(cached1dLoadedTicker, sym))) {
+                        try {
+                            const resp1d = await fetch(`/api/exness/candles?symbol=${encodeURIComponent(sym)}&tf=1440&count=-15&t=${Date.now()}`);
+                            if (resp1d.ok) {
+                                const json1d = await resp1d.json();
+                                if (json1d && (json1d.ok || json1d.status === 'ok') && Array.isArray(json1d.bars)) {
+                                    mergeOfficialBarsIntoArray(cached1dData, json1d.bars);
+                                }
+                            }
+                        } catch (_e) {}
+                    }
+
+                    // Verify active symbol & timeframe haven't changed while awaiting fetch
+                    const curSymNow = getCurrentSymbol();
+                    if ((curSymNow !== sym && !isForexMatch(curSymNow, sym)) || currentActiveTf !== tf) {
+                        return;
+                    }
+
+                    const isIntraday = tf === '1m' || tf === '5m' || tf === '15m' || tf === '1h';
+                    if (mode === 'initial' || mode === 'manual' || hasGap || appendedMany1m) {
+                        if (isIntraday && cached1mData && cached1mData.length > 0) {
+                            let data = cached1mData;
+                            if (tf === '5m') data = resampleIntradayBars(cached1mData, 300);
+                            else if (tf === '15m') data = resampleIntradayBars(cached1mData, 900);
+                            else if (tf === '1h') data = resampleIntradayBars(cached1mData, 3600);
+                            if (activeOfficialBars.length > 0 && tf !== '1m') {
+                                mergeOfficialBarsIntoArray(data, activeOfficialBars);
+                            }
+                            setupAndRenderIntraday(data, tf, true);
+                        } else if (tf === '1d' && cached1dData && cached1dData.length > 0) {
+                            let target1d = cached1dData;
+                            if (cached1mData && cached1mData.length > 0 && (cached1mLoadedTicker === sym || isForexMatch(cached1mLoadedTicker, sym))) {
+                                target1d = merge1mFootprintIntoDaily(cached1dData, cached1mData);
+                            }
+                            renderChartDataset(target1d, '1d');
+                        }
+                    } else if (activeOfficialBars.length > 0) {
+                        // In-place overwrite of closed candle(s) + current forming candle using historicalUpdate = true
+                        if (masterIntradayCandles && masterIntradayCandles.length > 0 && masterIntradayCandles !== cached1mData) {
+                            mergeOfficialBarsIntoArray(masterIntradayCandles, activeOfficialBars);
+                        }
+                        for (const ob of activeOfficialBars) {
+                            applyOfficialBarToActiveSeries(ob);
+                        }
+                    }
+
+                    updateLegendToLatest();
+                    updateTrafficLight();
+                    recalculateAllIndicators();
+                    refreshAllDrawingTools();
+                    renderTradePositions();
+
+                    // Schedule a single 1.5s follow-up verification on candle_close in case Exness finalized the bar milliseconds after :00
+                    if (mode === 'candle_close' && !isRetry) {
+                        setTimeout(() => {
+                            reconcileExnessCandles(sym, tf, 'candle_close', true);
+                        }, 1500);
+                    }
+                } catch (err) {
+                    console.warn('[Exness Reconcile] Failed to fetch official candles:', err);
+                }
+            }
 
             /**
              * Resolves exact Jakarta (WIB, UTC+7) calendar date and Fake-UTC timestamps.
@@ -19786,9 +21598,16 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 let todayDailyTs: number;
 
                 if (isForex) {
-                    nowSec = (tick.time && tick.time > 1e9) ? (tick.time > 1e11 ? Math.floor(tick.time / 1000) : tick.time) : Math.floor(Date.now() / 1000);
+                    const rawSec = (tick.time && tick.time > 1e9) ? (tick.time > 1e11 ? Math.floor(tick.time / 1000) : tick.time) : Math.floor(Date.now() / 1000);
+                    const nowUtcSec = Math.floor(Date.now() / 1000);
+                    // Determine if rawSec is UTC or already Fake-UTC WIB (+25200)
+                    const isAlreadyWib = (rawSec - nowUtcSec) > 14400;
+                    const utcSec = isAlreadyWib ? (rawSec - 25200) : rawSec;
+                    // Intraday Forex bars in XAUUSDc_1m.json use Fake-UTC WIB (utcSec + 25200)
+                    nowSec = utcSec + 25200;
                     minuteTs = Math.floor(nowSec / 60) * 60;
-                    todayDailyTs = tick.dailyTs || (Math.floor(nowSec / 86400) * 86400);
+                    // Daily Forex bars in XAUUSDc_1d.json use UTC midnight
+                    todayDailyTs = tick.dailyTs || (Math.floor(utcSec / 86400) * 86400);
                 } else {
                     nowSec = tick.time && tick.time > 1e9 && !tick.timeStr ? tick.time : wib.wibTsSec;
                     minuteTs = Math.floor(nowSec / 60) * 60;
@@ -19799,6 +21618,9 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 const lot = tick.lot || (tick.shares ? Math.round(tick.shares / 100) : 0) || 1;
                 const price = Number(tick.price);
                 if (!price || isNaN(price)) return;
+
+                let didClose1mCandle = false;
+                let didCloseCandle = false;
 
                 // 1. Ingest into cached 1m bars (the intraday base source)
                 if (cached1mData && cached1mData.length > 0) {
@@ -19819,6 +21641,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                             else lvl.bidVolume += lot;
                         }
                     } else if (minuteTs > last1m.time) {
+                        didClose1mCandle = true;
                         const new1mBar: any = {
                             time: minuteTs,
                             open: price,
@@ -19844,6 +21667,25 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
 
                     if (currentActiveTf === '1m') {
                         activeBar = cached1mData[cached1mData.length - 1];
+                        const lastChartBar = currentChartData[currentChartData.length - 1];
+                        if (activeBar && lastChartBar && activeBar.time > lastChartBar.time) {
+                            didCloseCandle = true;
+                            if (currentChartData !== cached1mData) {
+                                currentChartData.push(activeBar);
+                            }
+                            if (masterIntradayCandles && masterIntradayCandles !== cached1mData && masterIntradayCandles !== currentChartData) {
+                                masterIntradayCandles.push(activeBar);
+                                windowEndIdx = masterIntradayCandles.length;
+                            } else if (masterIntradayCandles === cached1mData) {
+                                windowEndIdx = masterIntradayCandles.length;
+                            }
+                        } else if (activeBar && lastChartBar && activeBar.time === lastChartBar.time && lastChartBar !== activeBar) {
+                            lastChartBar.high = activeBar.high;
+                            lastChartBar.low = activeBar.low;
+                            lastChartBar.close = activeBar.close;
+                            lastChartBar.volume = activeBar.volume;
+                            lastChartBar.levels = activeBar.levels;
+                        }
                     } else if (currentActiveTf === '5m' || currentActiveTf === '15m' || currentActiveTf === '1h') {
                         const deltaSec = currentActiveTf === '5m' ? 300 : (currentActiveTf === '15m' ? 900 : 3600);
                         const bucketTs = Math.floor(nowSec / deltaSec) * deltaSec;
@@ -19864,9 +21706,27 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                                 else lvl.bidVolume += lot;
                             }
                             activeBar = lastBar;
-                        } else {
-                            currentChartData = resampleIntradayBars(cached1mData, deltaSec);
-                            activeBar = currentChartData[currentChartData.length - 1];
+                        } else if (lastBar && bucketTs > lastBar.time) {
+                            didCloseCandle = true;
+                            const newBucketBar: any = {
+                                time: bucketTs,
+                                open: price,
+                                high: price,
+                                low: price,
+                                close: price,
+                                volume: lot,
+                                levels: [{
+                                    price,
+                                    bidVolume: isBuy ? 0 : lot,
+                                    askVolume: isBuy ? lot : 0
+                                }]
+                            };
+                            currentChartData.push(newBucketBar);
+                            if (masterIntradayCandles && masterIntradayCandles !== currentChartData) {
+                                masterIntradayCandles.push(newBucketBar);
+                                windowEndIdx = masterIntradayCandles.length;
+                            }
+                            activeBar = newBucketBar;
                         }
                     } else if (currentActiveTf === '1S') {
                         const expectedSessionTs = wib.sessionTs;
@@ -19888,9 +21748,23 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                                 else lvl.bidVolume += lot;
                             }
                             activeBar = lastBar;
-                        } else {
-                            currentChartData = resampleIntradayToSessionBars(cached1mData);
-                            activeBar = currentChartData[currentChartData.length - 1];
+                        } else if (lastBar && expectedSessionTs > lastBar.time) {
+                            didCloseCandle = true;
+                            const newSessionBar: any = {
+                                time: expectedSessionTs,
+                                open: price,
+                                high: price,
+                                low: price,
+                                close: price,
+                                volume: lot,
+                                levels: [{
+                                    price,
+                                    bidVolume: isBuy ? 0 : lot,
+                                    askVolume: isBuy ? lot : 0
+                                }]
+                            };
+                            currentChartData.push(newSessionBar);
+                            activeBar = newSessionBar;
                         }
                     }
 
@@ -19973,7 +21847,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                             }
                             dailyBar = lastDaily;
                         } else if (todayDailyTs > lastDaily.time) {
-                            // CREATE NEW CANDLE FOR TODAY (11 September) - PRESERVE YESTERDAY (10 September)!
+                            didCloseCandle = true;
                             const prevClose = lastDaily.close || price;
                             const newDaily: any = {
                                 time: todayDailyTs,
@@ -20018,6 +21892,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                             }
                             activeBar = lastChartBar;
                         } else if (todayDailyTs > (lastChartBar?.time || 0)) {
+                            didCloseCandle = true;
                             // Append new daily bar to currentChartData
                             const prevClose = lastChartBar ? lastChartBar.close : price;
                             const newBar: any = {
@@ -20088,7 +21963,8 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                             }
                         }
                         if ((footprintVisible || currentChartStyle === 'footprint-histogram' || currentChartStyle === 'broker-profile') && activeBar.levels && activeBar.levels.length > 0) {
-                            const dynamicTickSize = getIdxTickSize(activeBar.close);
+                            const formatInfo = getInstrumentFormatInfo(tSym, activeBar.close);
+                            const dynamicTickSize = formatInfo.isForex ? formatInfo.tickSize : getIdxTickSize(activeBar.close);
                             const clustered = clusterOrderFlowBarsByMintick([activeBar], dynamicTickSize, dynamicTickSize);
                             if (clustered && clustered.length > 0) {
                                 if (footprintVisible) {
@@ -20105,24 +21981,65 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     }
                 }
 
+                // Update live open position currentPrice & floating PnL for Forex & IDX
+                let updatedOpenPos = false;
+                if (isForex && allForexPositionsData && allForexPositionsData.length > 0) {
+                    for (const pos of allForexPositionsData) {
+                        if (pos.isOpen && isForexMatch(pos.symbol, tSym)) {
+                            const { unAmt, unPct, isWin } = computeOpenPositionUnrealizedPnl(pos, price);
+                            pos.currentPrice = price;
+                            pos.exitPrice = price;
+                            pos.realizedAmount = unAmt;
+                            pos.realizedPercentage = unPct;
+                            pos.isWin = isWin;
+                            openPositionsMap.set(pos.symbol.toUpperCase().trim(), { ...pos });
+                            updatedOpenPos = true;
+                        }
+                    }
+                } else if (!isForex && allOpenPositionsData && allOpenPositionsData.length > 0) {
+                    for (const pos of allOpenPositionsData) {
+                        if (pos.isOpen && pos.symbol === tSym) {
+                            const { unAmt, unPct, isWin } = computeOpenPositionUnrealizedPnl(pos, price);
+                            pos.currentPrice = price;
+                            pos.exitPrice = price;
+                            pos.realizedAmount = unAmt;
+                            pos.realizedPercentage = unPct;
+                            pos.isWin = isWin;
+                            openPositionsMap.set(pos.symbol.toUpperCase().trim(), { ...pos });
+                            updatedOpenPos = true;
+                        }
+                    }
+                }
+
+                // Immediately repaint open trade position primitive on every live price tick (60 FPS, zero debounce lag)
+                if (updatedOpenPos || isOpenPositionsVisible || focusedTradeId) {
+                    renderTradePositions();
+                }
+
                 // 3. Update Legend & Traffic Light
                 updateLegendToLatest();
                 updateTrafficLight();
 
-                // 4. Debounced Indicator & Overlay Recalculation (glue MA lines & technical tools to live price smoothly)
-                if (indicatorDebounceTimer) clearTimeout(indicatorDebounceTimer);
-                indicatorDebounceTimer = setTimeout(() => {
-                    recalculateAllIndicators();
-                    renderAutoSr();
-                    renderGhostCandle();
-                    renderAutoTrendlines();
-                    renderAutoChannels();
-                    renderAutoMs();
-                    renderGaps();
-                    renderChartPatterns();
-                    renderTradePositions();
-                    updateHorizonTrendStates(cached1dData);
-                }, 150);
+                // 4. Hybrid Live-Tick (Unclosed) vs Authoritative Candle Close (On Close):
+                // - On intrabar ticks (!didCloseCandle): DO NOT recalculate Left Toolbar Drawing Tools (#tv-left-toolbar)
+                //   so drawing tools & dropdowns remain 100% lag-free at 60 FPS.
+                // - On candle close (didCloseCandle or didClose1mCandle): fetch official Exness candle to overwrite
+                //   the closed candle in-place and then recalculate Left Toolbar Drawing Tools once.
+                if (didCloseCandle || didClose1mCandle) {
+                    if (isForex) {
+                        reconcileExnessCandles(tSym, currentActiveTf, 'candle_close');
+                    } else if (didCloseCandle) {
+                        recalculateAllIndicators();
+                        refreshAllDrawingTools();
+                        renderTradePositions();
+                    }
+                } else {
+                    if (indicatorDebounceTimer) clearTimeout(indicatorDebounceTimer);
+                    indicatorDebounceTimer = setTimeout(() => {
+                        recalculateAllIndicators();
+                        renderTradePositions();
+                    }, 180);
+                }
             }
 
             function normalizeIncomingTrade(d: any): LiveTradeRecord | null {
@@ -20150,10 +22067,14 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 let dailyTs: number;
 
                 if (isForex) {
-                    timeSec = Number(d.timeSec || d.time || d.t || Math.floor(Date.now() / 1000));
-                    if (timeSec > 1e11) timeSec = Math.floor(timeSec / 1000);
-                    dailyTs = Number(d.dailyTs || (Math.floor(timeSec / 86400) * 86400));
-                    timeStr = d.timeStr || new Date(timeSec * 1000).toISOString().slice(11, 19);
+                    let rawSec = Number(d.timeSec || d.time || d.t || Math.floor(Date.now() / 1000));
+                    if (rawSec > 1e11) rawSec = Math.floor(rawSec / 1000);
+                    const nowUtcSec = Math.floor(Date.now() / 1000);
+                    const utcSec = (rawSec - nowUtcSec) > 14400 ? (rawSec - 25200) : rawSec;
+                    timeSec = utcSec;
+                    dailyTs = Number(d.dailyTs || (Math.floor(utcSec / 86400) * 86400));
+                    const wibSec = utcSec + 25200;
+                    timeStr = d.timeStr || new Date(wibSec * 1000).toISOString().slice(11, 19);
                 } else {
                     const wib = getWibComponents(d.time, d.a);
                     timeStr = wib.timeStr;
@@ -20237,9 +22158,195 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 }
             }
 
-            function handleBridgeStatus(st: any) {
+            let exnessTokenValid = false;
+            let exnessWsConnected = false;
+            let exnessRemainingSeconds = 0;
+            let exnessEventSource: EventSource | null = null;
+            let stockbitTokenValid = false;
+            let stockbitSecTokenValid = false;
+            let stockbitRemainingSeconds = 0;
+
+            function updateTopRightLiveStatusPill() {
                 const statusPill = document.getElementById('live-status-pill');
                 const statusText = statusPill?.querySelector('.live-text');
+                if (!statusPill) return;
+                if (statusText) statusText.textContent = 'Live';
+
+                if (exnessTokenValid || stockbitTokenValid) {
+                    statusPill.className = 'live-pill online';
+                    const exMins = Math.max(0, Math.round(exnessRemainingSeconds / 60));
+                    const sbMins = Math.max(0, Math.round(stockbitRemainingSeconds / 60));
+                    const parts: string[] = [];
+                    if (exnessTokenValid) parts.push(`Exness Aktif (${exMins}m)`);
+                    if (stockbitTokenValid) parts.push(`Stockbit Aktif (${sbMins}m)`);
+                    statusPill.title = `${parts.join(' • ')} • Klik untuk pengaturan token`;
+                } else {
+                    statusPill.className = 'live-pill offline';
+                    statusPill.title = 'Token Live Tidak Aktif / Expired • Klik untuk memasukkan token Exness / Stockbit';
+                }
+            }
+
+            function applyStockbitStatusToUI(st: any) {
+                if (!st || typeof st !== 'object') return;
+                stockbitTokenValid = Boolean(st.tokenValid);
+                stockbitSecTokenValid = Boolean(st.secTokenValid);
+                stockbitRemainingSeconds = Number(st.remainingSeconds || 0);
+
+                updateTopRightLiveStatusPill();
+
+                const modalPill = document.getElementById('stockbit-modal-status-pill');
+                const modalPillText = modalPill?.querySelector('.live-text');
+                const expiryLabel = document.getElementById('stockbit-token-expiry-label');
+                const tokenInput = document.getElementById('stockbit-token-input') as HTMLInputElement;
+
+                if (tokenInput && !tokenInput.value && st.tokenPreview) {
+                    tokenInput.placeholder = `Token aktif: ${st.tokenPreview}`;
+                }
+
+                if (modalPill) {
+                    if (stockbitTokenValid) {
+                        modalPill.className = 'live-pill online';
+                        if (modalPillText) modalPillText.textContent = stockbitSecTokenValid ? 'FULL AKTIF' : 'CHART AKTIF';
+                    } else {
+                        modalPill.className = 'live-pill offline';
+                        if (modalPillText) modalPillText.textContent = st.hasToken ? 'EXPIRED' : 'NO TOKEN';
+                    }
+                }
+
+                if (expiryLabel) {
+                    if (stockbitTokenValid) {
+                        const mins = Math.max(1, Math.round(stockbitRemainingSeconds / 60));
+                        const secMins = Math.max(0, Math.round(Number(st.secRemainingSeconds || 0) / 60));
+                        expiryLabel.style.color = '#26a69a';
+                        expiryLabel.textContent = `Chart: Aktif (${mins}m)${stockbitSecTokenValid ? ` • Portofolio/Order: Aktif (${secMins}m)` : ''}`;
+                    } else if (st.hasToken) {
+                        expiryLabel.style.color = '#ef5350';
+                        expiryLabel.textContent = 'Token Stockbit Expired — Paste Cookie / Token baru di bawah';
+                    } else {
+                        expiryLabel.style.color = '#787b86';
+                        expiryLabel.textContent = 'Belum ada token Stockbit';
+                    }
+                }
+            }
+
+            async function fetchStockbitStatus(): Promise<any> {
+                try {
+                    const resp = await fetch(`/api/stockbit/status?t=${Date.now()}`);
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        applyStockbitStatusToUI(data);
+                        return data;
+                    }
+                } catch (_e) {}
+                return null;
+            }
+
+            function applyExnessStatusToUI(st: any) {
+                if (!st || typeof st !== 'object') return;
+                exnessTokenValid = Boolean(st.tokenValid);
+                exnessWsConnected = Boolean(st.connected);
+                exnessRemainingSeconds = Number(st.remainingSeconds || 0);
+
+                updateTopRightLiveStatusPill();
+
+                const modalPill = document.getElementById('exness-modal-status-pill');
+                const modalPillText = modalPill?.querySelector('.live-text');
+                const expiryLabel = document.getElementById('exness-token-expiry-label');
+                const tokenInput = document.getElementById('exness-token-input') as HTMLInputElement;
+
+                if (tokenInput && !tokenInput.value && st.tokenPreview) {
+                    tokenInput.placeholder = `Token saat ini: ${st.tokenPreview}`;
+                }
+
+                if (modalPill) {
+                    if (exnessTokenValid) {
+                        modalPill.className = 'live-pill online';
+                        if (modalPillText) modalPillText.textContent = exnessWsConnected ? 'STREAMING' : 'TOKEN AKTIF';
+                    } else {
+                        modalPill.className = 'live-pill offline';
+                        if (modalPillText) modalPillText.textContent = st.hasToken ? 'EXPIRED' : 'NO TOKEN';
+                    }
+                }
+
+                if (expiryLabel) {
+                    if (exnessTokenValid) {
+                        const mins = Math.max(1, Math.round(exnessRemainingSeconds / 60));
+                        expiryLabel.style.color = '#26a69a';
+                        expiryLabel.textContent = `Aktif (${mins} menit tersisa)${exnessWsConnected ? ' • WS Real-Time Terhubung' : ''}`;
+                    } else if (st.hasToken) {
+                        expiryLabel.style.color = '#ef5350';
+                        expiryLabel.textContent = 'Token Expired — Paste token baru di bawah';
+                    } else {
+                        expiryLabel.style.color = '#787b86';
+                        expiryLabel.textContent = 'Belum ada token';
+                    }
+                }
+            }
+
+            async function fetchExnessStatus(): Promise<any> {
+                try {
+                    const resp = await fetch(`/api/exness/status?t=${Date.now()}`);
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        applyExnessStatusToUI(data);
+                        return data;
+                    }
+                } catch (_e) {}
+                return null;
+            }
+
+            function connectExnessLiveStream() {
+                if (exnessEventSource) {
+                    try { exnessEventSource.close(); } catch (_e) {}
+                    exnessEventSource = null;
+                }
+
+                fetchExnessStatus();
+                fetchStockbitStatus();
+
+                try {
+                    const es = new EventSource('/api/exness/stream');
+                    exnessEventSource = es;
+
+                    const processExnessSsePayload = (rawData: string) => {
+                        try {
+                            const msg = JSON.parse(rawData);
+                            if (!msg || typeof msg !== 'object') return;
+                            if (msg.type === 'exness_status') {
+                                applyExnessStatusToUI(msg);
+                            } else if (msg.type === 'exness_tick' && msg.price) {
+                                const sym = String(msg.symbol || 'XAUUSDc').toUpperCase();
+                                const timeSec = msg.timeMs ? Math.floor(Number(msg.timeMs) / 1000) : Math.floor(Date.now() / 1000);
+                                const action: 'BUY' | 'SELL' = (msg.direction === 'SELL' || msg.direction === 'down') ? 'SELL' : 'BUY';
+                                const norm = normalizeIncomingTrade({
+                                    symbol: sym,
+                                    price: Number(msg.price),
+                                    lot: 1,
+                                    action,
+                                    timeSec
+                                });
+                                if (norm) {
+                                    handleIncomingNormalizedTrade(norm);
+                                }
+                            }
+                        } catch (_e) {}
+                    };
+
+                    es.onmessage = (ev: MessageEvent) => processExnessSsePayload(ev.data);
+                    es.addEventListener('exness_status', (ev: MessageEvent) => processExnessSsePayload(ev.data));
+                    es.addEventListener('exness_tick', (ev: MessageEvent) => processExnessSsePayload(ev.data));
+
+                    es.onerror = () => {
+                        // EventSource automatically reconnects; refresh token status in case token expired
+                        fetchExnessStatus();
+                fetchStockbitStatus();
+                    };
+                } catch (err) {
+                    console.warn('[Exness SSE] Failed to initialize EventSource:', err);
+                }
+            }
+
+            function handleBridgeStatus(st: any) {
                 const modalBadge = document.getElementById('live-modal-status-badge');
                 const modalBadgeText = modalBadge?.querySelector('.live-text');
                 const diagBox = document.getElementById('live-diagnostic-box');
@@ -20247,16 +22354,13 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 const diagMessage = document.getElementById('live-diag-message');
 
                 if (st.market) updateLiveMarketStatus(st.market);
+                updateTopRightLiveStatusPill();
 
                 if (st.connected) {
-                    if (statusPill) statusPill.className = 'live-pill online';
-                    if (statusText) statusText.textContent = 'LIVE';
                     if (modalBadge) modalBadge.className = 'live-pill online';
                     if (modalBadgeText) modalBadgeText.textContent = 'LIVE';
                     if (diagBox) diagBox.style.display = 'none';
                 } else if (st.errorCode === 4403) {
-                    if (statusPill) statusPill.className = 'live-pill offline';
-                    if (statusText) statusText.textContent = 'PAID REQ';
                     if (modalBadge) modalBadge.className = 'live-pill offline';
                     if (modalBadgeText) modalBadgeText.textContent = 'PAID REQ';
                     if (diagBox) {
@@ -20265,8 +22369,6 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         if (diagMessage) diagMessage.textContent = 'Akun Anda belum berstatus Paid User atau pembayaran masih menunggu konfirmasi admin stock.arjum.com.';
                     }
                 } else if (st.errorCode === 4401) {
-                    if (statusPill) statusPill.className = 'live-pill offline';
-                    if (statusText) statusText.textContent = 'NO KEY';
                     if (modalBadge) modalBadge.className = 'live-pill offline';
                     if (modalBadgeText) modalBadgeText.textContent = 'NO KEY';
                     if (diagBox) {
@@ -20275,13 +22377,9 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         if (diagMessage) diagMessage.textContent = 'API Key tidak valid atau belum diisi. Periksa API Key Anda di tab pengaturan.';
                     }
                 } else if (st.status === 'connecting') {
-                    if (statusPill) statusPill.className = 'live-pill connecting';
-                    if (statusText) statusText.textContent = 'CONNECTING';
                     if (modalBadge) modalBadge.className = 'live-pill connecting';
                     if (modalBadgeText) modalBadgeText.textContent = 'CONNECTING';
                 } else {
-                    if (statusPill) statusPill.className = 'live-pill offline';
-                    if (statusText) statusText.textContent = 'OFFLINE';
                     if (modalBadge) modalBadge.className = 'live-pill offline';
                     if (modalBadgeText) modalBadgeText.textContent = 'OFFLINE';
                 }
@@ -20292,17 +22390,13 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
             }
 
             function handleBridgeHeartbeat(hb: any) {
-                const statusPill = document.getElementById('live-status-pill');
-                const statusText = statusPill?.querySelector('.live-text');
                 const modalBadge = document.getElementById('live-modal-status-badge');
                 const modalBadgeText = modalBadge?.querySelector('.live-text');
                 const diagBox = document.getElementById('live-diagnostic-box');
 
+                updateTopRightLiveStatusPill();
+
                 if (hb.upstreamConnected) {
-                    if (statusPill && !statusPill.classList.contains('online')) {
-                        statusPill.className = 'live-pill online';
-                        if (statusText) statusText.textContent = 'LIVE';
-                    }
                     if (modalBadge && !modalBadge.classList.contains('online')) {
                         modalBadge.className = 'live-pill online';
                         if (modalBadgeText) modalBadgeText.textContent = 'LIVE';
@@ -20311,10 +22405,6 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         diagBox.style.display = 'none';
                     }
                 } else if (hb.upstreamStatus === 'connecting') {
-                    if (statusPill && !statusPill.classList.contains('connecting')) {
-                        statusPill.className = 'live-pill connecting';
-                        if (statusText) statusText.textContent = 'CONNECTING';
-                    }
                     if (modalBadge && !modalBadge.classList.contains('connecting')) {
                         modalBadge.className = 'live-pill connecting';
                         if (modalBadgeText) modalBadgeText.textContent = 'CONNECTING';
@@ -20657,7 +22747,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         else if (currentActiveTf === '1h') targetData = resampleIntradayBars(cached1mData, 3600);
                         else if (currentActiveTf === '1S') targetData = resampleIntradayToSessionBars(cached1mData);
                         try {
-                            setupAndRenderIntraday(targetData, currentActiveTf);
+                            setupAndRenderIntraday(targetData, currentActiveTf, true);
                             updateLegendToLatest();
                             updateTrafficLight();
                             recalculateAllIndicators();
@@ -20680,6 +22770,20 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 const liveSaveKeyBtn = document.getElementById('live-save-key-btn');
                 const liveReconnectBtn = document.getElementById('live-reconnect-btn');
 
+                // Exness Token Controls inside the modal
+                const exnessTokenInput = document.getElementById('exness-token-input') as HTMLInputElement;
+                const exnessToggleTokenBtn = document.getElementById('exness-toggle-token-visibility');
+                const exnessSaveTokenBtn = document.getElementById('exness-save-token-btn');
+                const exnessSyncNowBtn = document.getElementById('exness-sync-now-btn');
+                const exnessTokenFeedback = document.getElementById('exness-token-feedback');
+
+                // Stockbit Token Controls inside the modal
+                const stockbitTokenInput = document.getElementById('stockbit-token-input') as HTMLInputElement;
+                const stockbitToggleTokenBtn = document.getElementById('stockbit-toggle-token-visibility');
+                const stockbitSaveTokenBtn = document.getElementById('stockbit-save-token-btn');
+                const stockbitSyncNowBtn = document.getElementById('stockbit-sync-now-btn');
+                const stockbitTokenFeedback = document.getElementById('stockbit-token-feedback');
+
                 const defaultKey = localStorage.getItem('idx_stock_api_key') || 'sk_live_Dao2lMpLyhhcFQykASSSqMsoJUHNCMTS72Gix-jN5XQ';
                 if (liveApiKeyInput && !liveApiKeyInput.value) {
                     liveApiKeyInput.value = defaultKey;
@@ -20690,6 +22794,10 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                     if (liveApiKeyInput) {
                         liveApiKeyInput.value = localStorage.getItem('idx_stock_api_key') || defaultKey;
                     }
+                    if (exnessTokenFeedback) exnessTokenFeedback.style.display = 'none';
+                    if (stockbitTokenFeedback) stockbitTokenFeedback.style.display = 'none';
+                    fetchExnessStatus();
+                    fetchStockbitStatus();
                     if (liveSocket && liveSocket.readyState === WebSocket.OPEN) {
                         liveSocket.send(JSON.stringify({ action: 'get_status' }));
                     }
@@ -20700,6 +22808,162 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 };
                 liveModalCloseBtn?.addEventListener('click', closeModal);
                 liveModalDoneBtn?.addEventListener('click', closeModal);
+
+                exnessToggleTokenBtn?.addEventListener('click', () => {
+                    if (!exnessTokenInput) return;
+                    if (exnessTokenInput.type === 'password') {
+                        exnessTokenInput.type = 'text';
+                        exnessToggleTokenBtn.textContent = '🔒';
+                    } else {
+                        exnessTokenInput.type = 'password';
+                        exnessToggleTokenBtn.textContent = '👁';
+                    }
+                });
+
+                exnessSaveTokenBtn?.addEventListener('click', async () => {
+                    const rawToken = (exnessTokenInput?.value || '').trim();
+                    if (!rawToken) {
+                        if (exnessTokenFeedback) {
+                            exnessTokenFeedback.style.display = 'block';
+                            exnessTokenFeedback.style.background = '#ffebee';
+                            exnessTokenFeedback.style.color = '#c62828';
+                            exnessTokenFeedback.textContent = '❌ Masukkan Exness Bearer Token terlebih dahulu.';
+                        }
+                        showToast('Masukkan Exness Bearer Token terlebih dahulu');
+                        return;
+                    }
+
+                    if (exnessTokenFeedback) {
+                        exnessTokenFeedback.style.display = 'block';
+                        exnessTokenFeedback.style.background = '#fff8e1';
+                        exnessTokenFeedback.style.color = '#b78103';
+                        exnessTokenFeedback.textContent = '⏳ Memvalidasi & menyimpan token Exness...';
+                    }
+
+                    try {
+                        const resp = await fetch('/api/exness/token', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ token: rawToken })
+                        });
+                        const data = await resp.json();
+                        if (resp.ok && data && data.ok) {
+                            applyExnessStatusToUI(data);
+                            if (exnessTokenInput) exnessTokenInput.value = '';
+                            if (exnessTokenFeedback) {
+                                exnessTokenFeedback.style.display = 'block';
+                                exnessTokenFeedback.style.background = '#e8f5e9';
+                                exnessTokenFeedback.style.color = '#2e7d32';
+                                exnessTokenFeedback.textContent = '✅ Token Exness aktif & tersimpan! Stream live XAUUSDc terhubung.';
+                            }
+                            showToast('✅ Token Exness Aktif! Lampu Live Hijau.');
+                            reconcileExnessCandles(getCurrentSymbol(), currentActiveTf, 'manual');
+                            loadTradeHistoryData();
+                        } else {
+                            await fetchExnessStatus();
+                            if (exnessTokenFeedback) {
+                                exnessTokenFeedback.style.display = 'block';
+                                exnessTokenFeedback.style.background = '#ffebee';
+                                exnessTokenFeedback.style.color = '#c62828';
+                                exnessTokenFeedback.textContent = `❌ Token ditolak / expired: ${data?.error || 'Periksa kembali token Anda'}`;
+                            }
+                            showToast(`❌ Token Exness tidak valid / expired`);
+                        }
+                    } catch (err: any) {
+                        if (exnessTokenFeedback) {
+                            exnessTokenFeedback.style.display = 'block';
+                            exnessTokenFeedback.style.background = '#ffebee';
+                            exnessTokenFeedback.style.color = '#c62828';
+                            exnessTokenFeedback.textContent = `❌ Gagal menghubungi server: ${err?.message || 'Error'}`;
+                        }
+                    }
+                });
+
+                exnessSyncNowBtn?.addEventListener('click', async () => {
+                    showToast('🔄 Menyinkronkan candle resmi Exness...');
+                    await reconcileExnessCandles(getCurrentSymbol(), currentActiveTf, 'manual');
+                    await loadTradeHistoryData();
+                    showToast('✅ Candle Exness berhasil disinkronkan!');
+                });
+
+                stockbitToggleTokenBtn?.addEventListener('click', () => {
+                    if (!stockbitTokenInput) return;
+                    if (stockbitTokenInput.type === 'password') {
+                        stockbitTokenInput.type = 'text';
+                        stockbitToggleTokenBtn.textContent = '🔒';
+                    } else {
+                        stockbitTokenInput.type = 'password';
+                        stockbitToggleTokenBtn.textContent = '👁';
+                    }
+                });
+
+                stockbitSaveTokenBtn?.addEventListener('click', async () => {
+                    const rawToken = (stockbitTokenInput?.value || '').trim();
+                    if (!rawToken) {
+                        if (stockbitTokenFeedback) {
+                            stockbitTokenFeedback.style.display = 'block';
+                            stockbitTokenFeedback.style.background = '#ffebee';
+                            stockbitTokenFeedback.style.color = '#c62828';
+                            stockbitTokenFeedback.textContent = '❌ Masukkan Cookie / Bearer Token Stockbit terlebih dahulu.';
+                        }
+                        showToast('Masukkan Cookie / Bearer Token Stockbit terlebih dahulu');
+                        return;
+                    }
+
+                    if (stockbitTokenFeedback) {
+                        stockbitTokenFeedback.style.display = 'block';
+                        stockbitTokenFeedback.style.background = '#fff8e1';
+                        stockbitTokenFeedback.style.color = '#b78103';
+                        stockbitTokenFeedback.textContent = '⏳ Memvalidasi & menyimpan token Stockbit...';
+                    }
+
+                    try {
+                        const resp = await fetch('/api/stockbit/token', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ token: rawToken })
+                        });
+                        const data = await resp.json();
+                        if (resp.ok && data && data.ok) {
+                            applyStockbitStatusToUI(data);
+                            if (stockbitTokenInput) stockbitTokenInput.value = '';
+                            if (stockbitTokenFeedback) {
+                                stockbitTokenFeedback.style.display = 'block';
+                                stockbitTokenFeedback.style.background = '#e8f5e9';
+                                stockbitTokenFeedback.style.color = '#2e7d32';
+                                stockbitTokenFeedback.textContent = `✅ Token Stockbit aktif & tersimpan! (${data.username || 'User'})`;
+                            }
+                            showToast('✅ Token Stockbit Aktif! Sinkronisasi IHSG & Portofolio berjalan.');
+                            const sym = getCurrentSymbol();
+                            reconcileStockbitCandles(sym, currentActiveTf, 'manual');
+                            loadTradeHistoryData();
+                        } else {
+                            await fetchStockbitStatus();
+                            if (stockbitTokenFeedback) {
+                                stockbitTokenFeedback.style.display = 'block';
+                                stockbitTokenFeedback.style.background = '#ffebee';
+                                stockbitTokenFeedback.style.color = '#c62828';
+                                stockbitTokenFeedback.textContent = `❌ Token ditolak / expired: ${data?.error || 'Periksa kembali token / cookie Anda'}`;
+                            }
+                            showToast('❌ Token Stockbit tidak valid / expired');
+                        }
+                    } catch (err: any) {
+                        if (stockbitTokenFeedback) {
+                            stockbitTokenFeedback.style.display = 'block';
+                            stockbitTokenFeedback.style.background = '#ffebee';
+                            stockbitTokenFeedback.style.color = '#c62828';
+                            stockbitTokenFeedback.textContent = `❌ Gagal menghubungi server: ${err?.message || 'Error'}`;
+                        }
+                    }
+                });
+
+                stockbitSyncNowBtn?.addEventListener('click', async () => {
+                    const sym = getCurrentSymbol();
+                    showToast(`🔄 Menyinkronkan candle Stockbit (${sym}) & Portofolio...`);
+                    await reconcileStockbitCandles(sym, currentActiveTf, 'manual');
+                    await loadTradeHistoryData();
+                    showToast(`✅ Candle Stockbit & Portofolio berhasil disinkronkan!`);
+                });
 
                 liveToggleKeyBtn?.addEventListener('click', () => {
                     if (!liveApiKeyInput) return;
@@ -20928,9 +23192,6 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
             }
 
             function connectLiveTradeWebSocket(manual = false) {
-                const statusPill = document.getElementById('live-status-pill');
-                const statusText = statusPill?.querySelector('.live-text');
-
                 if (liveSocket && (liveSocket.readyState === WebSocket.OPEN || liveSocket.readyState === WebSocket.CONNECTING)) {
                     if (manual) showToast('Connected to Live Running Trades (ws://localhost:8765)');
                     return;
@@ -20946,10 +23207,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         lastClientMessageTime = Date.now();
                         startClientWatchdog();
 
-                        if (statusPill) {
-                            statusPill.className = 'live-pill online';
-                            if (statusText) statusText.textContent = 'LIVE';
-                        }
+                        updateTopRightLiveStatusPill();
                         showToast('Live Running Trades Connected');
                         clearTimeout(reconnectTimer);
 
@@ -21102,10 +23360,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                             clearInterval(clientWatchdogTimer);
                             clientWatchdogTimer = null;
                         }
-                        if (statusPill) {
-                            statusPill.className = 'live-pill offline';
-                            if (statusText) statusText.textContent = 'OFFLINE';
-                        }
+                        updateTopRightLiveStatusPill();
                         liveSocket = null;
                         clearTimeout(reconnectTimer);
                         reconnectTimer = setTimeout(() => {
@@ -21117,10 +23372,7 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                         clearInterval(clientWatchdogTimer);
                         clientWatchdogTimer = null;
                     }
-                    if (statusPill) {
-                        statusPill.className = 'live-pill offline';
-                        if (statusText) statusText.textContent = 'OFFLINE';
-                    }
+                    updateTopRightLiveStatusPill();
                     clearTimeout(reconnectTimer);
                     reconnectTimer = setTimeout(() => {
                         connectLiveTradeWebSocket();
@@ -21168,6 +23420,8 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
 
             initLiveStreamModal();
             initAlertStreamModal();
+            connectExnessLiveStream();
+            setInterval(fetchExnessStatus, 30000);
 
             // =========================================================================
             // ATTACH SCREENER STOCK AUTOCOMPLETE TO ALL SEARCH BARS ACROSS THE PLATFORM
@@ -21259,12 +23513,14 @@ Tugas Anda: Analisis data di atas dan jelaskan secara objektif mengapa Signal En
                 loadMarketCapData();
                 loadScreenerData();
                 loadTradeHistoryData();
+                setInterval(loadTradeHistoryData, 15000);
                 connectLiveTradeWebSocket();
                 startLiveUiLoop();
             }).catch(() => {
                 loadMarketCapData();
                 loadScreenerData();
                 loadTradeHistoryData();
+                setInterval(loadTradeHistoryData, 15000);
                 connectLiveTradeWebSocket();
                 startLiveUiLoop();
             });
